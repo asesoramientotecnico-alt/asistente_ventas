@@ -9,3 +9,7 @@ coverage/
 # El archivo vive en Supabase Storage y se referencia desde import_batch.
 data/*.xlsx
 data/*.xls
+
+# artefactos de build
+tsconfig.tsbuildinfo
+next-env.d.ts

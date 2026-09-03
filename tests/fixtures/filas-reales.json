@@ -1,0 +1,709 @@
+{
+  "_meta": {
+    "descripcion": "Una fila real por categoria, extraida del Excel de catalogo. Generado con: pnpm verificar:conteos -- --fixtures. No editar a mano.",
+    "archivo": "data/BAJADoc Dossier caracteristicas de materiales.xlsx",
+    "filas_del_archivo": 16973
+  },
+  "filas": [
+    {
+      "material_id": "300032",
+      "descripcion": "ABCR   010  a   016   0,6  304",
+      "negocio": "BULONERIA",
+      "familia": "ABRAZADERA",
+      "tipo": "Abrazadera",
+      "calidad": "304",
+      "grado_norm": "304",
+      "esperado": "abrazadera"
+    },
+    {
+      "material_id": "342176",
+      "descripcion": "PAÑO VELLON MANUAL 154X224 CORINDON A100",
+      "negocio": "ABRASIVOS",
+      "familia": "ABRASIVOS",
+      "tipo": "PAÑO DE VELLÓN",
+      "calidad": "",
+      "grado_norm": "",
+      "esperado": "acabado"
+    },
+    {
+      "material_id": "345831",
+      "descripcion": "[HI-AC111] ESCOBILLA BAÑO OPALO",
+      "negocio": "LINEA ARQUITECTURA",
+      "familia": "ACCESORIOS DE BAÑO",
+      "tipo": "",
+      "calidad": "304",
+      "grado_norm": "304",
+      "esperado": "acc_bano"
+    },
+    {
+      "material_id": "310666",
+      "descripcion": "EFI 2/3 C.MEC CERAM-GRAF-EPDM",
+      "negocio": "BOMBAS",
+      "familia": "ACC. P/ BOMBAS",
+      "tipo": "CIERRE MECANICO BOMBA",
+      "calidad": "",
+      "grado_norm": "",
+      "esperado": "acc_bomba"
+    },
+    {
+      "material_id": "303013",
+      "descripcion": "BNS1  1 1/2'' x d   1/2'' NPT F/C 316",
+      "negocio": "ACCESORIOS ROSC / SW",
+      "familia": "SERIE 150",
+      "tipo": "BUJE DE REDUCCIÓN",
+      "calidad": "316",
+      "grado_norm": "316",
+      "esperado": "acc_rosc_sw"
+    },
+    {
+      "material_id": "303046",
+      "descripcion": "BNS1  1 1/2'' x c   3/8'' RW  F/C 304",
+      "negocio": "INOXSALE",
+      "familia": "INOXSALE",
+      "tipo": "BUJE DE REDUCCIÓN",
+      "calidad": "304",
+      "grado_norm": "304",
+      "esperado": "acc_soldar_ind"
+    },
+    {
+      "material_id": "306114",
+      "descripcion": "CQ PS 101,60x 2,00 316L P/MATE",
+      "negocio": "ACC. P/ SOLDAR SANITARIOS",
+      "familia": "CASQUETES",
+      "tipo": "CASQUETE PARA SOLDAR",
+      "calidad": "316L",
+      "grado_norm": "316L",
+      "esperado": "acc_soldar_san"
+    },
+    {
+      "material_id": "322274",
+      "descripcion": "TUERCA PH  044,4  304  PHAUFFER",
+      "negocio": "ACCESORIOS P/ TANQUES",
+      "familia": "ACCESORIOS P/ TANQUES VT",
+      "tipo": "TUERCA FAFFEUR",
+      "calidad": "304",
+      "grado_norm": "304",
+      "esperado": "acc_tanque"
+    },
+    {
+      "material_id": "324375",
+      "descripcion": "AT RED.  ANILLO CLAMP PARA P32465",
+      "negocio": "TAPAS Y PUERTAS",
+      "familia": "TAPAS Y PUERTAS ACCESORIOS",
+      "tipo": "ACCESORIO PARA PUERTA",
+      "calidad": "",
+      "grado_norm": "",
+      "esperado": "acc_tapa"
+    },
+    {
+      "material_id": "309223",
+      "descripcion": "CLAPETA V2 MC 063,5 304L",
+      "negocio": "VALVULAS SANITARIAS",
+      "familia": "ACC. P/ VALVULAS SANITARIAS",
+      "tipo": "REPUESTOS DE VÁLVULA MARIPOSA",
+      "calidad": "304L",
+      "grado_norm": "304L",
+      "esperado": "acc_valvula_san"
+    },
+    {
+      "material_id": "313267",
+      "descripcion": "LA PERFIL P/BLIND   1,25  25x11 Int. 304",
+      "negocio": "LINEA ARQUITECTURA",
+      "familia": "ACCESORIOS PARA VIDRIO",
+      "tipo": "",
+      "calidad": "304",
+      "grado_norm": "304",
+      "esperado": "acc_vidrio"
+    },
+    {
+      "material_id": "300002",
+      "descripcion": "CUERPO/HEMBRA - LCH -  1 1/2\"  316",
+      "negocio": "OTROS L.IND.",
+      "familia": "ACOPLE RAPIDO",
+      "tipo": "CUERPO / HEMBRA - LCH",
+      "calidad": "316",
+      "grado_norm": "316",
+      "esperado": "acople_rapido"
+    },
+    {
+      "material_id": "330690",
+      "descripcion": "SET ACT HORIZ V2 MC 127 304 D.E",
+      "negocio": "VALVULAS SANITARIAS",
+      "familia": "ACTUADORES",
+      "tipo": "SET ACTUADOR VÁLVULA MARIPOSA",
+      "calidad": "304",
+      "grado_norm": "304",
+      "esperado": "actuador"
+    },
+    {
+      "material_id": "343805",
+      "descripcion": "ADHESIVO PARA ARQ  10ml LOCTITE 680.",
+      "negocio": "AUXILIARES",
+      "familia": "AUXILIARES VARIOS",
+      "tipo": "ADHESIVO",
+      "calidad": "",
+      "grado_norm": "",
+      "esperado": "adhesivo_montaje"
+    },
+    {
+      "material_id": "324322",
+      "descripcion": "ALAMBRE MIG 0,90 308L BOHLER",
+      "negocio": "SOLDADURA",
+      "familia": "SOLDADURA",
+      "tipo": "ALAMBRE MIG",
+      "calidad": "308L",
+      "grado_norm": "308L",
+      "esperado": "alambre_mig"
+    },
+    {
+      "material_id": "300534",
+      "descripcion": "ANGULO  2,00X015,80 304L",
+      "negocio": "ANGULOS",
+      "familia": "ANGULOS PLEGADOS",
+      "tipo": "ANGULO 90°",
+      "calidad": "304",
+      "grado_norm": "304",
+      "esperado": "angulo"
+    },
+    {
+      "material_id": "300691",
+      "descripcion": "ANTIADHERENTE AEROSOL KONNEN x 420 ml",
+      "negocio": "AUXILIARES",
+      "familia": "AUXILIARES VARIOS",
+      "tipo": "Antiadherente",
+      "calidad": "",
+      "grado_norm": "420",
+      "esperado": "antiproyecciones"
+    },
+    {
+      "material_id": "300650",
+      "descripcion": "ARANDELA GROWER 1 1/4''  304",
+      "negocio": "BULONERIA",
+      "familia": "ARANDELA",
+      "tipo": "ARANDELA GROWER",
+      "calidad": "304",
+      "grado_norm": "304",
+      "esperado": "arandela"
+    },
+    {
+      "material_id": "331592",
+      "descripcion": "REJA LIVIANA 600x750 - 304 P/PASARELAS",
+      "negocio": "LINEA ARQUITECTURA",
+      "familia": "REJAS Y ESCALONES",
+      "tipo": "",
+      "calidad": "304",
+      "grado_norm": "304",
+      "esperado": "arq_otro"
+    },
+    {
+      "material_id": "343952",
+      "descripcion": "BANDA HERMES RB480 XY ZIRCON 50X242 #50",
+      "negocio": "ABRASIVOS",
+      "familia": "ABRASIVOS",
+      "tipo": "BANDA",
+      "calidad": "",
+      "grado_norm": "",
+      "esperado": "banda"
+    },
+    {
+      "material_id": "304241",
+      "descripcion": "LA MEDIA CAÑA   60,30 x  3        304L",
+      "negocio": "LINEA ARQUITECTURA",
+      "familia": "BARANDAS Y PASAMANOS",
+      "tipo": "",
+      "calidad": "304L",
+      "grado_norm": "304L",
+      "esperado": "baranda"
+    },
+    {
+      "material_id": "300742",
+      "descripcion": "BARRA CD   011,10 304",
+      "negocio": "BARRAS",
+      "familia": "BARRAS CUADRADAS",
+      "tipo": "Barra",
+      "calidad": "304",
+      "grado_norm": "304",
+      "esperado": "barra"
+    },
+    {
+      "material_id": "310668",
+      "descripcion": "MV BOMBAS CENTRIFUGAS",
+      "negocio": "BOMBAS",
+      "familia": "BOMBAS CENTRIFUGAS",
+      "tipo": "Curva",
+      "calidad": "304",
+      "grado_norm": "304",
+      "esperado": "bomba"
+    },
+    {
+      "material_id": "302347",
+      "descripcion": "BR CIEGA 1 1/2'' 304L S-150 A-182",
+      "negocio": "BRIDAS INDUSTRIALES",
+      "familia": "BRIDAS CIEGAS",
+      "tipo": "Brida",
+      "calidad": "304L",
+      "grado_norm": "304L",
+      "esperado": "brida"
+    },
+    {
+      "material_id": "343854",
+      "descripcion": "BROCA 1,3MM DORMER A002 DIN338",
+      "negocio": "BROCAS",
+      "familia": "BROCAS",
+      "tipo": "BROCA ACERO RAPIDO",
+      "calidad": "",
+      "grado_norm": "",
+      "esperado": "broca"
+    },
+    {
+      "material_id": "300336",
+      "descripcion": "ALLEN CC  1/2'' x 38,10-1 1/2'' 304",
+      "negocio": "BULONERIA",
+      "familia": "ALLEN",
+      "tipo": "Allen",
+      "calidad": "304",
+      "grado_norm": "304",
+      "esperado": "bulon"
+    },
+    {
+      "material_id": "321147",
+      "descripcion": "DESTORCEDOR HORQ/HORQ 05 x 60 x 10  316",
+      "negocio": "BULONERIA",
+      "familia": "CABLES",
+      "tipo": "DESTORCEDOR",
+      "calidad": "316",
+      "grado_norm": "316",
+      "esperado": "cable"
+    },
+    {
+      "material_id": "303798",
+      "descripcion": "CA CD 100,0x100,0 2,00 304",
+      "negocio": "CAÑOS",
+      "familia": "CAÑOS ESTRUCTURALES",
+      "tipo": "CAÑO CON COSTURA",
+      "calidad": "304",
+      "grado_norm": "304",
+      "esperado": "cano"
+    },
+    {
+      "material_id": "342537",
+      "descripcion": "CEPILLO MANUAL ALAMBRE INOX 0.30",
+      "negocio": "ABRASIVOS",
+      "familia": "ABRASIVOS",
+      "tipo": "CEPILLO",
+      "calidad": "",
+      "grado_norm": "",
+      "esperado": "cepillo"
+    },
+    {
+      "material_id": "301292",
+      "descripcion": "BO 0,40x1250 304L 2B",
+      "negocio": "CHAPAS Y BOBINAS",
+      "familia": "CH Y BO MATE",
+      "tipo": "Bobina",
+      "calidad": "304L",
+      "grado_norm": "304L",
+      "esperado": "chapa"
+    },
+    {
+      "material_id": "344615",
+      "descripcion": "KIT 1 DEC & PAS",
+      "negocio": "COMBOS CONSUMIBLES",
+      "familia": "COMBOS CONSUMIBLES",
+      "tipo": "KIT 1",
+      "calidad": "",
+      "grado_norm": "",
+      "esperado": "combo"
+    },
+    {
+      "material_id": "333705",
+      "descripcion": "DECAPANTE EN PASTA KONNEN x 1,25kg",
+      "negocio": "AUXILIARES",
+      "familia": "DECAPANTES Y PASIVANTES",
+      "tipo": "Decapante",
+      "calidad": "",
+      "grado_norm": "",
+      "esperado": "decapante"
+    },
+    {
+      "material_id": "300698",
+      "descripcion": "DETECTOR MOLIBDENO KONNEN x 50ml",
+      "negocio": "AUXILIARES",
+      "familia": "AUXILIARES VARIOS",
+      "tipo": "Detector Molibdeno",
+      "calidad": "",
+      "grado_norm": "",
+      "esperado": "detector"
+    },
+    {
+      "material_id": "342046",
+      "descripcion": "DISCO CORTE SG-STEELOX 115x1,0   A60",
+      "negocio": "ABRASIVOS",
+      "familia": "ABRASIVOS",
+      "tipo": "DISCO DE CORTE",
+      "calidad": "",
+      "grado_norm": "",
+      "esperado": "disco_corte"
+    },
+    {
+      "material_id": "312482",
+      "descripcion": "ELECTRODO 1,50 E308L  BOHLER",
+      "negocio": "SOLDADURA",
+      "familia": "SOLDADURA",
+      "tipo": "Electrodo",
+      "calidad": "E308",
+      "grado_norm": "308L",
+      "esperado": "electrodo_revestido"
+    },
+    {
+      "material_id": "336054",
+      "descripcion": "FILTRO  1/2''   BSP  Y-S600    316",
+      "negocio": "OTROS L.IND.",
+      "familia": "FILTROS IND.",
+      "tipo": "FILTRO INDUSTRIAL",
+      "calidad": "316",
+      "grado_norm": "316",
+      "esperado": "filtro_ind"
+    },
+    {
+      "material_id": "312777",
+      "descripcion": "MVSE FILTRO RECTO CORTO (UN)",
+      "negocio": "OTROS L.SAN.",
+      "familia": "FILTROS SAN.",
+      "tipo": "Filtro",
+      "calidad": "304",
+      "grado_norm": "304",
+      "esperado": "filtro_san"
+    },
+    {
+      "material_id": "342056",
+      "descripcion": "RUEDA FLAP C/PERNO 25x10 A120",
+      "negocio": "ABRASIVOS",
+      "familia": "ABRASIVOS",
+      "tipo": "RUEDA FLAP CON PERNO",
+      "calidad": "",
+      "grado_norm": "",
+      "esperado": "flap"
+    },
+    {
+      "material_id": "342538",
+      "descripcion": "FRESA METAL CILINDRICA 12x25",
+      "negocio": "ABRASIVOS",
+      "familia": "ABRASIVOS",
+      "tipo": "FRESA METAL",
+      "calidad": "",
+      "grado_norm": "",
+      "esperado": "fresa"
+    },
+    {
+      "material_id": "345834",
+      "descripcion": "[HI-BT122] GRIFERIA BIDET CABERNET",
+      "negocio": "LINEA ARQUITECTURA",
+      "familia": "GRIFERIA",
+      "tipo": "",
+      "calidad": "304",
+      "grado_norm": "304",
+      "esperado": "griferia"
+    },
+    {
+      "material_id": "312879",
+      "descripcion": "REF. 58 BISAGRA ASIENTO SANITARIO",
+      "negocio": "LINEA ARQUITECTURA",
+      "familia": "HERRAJES",
+      "tipo": "Herrajes",
+      "calidad": "304",
+      "grado_norm": "304",
+      "esperado": "herraje_arq"
+    },
+    {
+      "material_id": "339985",
+      "descripcion": "RECTO MACHO 1/4\"OD X 1/2\"NPT 316",
+      "negocio": "INSTRUMENTACION",
+      "familia": "ACC. ALTA PRESION",
+      "tipo": "CONECTOR RECTO",
+      "calidad": "316",
+      "grado_norm": "316",
+      "esperado": "instrumentacion"
+    },
+    {
+      "material_id": "300186",
+      "descripcion": "AT JUNTA SALENTEIN 1000 (3150) SILICONA",
+      "negocio": "TAPAS Y PUERTAS",
+      "familia": "TAPAS Y PUERTAS JUNTAS",
+      "tipo": "JUNTA PARA PUERTA",
+      "calidad": "",
+      "grado_norm": "",
+      "esperado": "junta"
+    },
+    {
+      "material_id": "342095",
+      "descripcion": "DISCO LIJA    115     CERAMICO 36 COOL",
+      "negocio": "ABRASIVOS",
+      "familia": "ABRASIVOS",
+      "tipo": "DISCO DE LIJA",
+      "calidad": "",
+      "grado_norm": "",
+      "esperado": "lija"
+    },
+    {
+      "material_id": "300700",
+      "descripcion": "AUX LIMP.AEROSOL P/INOX 600 gr 3M",
+      "negocio": "AUXILIARES",
+      "familia": "LIMPIADORES",
+      "tipo": "Limpiador",
+      "calidad": "",
+      "grado_norm": "",
+      "esperado": "limpieza"
+    },
+    {
+      "material_id": "344213",
+      "descripcion": "AUX LUBRICANTE ACEITE    400ML WS INFI",
+      "negocio": "AUXILIARES",
+      "familia": "AUXILIARES VARIOS",
+      "tipo": "LUBRICANTE ACEITE",
+      "calidad": "",
+      "grado_norm": "",
+      "esperado": "lubricante"
+    },
+    {
+      "material_id": "314375",
+      "descripcion": "MIRILLA TUB    1 1/2''  - 316L P/S",
+      "negocio": "OTROS L.SAN.",
+      "familia": "MIRILLAS",
+      "tipo": "Mirilla tubular",
+      "calidad": "316L",
+      "grado_norm": "316L",
+      "esperado": "mirilla"
+    },
+    {
+      "material_id": "344220",
+      "descripcion": "AUX TINTA PENETRANTE AEROSOL WS KIT NDT",
+      "negocio": "AUXILIARES",
+      "familia": "AUXILIARES VARIOS",
+      "tipo": "TINTA PENETRANTE",
+      "calidad": "",
+      "grado_norm": "",
+      "esperado": "ndt"
+    },
+    {
+      "material_id": "350562",
+      "descripcion": "Neutralizante en gel Konnen 1,25 KG",
+      "negocio": "AUXILIARES",
+      "familia": "DECAPANTES Y PASIVANTES",
+      "tipo": "NEUTRALIZANTE",
+      "calidad": "",
+      "grado_norm": "",
+      "esperado": "neutralizante"
+    },
+    {
+      "material_id": "314080",
+      "descripcion": "MN  2''     x 050    C/C-316L RW",
+      "negocio": "NIPLES",
+      "familia": "MEDIO NIPLE",
+      "tipo": "MEDIO NIPLE CON COSTURA",
+      "calidad": "316L",
+      "grado_norm": "316L",
+      "esperado": "niple"
+    },
+    {
+      "material_id": "300267",
+      "descripcion": "ALAMBRE BLANDO   1,50 304",
+      "negocio": "OTRAS M.P.",
+      "familia": "ALAMBRES",
+      "tipo": "ALAMBRE BLANDO",
+      "calidad": "304",
+      "grado_norm": "304",
+      "esperado": "otra_mp"
+    },
+    {
+      "material_id": "300105",
+      "descripcion": "ABOM   073                 304",
+      "negocio": "INOXSALE",
+      "familia": "INOXSALE",
+      "tipo": "Abrazadera",
+      "calidad": "304",
+      "grado_norm": "304",
+      "esperado": "otro"
+    },
+    {
+      "material_id": "333794",
+      "descripcion": "PASIVANTE EN GEL - KONNEN 2Kg",
+      "negocio": "AUXILIARES",
+      "familia": "DECAPANTES Y PASIVANTES",
+      "tipo": "Pasivante",
+      "calidad": "",
+      "grado_norm": "",
+      "esperado": "pasivante"
+    },
+    {
+      "material_id": "315221",
+      "descripcion": "PLANCH  12,70x025,40 316L",
+      "negocio": "INOXSALE",
+      "familia": "INOXSALE",
+      "tipo": "Planchuela",
+      "calidad": "316L",
+      "grado_norm": "316L",
+      "esperado": "planchuela"
+    },
+    {
+      "material_id": "342090",
+      "descripcion": "SET PARA PULIDO COMBICLICK  115xM14",
+      "negocio": "ABRASIVOS",
+      "familia": "ABRASIVOS",
+      "tipo": "SET PARA PULIDO",
+      "calidad": "",
+      "grado_norm": "",
+      "esperado": "pulido"
+    },
+    {
+      "material_id": "318600",
+      "descripcion": "REMACHE    3,20 x 10,00  POP   304",
+      "negocio": "BULONERIA",
+      "familia": "REMACHE",
+      "tipo": "REMACHE POP",
+      "calidad": "304",
+      "grado_norm": "304",
+      "esperado": "remache"
+    },
+    {
+      "material_id": "335137",
+      "descripcion": "PASTA CERÁMICA - KONNEN 500Gr",
+      "negocio": "AUXILIARES",
+      "familia": "AUXILIARES VARIOS",
+      "tipo": "LUBRICANTE EN PASTA",
+      "calidad": "",
+      "grado_norm": "",
+      "esperado": "respaldo"
+    },
+    {
+      "material_id": "330693",
+      "descripcion": "AUX REVESTIMIENTO SK 316 MATE 1L",
+      "negocio": "AUXILIARES",
+      "familia": "REVESTIMIENTOS",
+      "tipo": "Revestimiento",
+      "calidad": "",
+      "grado_norm": "316",
+      "esperado": "revestimiento"
+    },
+    {
+      "material_id": "343807",
+      "descripcion": "FIJADOR SELLADOR P/ROSCA 10ML LOCTITE243",
+      "negocio": "AUXILIARES",
+      "familia": "AUXILIARES VARIOS",
+      "tipo": "ADHESIVO",
+      "calidad": "",
+      "grado_norm": "",
+      "esperado": "sellador_rosca"
+    },
+    {
+      "material_id": "302313",
+      "descripcion": "BOCHA DE LIMP   22x050  TIPO-I- 316",
+      "negocio": "ACCESORIOS P/ TANQUES",
+      "familia": "SISTEMA DE LIMPIEZA",
+      "tipo": "BOCHA DE LIMPIEZA",
+      "calidad": "316",
+      "grado_norm": "316",
+      "esperado": "sistema_limpieza"
+    },
+    {
+      "material_id": "318664",
+      "descripcion": "SOPORTE 050,80  304 C/CUPLA P/CAÑO",
+      "negocio": "OTROS L.SAN.",
+      "familia": "SOPORTES",
+      "tipo": "SOPORTES PARA CAÑO CON CUPLA",
+      "calidad": "304",
+      "grado_norm": "304",
+      "esperado": "soporte_san"
+    },
+    {
+      "material_id": "315642",
+      "descripcion": "PUOV EMPOTRAR   P41-001 CAUCHO 316",
+      "negocio": "INOXSALE",
+      "familia": "INOXSALE",
+      "tipo": "Puerta",
+      "calidad": "316L",
+      "grado_norm": "316L",
+      "esperado": "tapa_puerta"
+    },
+    {
+      "material_id": "304293",
+      "descripcion": "TU RE 012,70  1,00 304L",
+      "negocio": "INOXSALE",
+      "familia": "INOXSALE",
+      "tipo": "TUBO CON COSTURA",
+      "calidad": "304L",
+      "grado_norm": "304L",
+      "esperado": "tubo"
+    },
+    {
+      "material_id": "322072",
+      "descripcion": "TUERCA    1 1/2''  304",
+      "negocio": "BULONERIA",
+      "familia": "TUERCA",
+      "tipo": "Tuerca",
+      "calidad": "304",
+      "grado_norm": "304",
+      "esperado": "tuerca"
+    },
+    {
+      "material_id": "336057",
+      "descripcion": "ELECTRODO TUNGSTENO 1,60MM BOHLER WT20",
+      "negocio": "SOLDADURA",
+      "familia": "SOLDADURA",
+      "tipo": "Electrodo",
+      "calidad": "",
+      "grado_norm": "",
+      "esperado": "tungsteno"
+    },
+    {
+      "material_id": "300000",
+      "descripcion": "ABCL  1 1/2\"        304",
+      "negocio": "UNIONES SANITARIAS",
+      "familia": "UNION SANITARIAS N. ACM",
+      "tipo": "ABRAZADERA CLAMP",
+      "calidad": "304",
+      "grado_norm": "304",
+      "esperado": "union_sanitaria"
+    },
+    {
+      "material_id": "309901",
+      "descripcion": "CREM P/V  1 1/2'' a 3''     FUND-EST 304",
+      "negocio": "INOXSALE",
+      "familia": "INOXSALE",
+      "tipo": "REPUESTOS DE VÁLVULA MARIPOSA",
+      "calidad": "304",
+      "grado_norm": "304",
+      "esperado": "valvula_ind"
+    },
+    {
+      "material_id": "302342",
+      "descripcion": "BOCHA P/V FLOTANTE 1 1/2''x2''   316",
+      "negocio": "VALVULAS SANITARIAS",
+      "familia": "VALVULAS P/ TANQUES",
+      "tipo": "REPUESTO VÁLVULA FLOTANTE",
+      "calidad": "316",
+      "grado_norm": "316",
+      "esperado": "valvula_san"
+    },
+    {
+      "material_id": "323129",
+      "descripcion": "VARILLA ROSCADA  30    304",
+      "negocio": "BULONERIA",
+      "familia": "VARILLA ROSCADA",
+      "tipo": "VARILLA ROSCADA",
+      "calidad": "304",
+      "grado_norm": "304",
+      "esperado": "varilla_roscada"
+    },
+    {
+      "material_id": "323186",
+      "descripcion": "VARILLA TIG 1,60 308L BOHLER",
+      "negocio": "SOLDADURA",
+      "familia": "SOLDADURA",
+      "tipo": "VARILLA TIG",
+      "calidad": "308L",
+      "grado_norm": "308L",
+      "esperado": "varilla_tig"
+    }
+  ]
+}
