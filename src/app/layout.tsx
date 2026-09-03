@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import { Encabezado } from "@/componentes/Encabezado";
+import { sesionActual } from "@/datos/perfil";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -6,10 +8,16 @@ export const metadata: Metadata = {
   description: "Herramienta interna para asesores comerciales.",
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
+  // En /login todavia no hay sesion: ahi el encabezado no se muestra.
+  const sesion = await sesionActual();
+
   return (
     <html lang="es-AR">
-      <body className="min-h-screen bg-slate-50 text-slate-900 antialiased">{children}</body>
+      <body className="min-h-screen bg-slate-50 text-slate-900 antialiased">
+        {sesion !== null && <Encabezado sesion={sesion} />}
+        {children}
+      </body>
     </html>
   );
 }
