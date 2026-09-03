@@ -1,0 +1,2481 @@
+{
+  "_meta": {
+    "descripcion": "Reglas de venta cruzada de acero inoxidable. Salida a nivel FAMILIA (no SKU). Solo categorías presentes en el catálogo.",
+    "prioridades": {
+      "oblig": "Obligado / va sí o sí",
+      "reco": "Recomendado",
+      "opc": "Opcional"
+    },
+    "fuente": "BAJADoc Dossier caracteristicas de materiales.xlsx"
+  },
+  "categorias": {
+    "cano": {
+      "etiqueta": "Caños / tubos",
+      "catalogo": {
+        "negocios": [
+          "CAÑOS",
+          "INOXSALE"
+        ],
+        "subfamilias": [
+          "CAÑOS ▸ CAÑOS REDONDOS",
+          "INOXSALE ▸ INOXSALE",
+          "CAÑOS ▸ CAÑOS ESTRUCTURALES",
+          "CAÑOS ▸ MV CAÑOS"
+        ],
+        "total_en_catalogo": 1213,
+        "grados": [
+          "304L",
+          "316L",
+          "304",
+          "316",
+          "439",
+          "310"
+        ]
+      }
+    },
+    "tubo": {
+      "etiqueta": "Tubos",
+      "catalogo": {
+        "negocios": [
+          "INOXSALE",
+          "TUBOS"
+        ],
+        "subfamilias": [
+          "INOXSALE ▸ INOXSALE",
+          "TUBOS ▸ TUBOS",
+          "TUBOS ▸ TUBOS PHARMA"
+        ],
+        "total_en_catalogo": 492,
+        "grados": [
+          "304L",
+          "316L",
+          "304",
+          "316",
+          "439",
+          "409L"
+        ]
+      }
+    },
+    "acc_soldar_ind": {
+      "etiqueta": "Accesorios para soldar (industriales)",
+      "catalogo": {
+        "negocios": [
+          "ACC. P/ SOLDAR INDUSTRIALES",
+          "INOXSALE"
+        ],
+        "subfamilias": [
+          "ACC. P/ SOLDAR INDUSTRIALES ▸ REDUCCIONES CONCENTRICAS",
+          "INOXSALE ▸ INOXSALE",
+          "ACC. P/ SOLDAR INDUSTRIALES ▸ CURVAS",
+          "ACC. P/ SOLDAR INDUSTRIALES ▸ REDUCCIONES EXCENTRICAS",
+          "ACC. P/ SOLDAR INDUSTRIALES ▸ COLLARES",
+          "ACC. P/ SOLDAR INDUSTRIALES ▸ TEES",
+          "ACC. P/ SOLDAR INDUSTRIALES ▸ TEES DE REDUCCION",
+          "ACC. P/ SOLDAR INDUSTRIALES ▸ CASQUETES"
+        ],
+        "total_en_catalogo": 1142,
+        "grados": [
+          "316L",
+          "304L",
+          "304",
+          "316",
+          "ALB6"
+        ]
+      }
+    },
+    "acc_soldar_san": {
+      "etiqueta": "Accesorios sanitarios para soldar",
+      "catalogo": {
+        "negocios": [
+          "ACC. P/ SOLDAR SANITARIOS",
+          "ACCESORIOS PHARMA"
+        ],
+        "subfamilias": [
+          "ACC. P/ SOLDAR SANITARIOS ▸ REDUCCIONES CONCENTRICAS",
+          "ACC. P/ SOLDAR SANITARIOS ▸ TEES",
+          "ACC. P/ SOLDAR SANITARIOS ▸ CURVAS",
+          "ACC. P/ SOLDAR SANITARIOS ▸ TEES DE REDUCCION",
+          "ACC. P/ SOLDAR SANITARIOS ▸ REDUCCIONES EXCENTRICAS",
+          "ACC. P/ SOLDAR SANITARIOS ▸ COLLARES",
+          "ACC. P/ SOLDAR SANITARIOS ▸ CASQUETES",
+          "ACCESORIOS PHARMA ▸ CURVAS PHARMA"
+        ],
+        "total_en_catalogo": 803,
+        "grados": [
+          "316L",
+          "304L",
+          "304",
+          "316"
+        ]
+      }
+    },
+    "brida": {
+      "etiqueta": "Bridas",
+      "catalogo": {
+        "negocios": [
+          "BRIDAS INDUSTRIALES",
+          "BRIDAS SANITARIAS",
+          "INOXSALE"
+        ],
+        "subfamilias": [
+          "BRIDAS INDUSTRIALES ▸ BRIDAS SLIP ON",
+          "BRIDAS INDUSTRIALES ▸ BRIDAS WELD NECK",
+          "BRIDAS INDUSTRIALES ▸ BRIDAS CIEGAS",
+          "BRIDAS SANITARIAS ▸ BRIDAS SLIP ON",
+          "BRIDAS INDUSTRIALES ▸ BRIDAS LAP JOINT",
+          "BRIDAS INDUSTRIALES ▸ BRIDAS WITHWORTH GAS",
+          "BRIDAS INDUSTRIALES ▸ BRIDAS SOCKET WELD",
+          "INOXSALE ▸ INOXSALE"
+        ],
+        "total_en_catalogo": 240,
+        "grados": [
+          "316L",
+          "304L",
+          "304",
+          "321"
+        ]
+      }
+    },
+    "niple": {
+      "etiqueta": "Niples",
+      "catalogo": {
+        "negocios": [
+          "NIPLES"
+        ],
+        "subfamilias": [
+          "NIPLES ▸ NIPLE",
+          "NIPLES ▸ MEDIO NIPLE"
+        ],
+        "total_en_catalogo": 189,
+        "grados": [
+          "316L",
+          "304L",
+          "304",
+          "316"
+        ]
+      }
+    },
+    "acc_rosc_sw": {
+      "etiqueta": "Accesorios roscados / socket weld",
+      "catalogo": {
+        "negocios": [
+          "ACCESORIOS ROSC / SW"
+        ],
+        "subfamilias": [
+          "ACCESORIOS ROSC / SW ▸ SERIE 150",
+          "ACCESORIOS ROSC / SW ▸ SERIE 3000"
+        ],
+        "total_en_catalogo": 736,
+        "grados": [
+          "316",
+          "316L",
+          "304",
+          "304L"
+        ]
+      }
+    },
+    "valvula_ind": {
+      "etiqueta": "Válvulas industriales",
+      "catalogo": {
+        "negocios": [
+          "INOXSALE",
+          "VALVULAS INDUSTRIALES"
+        ],
+        "subfamilias": [
+          "INOXSALE ▸ INOXSALE",
+          "VALVULAS INDUSTRIALES ▸ VALV. ESFERICA IND",
+          "VALVULAS INDUSTRIALES ▸ VÁLVULAS WAFER",
+          "VALVULAS INDUSTRIALES ▸ VALV. GLOBO",
+          "VALVULAS INDUSTRIALES ▸ VALV. ESCLUSA",
+          "VALVULAS INDUSTRIALES ▸ VALV. RETENCION IND",
+          "VALVULAS INDUSTRIALES ▸ MV VALVULAS INDUSTRIALES"
+        ],
+        "total_en_catalogo": 499,
+        "grados": [
+          "316L",
+          "316",
+          "304",
+          "304L",
+          "ALUM"
+        ]
+      }
+    },
+    "valvula_san": {
+      "etiqueta": "Válvulas sanitarias",
+      "catalogo": {
+        "negocios": [
+          "VALVULAS SANITARIAS"
+        ],
+        "subfamilias": [
+          "VALVULAS SANITARIAS ▸ VALV. MARIPOSA",
+          "VALVULAS SANITARIAS ▸ VALV. A PISTON",
+          "VALVULAS SANITARIAS ▸ VALVULAS P/ TANQUES",
+          "VALVULAS SANITARIAS ▸ VALV. RETENCION",
+          "VALVULAS SANITARIAS ▸ VALV. ESFERICA SAN",
+          "VALVULAS SANITARIAS ▸ VALV. DIAFRAGMA"
+        ],
+        "total_en_catalogo": 490,
+        "grados": [
+          "316L",
+          "304L",
+          "316",
+          "304"
+        ]
+      }
+    },
+    "acc_valvula_san": {
+      "etiqueta": "Repuestos de válvula sanitaria",
+      "catalogo": {
+        "negocios": [
+          "VALVULAS SANITARIAS"
+        ],
+        "subfamilias": [
+          "VALVULAS SANITARIAS ▸ ACC. P/ VALVULAS SANITARIAS",
+          "VALVULAS SANITARIAS ▸ ACC. CERVECEROS"
+        ],
+        "total_en_catalogo": 134,
+        "grados": [
+          "304",
+          "316L",
+          "304L",
+          "302"
+        ]
+      }
+    },
+    "actuador": {
+      "etiqueta": "Actuadores",
+      "catalogo": {
+        "negocios": [
+          "VALVULAS SANITARIAS"
+        ],
+        "subfamilias": [
+          "VALVULAS SANITARIAS ▸ ACTUADORES"
+        ],
+        "total_en_catalogo": 54,
+        "grados": [
+          "304L",
+          "304",
+          "ALUM",
+          "420"
+        ]
+      }
+    },
+    "union_sanitaria": {
+      "etiqueta": "Uniones sanitarias",
+      "catalogo": {
+        "negocios": [
+          "UNIONES SANITARIAS"
+        ],
+        "subfamilias": [
+          "UNIONES SANITARIAS ▸ UNION SANITARIAS N. ACM",
+          "UNIONES SANITARIAS ▸ UNION SANITARIAS N. CLAMP",
+          "UNIONES SANITARIAS ▸ UNION BRIDADA"
+        ],
+        "total_en_catalogo": 497,
+        "grados": [
+          "304L",
+          "316L",
+          "304",
+          "316"
+        ]
+      }
+    },
+    "bomba": {
+      "etiqueta": "Bombas",
+      "catalogo": {
+        "negocios": [
+          "BOMBAS"
+        ],
+        "subfamilias": [
+          "BOMBAS ▸ BOMBAS CENTRIFUGAS",
+          "BOMBAS ▸ BOMBAS POSITIVAS",
+          "BOMBAS ▸ BOMBAS AUTOASPIRANTE",
+          "BOMBAS ▸ ACONDICIONAMIENTO BOMBAS"
+        ],
+        "total_en_catalogo": 547,
+        "grados": [
+          "316L",
+          "304"
+        ]
+      }
+    },
+    "acc_bomba": {
+      "etiqueta": "Repuestos de bomba",
+      "catalogo": {
+        "negocios": [
+          "BOMBAS"
+        ],
+        "subfamilias": [
+          "BOMBAS ▸ ACC. P/ BOMBAS"
+        ],
+        "total_en_catalogo": 369,
+        "grados": [
+          "316L",
+          "304",
+          "304L"
+        ]
+      }
+    },
+    "instrumentacion": {
+      "etiqueta": "Instrumentación",
+      "catalogo": {
+        "negocios": [
+          "INSTRUMENTACION"
+        ],
+        "subfamilias": [
+          "INSTRUMENTACION ▸ ACC. ALTA PRESION",
+          "INSTRUMENTACION ▸ CONECTORES",
+          "INSTRUMENTACION ▸ VALVULAS Y MANIFOLDS",
+          "INSTRUMENTACION ▸ ADAPTADORES",
+          "INSTRUMENTACION ▸ OTROS ACCESORIOS"
+        ],
+        "total_en_catalogo": 730,
+        "grados": [
+          "316"
+        ]
+      }
+    },
+    "acc_tanque": {
+      "etiqueta": "Accesorios de tanque",
+      "catalogo": {
+        "negocios": [
+          "ACCESORIOS P/ TANQUES"
+        ],
+        "subfamilias": [
+          "ACCESORIOS P/ TANQUES ▸ ACCESORIOS P/ TANQUES VT",
+          "ACCESORIOS P/ TANQUES ▸ ACCESORIOS P/ TANQUES OTROS"
+        ],
+        "total_en_catalogo": 135,
+        "grados": [
+          "304",
+          "304L",
+          "316L",
+          "316",
+          "PVC"
+        ]
+      }
+    },
+    "sistema_limpieza": {
+      "etiqueta": "Sistema de limpieza (spray ball)",
+      "catalogo": {
+        "negocios": [
+          "ACCESORIOS P/ TANQUES"
+        ],
+        "subfamilias": [
+          "ACCESORIOS P/ TANQUES ▸ SISTEMA DE LIMPIEZA"
+        ],
+        "total_en_catalogo": 20,
+        "grados": [
+          "316",
+          "304"
+        ]
+      }
+    },
+    "tapa_puerta": {
+      "etiqueta": "Tapas y puertas",
+      "catalogo": {
+        "negocios": [
+          "TAPAS Y PUERTAS",
+          "INOXSALE"
+        ],
+        "subfamilias": [
+          "TAPAS Y PUERTAS ▸ TAPAS Y PUERTAS REDONDA",
+          "TAPAS Y PUERTAS ▸ TAPAS Y PUERTAS OVAL",
+          "TAPAS Y PUERTAS ▸ TAPAS Y PUERTAS RECTANGULAR",
+          "INOXSALE ▸ INOXSALE",
+          "TAPAS Y PUERTAS ▸ MV PUERTAS"
+        ],
+        "total_en_catalogo": 806,
+        "grados": [
+          "316L",
+          "304L",
+          "316"
+        ]
+      }
+    },
+    "acc_tapa": {
+      "etiqueta": "Herrajes de tapa",
+      "catalogo": {
+        "negocios": [
+          "TAPAS Y PUERTAS"
+        ],
+        "subfamilias": [
+          "TAPAS Y PUERTAS ▸ TAPAS Y PUERTAS ACCESORIOS"
+        ],
+        "total_en_catalogo": 136,
+        "grados": [
+          "304",
+          "316L",
+          "304L"
+        ]
+      }
+    },
+    "mirilla": {
+      "etiqueta": "Mirillas",
+      "catalogo": {
+        "negocios": [
+          "OTROS L.SAN."
+        ],
+        "subfamilias": [
+          "OTROS L.SAN. ▸ MIRILLAS"
+        ],
+        "total_en_catalogo": 28,
+        "grados": [
+          "316L",
+          "304",
+          "304L"
+        ]
+      }
+    },
+    "soporte_san": {
+      "etiqueta": "Soportes sanitarios",
+      "catalogo": {
+        "negocios": [
+          "OTROS L.SAN."
+        ],
+        "subfamilias": [
+          "OTROS L.SAN. ▸ SOPORTES"
+        ],
+        "total_en_catalogo": 56,
+        "grados": [
+          "304"
+        ]
+      }
+    },
+    "filtro_san": {
+      "etiqueta": "Filtros sanitarios",
+      "catalogo": {
+        "negocios": [
+          "OTROS L.SAN."
+        ],
+        "subfamilias": [
+          "OTROS L.SAN. ▸ FILTROS SAN."
+        ],
+        "total_en_catalogo": 30,
+        "grados": [
+          "316L",
+          "304",
+          "316"
+        ]
+      }
+    },
+    "filtro_ind": {
+      "etiqueta": "Filtros industriales",
+      "catalogo": {
+        "negocios": [
+          "OTROS L.IND."
+        ],
+        "subfamilias": [
+          "OTROS L.IND. ▸ FILTROS IND."
+        ],
+        "total_en_catalogo": 6,
+        "grados": [
+          "316"
+        ]
+      }
+    },
+    "acople_rapido": {
+      "etiqueta": "Acoples rápidos",
+      "catalogo": {
+        "negocios": [
+          "OTROS L.IND."
+        ],
+        "subfamilias": [
+          "OTROS L.IND. ▸ ACOPLE RAPIDO"
+        ],
+        "total_en_catalogo": 72,
+        "grados": [
+          "316",
+          "304"
+        ]
+      }
+    },
+    "junta": {
+      "etiqueta": "Juntas / gaskets",
+      "catalogo": {
+        "negocios": [
+          "VALVULAS SANITARIAS",
+          "UNIONES SANITARIAS",
+          "TAPAS Y PUERTAS",
+          "VALVULAS INDUSTRIALES",
+          "BOMBAS",
+          "ACCESORIOS PHARMA",
+          "INOXSALE",
+          "ACCESORIOS P/ TANQUES",
+          "OTROS L.IND.",
+          "OTROS L.SAN."
+        ],
+        "subfamilias": [
+          "VALVULAS SANITARIAS ▸ ACC. P/ VALVULAS SANITARIAS",
+          "TAPAS Y PUERTAS ▸ TAPAS Y PUERTAS JUNTAS",
+          "UNIONES SANITARIAS ▸ UNION SANITARIAS N. ACM",
+          "VALVULAS INDUSTRIALES ▸ VALV. ESFERICA IND",
+          "BOMBAS ▸ ACC. P/ BOMBAS",
+          "ACCESORIOS PHARMA ▸ JUNTAS PHARMA",
+          "INOXSALE ▸ INOXSALE",
+          "ACCESORIOS P/ TANQUES ▸ ACCESORIOS P/ TANQUES VT"
+        ],
+        "total_en_catalogo": 589,
+        "grados": [
+          "EPDM",
+          "PTFE",
+          "316L",
+          "316",
+          "430"
+        ]
+      }
+    },
+    "chapa": {
+      "etiqueta": "Chapas / bobinas",
+      "catalogo": {
+        "negocios": [
+          "CHAPAS Y BOBINAS",
+          "INOXSALE"
+        ],
+        "subfamilias": [
+          "CHAPAS Y BOBINAS ▸ CH Y BO MATE",
+          "INOXSALE ▸ INOXSALE",
+          "CHAPAS Y BOBINAS ▸ CH Y BO BRILLANTE",
+          "CHAPAS Y BOBINAS ▸ CH Y BO ESMERILADA",
+          "CHAPAS Y BOBINAS ▸ CH Y BO LAM. CALIENTE",
+          "CHAPAS Y BOBINAS ▸ OTRAS M.P.",
+          "CHAPAS Y BOBINAS ▸ MV CHAPAS"
+        ],
+        "total_en_catalogo": 2082,
+        "grados": [
+          "430",
+          "304L",
+          "316L",
+          "304",
+          "310S",
+          "420"
+        ]
+      }
+    },
+    "barra": {
+      "etiqueta": "Barras",
+      "catalogo": {
+        "negocios": [
+          "BARRAS"
+        ],
+        "subfamilias": [
+          "BARRAS ▸ BARRAS REDONDAS",
+          "BARRAS ▸ BARRAS HEXAGONALES",
+          "BARRAS ▸ BARRAS CUADRADAS",
+          "BARRAS ▸ MV BARRAS"
+        ],
+        "total_en_catalogo": 269,
+        "grados": [
+          "316L",
+          "304L",
+          "304",
+          "420",
+          "630/",
+          "316"
+        ]
+      }
+    },
+    "planchuela": {
+      "etiqueta": "Planchuelas",
+      "catalogo": {
+        "negocios": [
+          "PLANCHUELAS",
+          "INOXSALE"
+        ],
+        "subfamilias": [
+          "PLANCHUELAS ▸ PL. CORTADA DE CHAPA",
+          "PLANCHUELAS ▸ PL. LAMINADA / TRAFILADA",
+          "INOXSALE ▸ INOXSALE"
+        ],
+        "total_en_catalogo": 287,
+        "grados": [
+          "304",
+          "304L",
+          "316L",
+          "316"
+        ]
+      }
+    },
+    "angulo": {
+      "etiqueta": "Ángulos",
+      "catalogo": {
+        "negocios": [
+          "ANGULOS",
+          "INOXSALE"
+        ],
+        "subfamilias": [
+          "INOXSALE ▸ INOXSALE",
+          "ANGULOS ▸ ANGULOS PLEGADOS",
+          "ANGULOS ▸ ANGULOS LAMINADOS"
+        ],
+        "total_en_catalogo": 62,
+        "grados": [
+          "304",
+          "304L",
+          "316L",
+          "316"
+        ]
+      }
+    },
+    "otra_mp": {
+      "etiqueta": "Otras materias primas",
+      "catalogo": {
+        "negocios": [
+          "OTRAS M.P.",
+          "MEZCLAS"
+        ],
+        "subfamilias": [
+          "OTRAS M.P. ▸ BANDEJA PASACABLE",
+          "OTRAS M.P. ▸ ALAMBRES",
+          "MEZCLAS ▸ AGITADORES",
+          "OTRAS M.P. ▸ MALLAS",
+          "OTRAS M.P. ▸ CHAPA ANTIDESLIZANTE",
+          "OTRAS M.P. ▸ CHAPA PERFORADA",
+          "OTRAS M.P. ▸ CHATARRA",
+          "OTRAS M.P. ▸ METAL DESPLEGADO"
+        ],
+        "total_en_catalogo": 256,
+        "grados": [
+          "304",
+          "316",
+          "316L",
+          "302",
+          "304L",
+          "430"
+        ]
+      }
+    },
+    "bulon": {
+      "etiqueta": "Tornillos / bulones",
+      "catalogo": {
+        "negocios": [
+          "BULONERIA",
+          "INOXSALE"
+        ],
+        "subfamilias": [
+          "BULONERIA ▸ TORNILLO",
+          "BULONERIA ▸ BULON",
+          "BULONERIA ▸ ALLEN",
+          "INOXSALE ▸ INOXSALE",
+          "BULONERIA ▸ ESPARRAGO",
+          "BULONERIA ▸ ESLABONES",
+          "BULONERIA ▸ CLAVOS"
+        ],
+        "total_en_catalogo": 2023,
+        "grados": [
+          "304",
+          "316",
+          "410",
+          "316L"
+        ]
+      }
+    },
+    "tuerca": {
+      "etiqueta": "Tuercas",
+      "catalogo": {
+        "negocios": [
+          "BULONERIA"
+        ],
+        "subfamilias": [
+          "BULONERIA ▸ TUERCA"
+        ],
+        "total_en_catalogo": 176,
+        "grados": [
+          "304",
+          "316"
+        ]
+      }
+    },
+    "arandela": {
+      "etiqueta": "Arandelas",
+      "catalogo": {
+        "negocios": [
+          "BULONERIA"
+        ],
+        "subfamilias": [
+          "BULONERIA ▸ ARANDELA"
+        ],
+        "total_en_catalogo": 95,
+        "grados": [
+          "304",
+          "316"
+        ]
+      }
+    },
+    "varilla_roscada": {
+      "etiqueta": "Varillas roscadas / espárragos",
+      "catalogo": {
+        "negocios": [
+          "BULONERIA"
+        ],
+        "subfamilias": [
+          "BULONERIA ▸ VARILLA ROSCADA"
+        ],
+        "total_en_catalogo": 52,
+        "grados": [
+          "304",
+          "316"
+        ]
+      }
+    },
+    "abrazadera": {
+      "etiqueta": "Abrazaderas",
+      "catalogo": {
+        "negocios": [
+          "BULONERIA"
+        ],
+        "subfamilias": [
+          "BULONERIA ▸ ABRAZADERA"
+        ],
+        "total_en_catalogo": 65,
+        "grados": [
+          "304"
+        ]
+      }
+    },
+    "remache": {
+      "etiqueta": "Remaches",
+      "catalogo": {
+        "negocios": [
+          "BULONERIA"
+        ],
+        "subfamilias": [
+          "BULONERIA ▸ REMACHE"
+        ],
+        "total_en_catalogo": 21,
+        "grados": [
+          "304"
+        ]
+      }
+    },
+    "cable": {
+      "etiqueta": "Cables",
+      "catalogo": {
+        "negocios": [
+          "BULONERIA"
+        ],
+        "subfamilias": [
+          "BULONERIA ▸ CABLES"
+        ],
+        "total_en_catalogo": 75,
+        "grados": [
+          "316",
+          "304"
+        ]
+      }
+    },
+    "baranda": {
+      "etiqueta": "Barandas / pasamanos",
+      "catalogo": {
+        "negocios": [
+          "LINEA ARQUITECTURA"
+        ],
+        "subfamilias": [
+          "LINEA ARQUITECTURA ▸ BARANDAS Y PASAMANOS"
+        ],
+        "total_en_catalogo": 137,
+        "grados": [
+          "304",
+          "304L",
+          "316L"
+        ]
+      }
+    },
+    "griferia": {
+      "etiqueta": "Grifería",
+      "catalogo": {
+        "negocios": [
+          "LINEA ARQUITECTURA"
+        ],
+        "subfamilias": [
+          "LINEA ARQUITECTURA ▸ GRIFERIA"
+        ],
+        "total_en_catalogo": 108,
+        "grados": [
+          "304"
+        ]
+      }
+    },
+    "acc_vidrio": {
+      "etiqueta": "Accesorios para vidrio",
+      "catalogo": {
+        "negocios": [
+          "LINEA ARQUITECTURA"
+        ],
+        "subfamilias": [
+          "LINEA ARQUITECTURA ▸ ACCESORIOS PARA VIDRIO"
+        ],
+        "total_en_catalogo": 51,
+        "grados": [
+          "304"
+        ]
+      }
+    },
+    "herraje_arq": {
+      "etiqueta": "Herrajes de arquitectura",
+      "catalogo": {
+        "negocios": [
+          "LINEA ARQUITECTURA"
+        ],
+        "subfamilias": [
+          "LINEA ARQUITECTURA ▸ HERRAJES"
+        ],
+        "total_en_catalogo": 96,
+        "grados": [
+          "304"
+        ]
+      }
+    },
+    "acc_bano": {
+      "etiqueta": "Accesorios de baño",
+      "catalogo": {
+        "negocios": [
+          "LINEA ARQUITECTURA"
+        ],
+        "subfamilias": [
+          "LINEA ARQUITECTURA ▸ ACCESORIOS DE BAÑO"
+        ],
+        "total_en_catalogo": 35,
+        "grados": [
+          "304"
+        ]
+      }
+    },
+    "arq_otro": {
+      "etiqueta": "Otros de arquitectura",
+      "catalogo": {
+        "negocios": [
+          "LINEA ARQUITECTURA"
+        ],
+        "subfamilias": [
+          "LINEA ARQUITECTURA ▸ OTROS L.ARQ",
+          "LINEA ARQUITECTURA ▸ REPUESTOS HI",
+          "LINEA ARQUITECTURA ▸ REJAS Y ESCALONES",
+          "LINEA ARQUITECTURA ▸ MANIJAS Y MANIJONES",
+          "LINEA ARQUITECTURA ▸ LA REJA",
+          "LINEA ARQUITECTURA ▸ LIFESTYLE",
+          "LINEA ARQUITECTURA ▸ REVESTIMIENTO ACERO INOXIDABLE",
+          "LINEA ARQUITECTURA ▸ MV LINEA ARQUITECTURA"
+        ],
+        "total_en_catalogo": 91,
+        "grados": [
+          "304",
+          "304L"
+        ]
+      }
+    },
+    "broca": {
+      "etiqueta": "Brocas",
+      "catalogo": {
+        "negocios": [
+          "BROCAS"
+        ],
+        "subfamilias": [
+          "BROCAS ▸ BROCAS"
+        ],
+        "total_en_catalogo": 97,
+        "grados": []
+      }
+    },
+    "varilla_tig": {
+      "etiqueta": "Varilla TIG",
+      "catalogo": {
+        "negocios": [
+          "SOLDADURA"
+        ],
+        "subfamilias": [
+          "SOLDADURA ▸ SOLDADURA"
+        ],
+        "total_en_catalogo": 29,
+        "grados": [
+          "308L",
+          "316L",
+          "309L",
+          "310",
+          "312"
+        ]
+      }
+    },
+    "alambre_mig": {
+      "etiqueta": "Alambre MIG",
+      "catalogo": {
+        "negocios": [
+          "SOLDADURA"
+        ],
+        "subfamilias": [
+          "SOLDADURA ▸ SOLDADURA"
+        ],
+        "total_en_catalogo": 21,
+        "grados": [
+          "308L",
+          "316L",
+          "309L",
+          "310",
+          "312"
+        ]
+      }
+    },
+    "electrodo_revestido": {
+      "etiqueta": "Electrodo revestido",
+      "catalogo": {
+        "negocios": [
+          "SOLDADURA"
+        ],
+        "subfamilias": [
+          "SOLDADURA ▸ SOLDADURA"
+        ],
+        "total_en_catalogo": 53,
+        "grados": [
+          "308L",
+          "316L",
+          "312",
+          "310",
+          "309L"
+        ]
+      }
+    },
+    "tungsteno": {
+      "etiqueta": "Electrodo de tungsteno",
+      "catalogo": {
+        "negocios": [
+          "SOLDADURA"
+        ],
+        "subfamilias": [
+          "SOLDADURA ▸ SOLDADURA"
+        ],
+        "total_en_catalogo": 16,
+        "grados": []
+      }
+    },
+    "combo": {
+      "etiqueta": "Combos de consumibles",
+      "catalogo": {
+        "negocios": [
+          "COMBOS CONSUMIBLES"
+        ],
+        "subfamilias": [
+          "COMBOS CONSUMIBLES ▸ COMBOS CONSUMIBLES"
+        ],
+        "total_en_catalogo": 30,
+        "grados": [
+          "308L"
+        ]
+      }
+    },
+    "disco_corte": {
+      "etiqueta": "Discos de corte",
+      "catalogo": {
+        "negocios": [
+          "ABRASIVOS"
+        ],
+        "subfamilias": [
+          "ABRASIVOS ▸ ABRASIVOS"
+        ],
+        "total_en_catalogo": 21,
+        "grados": []
+      }
+    },
+    "flap": {
+      "etiqueta": "Discos flap",
+      "catalogo": {
+        "negocios": [
+          "ABRASIVOS"
+        ],
+        "subfamilias": [
+          "ABRASIVOS ▸ ABRASIVOS"
+        ],
+        "total_en_catalogo": 53,
+        "grados": []
+      }
+    },
+    "lija": {
+      "etiqueta": "Lijas",
+      "catalogo": {
+        "negocios": [
+          "ABRASIVOS"
+        ],
+        "subfamilias": [
+          "ABRASIVOS ▸ ABRASIVOS"
+        ],
+        "total_en_catalogo": 16,
+        "grados": []
+      }
+    },
+    "acabado": {
+      "etiqueta": "Vellón / acabado",
+      "catalogo": {
+        "negocios": [
+          "ABRASIVOS"
+        ],
+        "subfamilias": [
+          "ABRASIVOS ▸ ABRASIVOS"
+        ],
+        "total_en_catalogo": 45,
+        "grados": []
+      }
+    },
+    "cepillo": {
+      "etiqueta": "Cepillos / cardas",
+      "catalogo": {
+        "negocios": [
+          "ABRASIVOS"
+        ],
+        "subfamilias": [
+          "ABRASIVOS ▸ ABRASIVOS"
+        ],
+        "total_en_catalogo": 12,
+        "grados": []
+      }
+    },
+    "pulido": {
+      "etiqueta": "Pasta de pulido",
+      "catalogo": {
+        "negocios": [
+          "ABRASIVOS"
+        ],
+        "subfamilias": [
+          "ABRASIVOS ▸ ABRASIVOS"
+        ],
+        "total_en_catalogo": 6,
+        "grados": []
+      }
+    },
+    "banda": {
+      "etiqueta": "Bandas",
+      "catalogo": {
+        "negocios": [
+          "ABRASIVOS"
+        ],
+        "subfamilias": [
+          "ABRASIVOS ▸ ABRASIVOS"
+        ],
+        "total_en_catalogo": 116,
+        "grados": []
+      }
+    },
+    "fresa": {
+      "etiqueta": "Fresas",
+      "catalogo": {
+        "negocios": [
+          "ABRASIVOS"
+        ],
+        "subfamilias": [
+          "ABRASIVOS ▸ ABRASIVOS"
+        ],
+        "total_en_catalogo": 6,
+        "grados": []
+      }
+    },
+    "decapante": {
+      "etiqueta": "Decapante",
+      "catalogo": {
+        "negocios": [
+          "AUXILIARES"
+        ],
+        "subfamilias": [
+          "AUXILIARES ▸ DECAPANTES Y PASIVANTES"
+        ],
+        "total_en_catalogo": 12,
+        "grados": []
+      }
+    },
+    "pasivante": {
+      "etiqueta": "Pasivante",
+      "catalogo": {
+        "negocios": [
+          "AUXILIARES"
+        ],
+        "subfamilias": [
+          "AUXILIARES ▸ DECAPANTES Y PASIVANTES"
+        ],
+        "total_en_catalogo": 7,
+        "grados": []
+      }
+    },
+    "neutralizante": {
+      "etiqueta": "Neutralizante",
+      "catalogo": {
+        "negocios": [
+          "AUXILIARES"
+        ],
+        "subfamilias": [
+          "AUXILIARES ▸ DECAPANTES Y PASIVANTES"
+        ],
+        "total_en_catalogo": 3,
+        "grados": []
+      }
+    },
+    "limpieza": {
+      "etiqueta": "Limpiadores",
+      "catalogo": {
+        "negocios": [
+          "AUXILIARES"
+        ],
+        "subfamilias": [
+          "AUXILIARES ▸ LIMPIADORES",
+          "AUXILIARES ▸ AUXILIARES VARIOS"
+        ],
+        "total_en_catalogo": 13,
+        "grados": []
+      }
+    },
+    "revestimiento": {
+      "etiqueta": "Revestimiento protector",
+      "catalogo": {
+        "negocios": [
+          "AUXILIARES"
+        ],
+        "subfamilias": [
+          "AUXILIARES ▸ REVESTIMIENTOS",
+          "AUXILIARES ▸ DECAPANTES Y PASIVANTES"
+        ],
+        "total_en_catalogo": 4,
+        "grados": [
+          "316"
+        ]
+      }
+    },
+    "respaldo": {
+      "etiqueta": "Respaldo de raíz (pasta cerámica)",
+      "catalogo": {
+        "negocios": [
+          "AUXILIARES"
+        ],
+        "subfamilias": [
+          "AUXILIARES ▸ AUXILIARES VARIOS"
+        ],
+        "total_en_catalogo": 1,
+        "grados": []
+      }
+    },
+    "antiproyecciones": {
+      "etiqueta": "Antiproyecciones",
+      "catalogo": {
+        "negocios": [
+          "AUXILIARES"
+        ],
+        "subfamilias": [
+          "AUXILIARES ▸ AUXILIARES VARIOS"
+        ],
+        "total_en_catalogo": 3,
+        "grados": [
+          "420"
+        ]
+      }
+    },
+    "detector": {
+      "etiqueta": "Detector ferrita/molibdeno",
+      "catalogo": {
+        "negocios": [
+          "AUXILIARES"
+        ],
+        "subfamilias": [
+          "AUXILIARES ▸ AUXILIARES VARIOS"
+        ],
+        "total_en_catalogo": 3,
+        "grados": []
+      }
+    },
+    "ndt": {
+      "etiqueta": "Tinta penetrante (END)",
+      "catalogo": {
+        "negocios": [
+          "AUXILIARES"
+        ],
+        "subfamilias": [
+          "AUXILIARES ▸ AUXILIARES VARIOS"
+        ],
+        "total_en_catalogo": 1,
+        "grados": []
+      }
+    },
+    "sellador_rosca": {
+      "etiqueta": "Sellador / fijador / antigripante de rosca",
+      "catalogo": {
+        "negocios": [
+          "AUXILIARES"
+        ],
+        "subfamilias": [
+          "AUXILIARES ▸ AUXILIARES VARIOS"
+        ],
+        "total_en_catalogo": 3,
+        "grados": []
+      }
+    },
+    "adhesivo_montaje": {
+      "etiqueta": "Adhesivos / selladores de montaje",
+      "catalogo": {
+        "negocios": [
+          "AUXILIARES"
+        ],
+        "subfamilias": [
+          "AUXILIARES ▸ AUXILIARES VARIOS"
+        ],
+        "total_en_catalogo": 8,
+        "grados": []
+      }
+    },
+    "lubricante": {
+      "etiqueta": "Lubricantes",
+      "catalogo": {
+        "negocios": [
+          "AUXILIARES"
+        ],
+        "subfamilias": [
+          "AUXILIARES ▸ AUXILIARES VARIOS"
+        ],
+        "total_en_catalogo": 3,
+        "grados": []
+      }
+    }
+  },
+  "aporte_por_grado": {
+    "304": {
+      "aporte": "308L",
+      "motivo": "308L sobre-aleado: compensa la dilución; aporte estándar de austeníticos 18/8."
+    },
+    "316": {
+      "aporte": "316L",
+      "motivo": "Aporte 316L para conservar el molibdeno y la resistencia al picado por cloruros."
+    },
+    "310": {
+      "aporte": "310",
+      "motivo": "Aporte 310 (25/20) para mantener el alto Cr/Ni y la resistencia en caliente."
+    }
+  },
+  "dominios": [
+    {
+      "id": "tuberia",
+      "nombre": "Tubería de proceso industrial"
+    },
+    {
+      "id": "sanitario",
+      "nombre": "Línea sanitaria / alimenticia"
+    },
+    {
+      "id": "materiaprima",
+      "nombre": "Materia prima"
+    },
+    {
+      "id": "tapas",
+      "nombre": "Tapas y puertas de tanque"
+    },
+    {
+      "id": "bulones",
+      "nombre": "Bulonería y fijación"
+    },
+    {
+      "id": "arquitectura",
+      "nombre": "Línea arquitectura"
+    },
+    {
+      "id": "soldadura",
+      "nombre": "Consumibles de soldadura"
+    },
+    {
+      "id": "abrasivos",
+      "nombre": "Abrasivos y acabado"
+    },
+    {
+      "id": "quimica",
+      "nombre": "Auxiliares y química"
+    }
+  ],
+  "tipos": {
+    "cano": {
+      "dominio": "tuberia",
+      "nombre": "Caño / tubo de proceso",
+      "pregunta_grado": true,
+      "complementos": [
+        {
+          "nombre": "Accesorios para soldar",
+          "prioridad": "oblig",
+          "motivo": "Codos, tees y reducciones del mismo grado para armar la línea.",
+          "familias": [
+            "acc_soldar_ind"
+          ],
+          "depende_del_grado": false
+        },
+        {
+          "nombre": "Consumible de aporte",
+          "prioridad": "oblig",
+          "motivo": "Para unir los tramos; el grado de aporte lo define el grado del caño.",
+          "familias": [
+            "varilla_tig",
+            "alambre_mig",
+            "electrodo_revestido"
+          ],
+          "depende_del_grado": true
+        },
+        {
+          "nombre": "Bridas",
+          "prioridad": "reco",
+          "motivo": "Conexiones desmontables a equipos y válvulas.",
+          "familias": [
+            "brida"
+          ],
+          "depende_del_grado": false
+        },
+        {
+          "nombre": "Química de terminación",
+          "prioridad": "oblig",
+          "motivo": "Decapar y pasivar cada soldadura para que la junta no oxide.",
+          "familias": [
+            "decapante",
+            "pasivante",
+            "neutralizante"
+          ],
+          "depende_del_grado": false
+        },
+        {
+          "nombre": "Abrasivos",
+          "prioridad": "reco",
+          "motivo": "Corte, biselado y acabado del cordón.",
+          "familias": [
+            "disco_corte",
+            "flap",
+            "lija"
+          ],
+          "depende_del_grado": false
+        }
+      ]
+    },
+    "acc_soldar_ind": {
+      "dominio": "tuberia",
+      "nombre": "Accesorio para soldar (codo/tee/reducción)",
+      "pregunta_grado": true,
+      "complementos": [
+        {
+          "nombre": "Caño / tubo",
+          "prioridad": "reco",
+          "motivo": "El tramo recto que conecta los accesorios.",
+          "familias": [
+            "cano",
+            "tubo"
+          ],
+          "depende_del_grado": false
+        },
+        {
+          "nombre": "Consumible de aporte",
+          "prioridad": "oblig",
+          "motivo": "Aporte del grado del accesorio.",
+          "familias": [
+            "varilla_tig",
+            "alambre_mig",
+            "electrodo_revestido"
+          ],
+          "depende_del_grado": true
+        },
+        {
+          "nombre": "Bridas",
+          "prioridad": "reco",
+          "motivo": "Conexión desmontable de la línea.",
+          "familias": [
+            "brida"
+          ],
+          "depende_del_grado": false
+        },
+        {
+          "nombre": "Química de terminación",
+          "prioridad": "oblig",
+          "motivo": "Decapar y pasivar cada soldadura.",
+          "familias": [
+            "decapante",
+            "pasivante",
+            "neutralizante"
+          ],
+          "depende_del_grado": false
+        },
+        {
+          "nombre": "Abrasivos",
+          "prioridad": "reco",
+          "motivo": "Preparación y acabado.",
+          "familias": [
+            "disco_corte",
+            "flap",
+            "lija"
+          ],
+          "depende_del_grado": false
+        }
+      ]
+    },
+    "brida": {
+      "dominio": "tuberia",
+      "nombre": "Brida",
+      "pregunta_grado": false,
+      "complementos": [
+        {
+          "nombre": "Juntas / gaskets",
+          "prioridad": "oblig",
+          "motivo": "Toda brida sella contra una junta; material según fluido y temperatura.",
+          "familias": [
+            "junta"
+          ],
+          "depende_del_grado": false
+        },
+        {
+          "nombre": "Espárragos, tuercas y arandelas",
+          "prioridad": "oblig",
+          "motivo": "El set de apriete de la brida.",
+          "familias": [
+            "varilla_roscada",
+            "tuerca",
+            "arandela"
+          ],
+          "depende_del_grado": false
+        },
+        {
+          "nombre": "Consumible de aporte",
+          "prioridad": "reco",
+          "motivo": "Si es welding-neck o slip-on hay que soldarla al caño.",
+          "familias": [
+            "varilla_tig",
+            "alambre_mig",
+            "electrodo_revestido"
+          ],
+          "depende_del_grado": true
+        },
+        {
+          "nombre": "Caño",
+          "prioridad": "reco",
+          "motivo": "El tramo que se une a la brida.",
+          "familias": [
+            "cano"
+          ],
+          "depende_del_grado": false
+        }
+      ]
+    },
+    "niple": {
+      "dominio": "tuberia",
+      "nombre": "Niple / medio niple",
+      "pregunta_grado": false,
+      "complementos": [
+        {
+          "nombre": "Accesorios roscados / SW",
+          "prioridad": "oblig",
+          "motivo": "El niple conecta los fittings roscados.",
+          "familias": [
+            "acc_rosc_sw"
+          ],
+          "depende_del_grado": false
+        },
+        {
+          "nombre": "Sellador / antigripante de rosca",
+          "prioridad": "oblig",
+          "motivo": "Sellar y proteger la unión roscada.",
+          "familias": [
+            "sellador_rosca",
+            "lubricante"
+          ],
+          "depende_del_grado": false
+        },
+        {
+          "nombre": "Válvulas",
+          "prioridad": "reco",
+          "motivo": "Cierre o regulación en la línea roscada.",
+          "familias": [
+            "valvula_ind"
+          ],
+          "depende_del_grado": false
+        }
+      ]
+    },
+    "acc_rosc_sw": {
+      "dominio": "tuberia",
+      "nombre": "Accesorio roscado / socket weld",
+      "pregunta_grado": false,
+      "complementos": [
+        {
+          "nombre": "Niples",
+          "prioridad": "reco",
+          "motivo": "Conectores entre fittings.",
+          "familias": [
+            "niple"
+          ],
+          "depende_del_grado": false
+        },
+        {
+          "nombre": "Sellador / antigripante de rosca",
+          "prioridad": "oblig",
+          "motivo": "Sellado de la unión roscada.",
+          "familias": [
+            "sellador_rosca",
+            "lubricante"
+          ],
+          "depende_del_grado": false
+        },
+        {
+          "nombre": "Válvulas",
+          "prioridad": "reco",
+          "motivo": "",
+          "familias": [
+            "valvula_ind"
+          ],
+          "depende_del_grado": false
+        },
+        {
+          "nombre": "Consumible (versiones SW)",
+          "prioridad": "reco",
+          "motivo": "Las versiones socket-weld se sueldan.",
+          "familias": [
+            "electrodo_revestido",
+            "varilla_tig"
+          ],
+          "depende_del_grado": false
+        }
+      ]
+    },
+    "valvula_ind": {
+      "dominio": "tuberia",
+      "nombre": "Válvula industrial",
+      "pregunta_grado": false,
+      "complementos": [
+        {
+          "nombre": "Bridas",
+          "prioridad": "reco",
+          "motivo": "Para montar la válvula bridada.",
+          "familias": [
+            "brida"
+          ],
+          "depende_del_grado": false
+        },
+        {
+          "nombre": "Juntas",
+          "prioridad": "oblig",
+          "motivo": "Sellado de las caras de montaje.",
+          "familias": [
+            "junta"
+          ],
+          "depende_del_grado": false
+        },
+        {
+          "nombre": "Espárragos y tuercas",
+          "prioridad": "oblig",
+          "motivo": "Set de apriete.",
+          "familias": [
+            "varilla_roscada",
+            "tuerca",
+            "arandela"
+          ],
+          "depende_del_grado": false
+        },
+        {
+          "nombre": "Accesorios roscados / niples",
+          "prioridad": "reco",
+          "motivo": "Si es válvula roscada.",
+          "familias": [
+            "acc_rosc_sw",
+            "niple"
+          ],
+          "depende_del_grado": false
+        }
+      ]
+    },
+    "union_sanitaria": {
+      "dominio": "sanitario",
+      "nombre": "Unión sanitaria (Clamp/SMS/DIN)",
+      "pregunta_grado": false,
+      "complementos": [
+        {
+          "nombre": "Juntas sanitarias",
+          "prioridad": "oblig",
+          "motivo": "La unión clamp no sella sin junta: EPDM/silicona/PTFE/Viton según fluido y temperatura.",
+          "familias": [
+            "junta"
+          ],
+          "depende_del_grado": false
+        },
+        {
+          "nombre": "Abrazaderas clamp",
+          "prioridad": "oblig",
+          "motivo": "El collar que cierra la unión.",
+          "familias": [
+            "abrazadera"
+          ],
+          "depende_del_grado": false
+        },
+        {
+          "nombre": "Accesorios sanitarios para soldar",
+          "prioridad": "reco",
+          "motivo": "Para empalmar la unión a la línea.",
+          "familias": [
+            "acc_soldar_san"
+          ],
+          "depende_del_grado": false
+        },
+        {
+          "nombre": "Tubo sanitario",
+          "prioridad": "reco",
+          "motivo": "",
+          "familias": [
+            "tubo"
+          ],
+          "depende_del_grado": false
+        }
+      ]
+    },
+    "acc_soldar_san": {
+      "dominio": "sanitario",
+      "nombre": "Accesorio sanitario para soldar (incl. pharma)",
+      "pregunta_grado": true,
+      "complementos": [
+        {
+          "nombre": "Consumible de aporte 316L",
+          "prioridad": "oblig",
+          "motivo": "Aporte bajo carbono (316L/308L) para no perder corrosión ni contaminar producto.",
+          "familias": [
+            "varilla_tig",
+            "alambre_mig"
+          ],
+          "depende_del_grado": true
+        },
+        {
+          "nombre": "Respaldo / back-purge",
+          "prioridad": "oblig",
+          "motivo": "Proteger la raíz interior (cara en contacto con producto).",
+          "familias": [
+            "respaldo"
+          ],
+          "depende_del_grado": false
+        },
+        {
+          "nombre": "Química: decapar/pasivar + revestimiento",
+          "prioridad": "oblig",
+          "motivo": "Terminación higiénica de la soldadura interior.",
+          "familias": [
+            "decapante",
+            "pasivante",
+            "revestimiento"
+          ],
+          "depende_del_grado": false
+        },
+        {
+          "nombre": "Uniones sanitarias",
+          "prioridad": "reco",
+          "motivo": "",
+          "familias": [
+            "union_sanitaria"
+          ],
+          "depende_del_grado": false
+        }
+      ]
+    },
+    "valvula_san": {
+      "dominio": "sanitario",
+      "nombre": "Válvula sanitaria (mariposa/pistón)",
+      "pregunta_grado": false,
+      "complementos": [
+        {
+          "nombre": "Juntas y kit de repuesto",
+          "prioridad": "oblig",
+          "motivo": "Sellos EPDM/silicona/Viton: repuesto de desgaste.",
+          "familias": [
+            "junta",
+            "acc_valvula_san"
+          ],
+          "depende_del_grado": false
+        },
+        {
+          "nombre": "Actuadores",
+          "prioridad": "reco",
+          "motivo": "Para automatizar (mariposa neumática).",
+          "familias": [
+            "actuador"
+          ],
+          "depende_del_grado": false
+        },
+        {
+          "nombre": "Uniones sanitarias",
+          "prioridad": "reco",
+          "motivo": "Para montar la válvula a la línea.",
+          "familias": [
+            "union_sanitaria"
+          ],
+          "depende_del_grado": false
+        },
+        {
+          "nombre": "Instrumentación",
+          "prioridad": "opc",
+          "motivo": "",
+          "familias": [
+            "instrumentacion"
+          ],
+          "depende_del_grado": false
+        }
+      ]
+    },
+    "bomba": {
+      "dominio": "sanitario",
+      "nombre": "Bomba sanitaria / centrífuga",
+      "pregunta_grado": false,
+      "complementos": [
+        {
+          "nombre": "Repuestos de bomba",
+          "prioridad": "oblig",
+          "motivo": "Sellos mecánicos, rodetes y repuestos de desgaste.",
+          "familias": [
+            "acc_bomba"
+          ],
+          "depende_del_grado": false
+        },
+        {
+          "nombre": "Uniones sanitarias",
+          "prioridad": "oblig",
+          "motivo": "Para conectar la bomba a la línea.",
+          "familias": [
+            "union_sanitaria"
+          ],
+          "depende_del_grado": false
+        },
+        {
+          "nombre": "Válvulas",
+          "prioridad": "reco",
+          "motivo": "",
+          "familias": [
+            "valvula_san"
+          ],
+          "depende_del_grado": false
+        },
+        {
+          "nombre": "Instrumentación",
+          "prioridad": "opc",
+          "motivo": "Manómetros, sensores.",
+          "familias": [
+            "instrumentacion"
+          ],
+          "depende_del_grado": false
+        }
+      ]
+    },
+    "instrumentacion": {
+      "dominio": "sanitario",
+      "nombre": "Instrumentación / alta presión",
+      "pregunta_grado": false,
+      "complementos": [
+        {
+          "nombre": "Conectores y adaptadores",
+          "prioridad": "oblig",
+          "motivo": "Para completar el armado del instrumento.",
+          "familias": [
+            "instrumentacion"
+          ],
+          "depende_del_grado": false
+        },
+        {
+          "nombre": "Válvulas y manifolds",
+          "prioridad": "reco",
+          "motivo": "",
+          "familias": [
+            "valvula_ind"
+          ],
+          "depende_del_grado": false
+        },
+        {
+          "nombre": "Juntas",
+          "prioridad": "reco",
+          "motivo": "",
+          "familias": [
+            "junta"
+          ],
+          "depende_del_grado": false
+        }
+      ]
+    },
+    "acc_tanque": {
+      "dominio": "sanitario",
+      "nombre": "Accesorio para tanque",
+      "pregunta_grado": false,
+      "complementos": [
+        {
+          "nombre": "Juntas",
+          "prioridad": "oblig",
+          "motivo": "Sellado de bocas y conexiones.",
+          "familias": [
+            "junta"
+          ],
+          "depende_del_grado": false
+        },
+        {
+          "nombre": "Tapas y puertas",
+          "prioridad": "reco",
+          "motivo": "",
+          "familias": [
+            "tapa_puerta"
+          ],
+          "depende_del_grado": false
+        },
+        {
+          "nombre": "Sistema de limpieza (spray ball)",
+          "prioridad": "reco",
+          "motivo": "CIP del tanque.",
+          "familias": [
+            "sistema_limpieza"
+          ],
+          "depende_del_grado": false
+        },
+        {
+          "nombre": "Mirillas y soportes",
+          "prioridad": "opc",
+          "motivo": "",
+          "familias": [
+            "mirilla",
+            "soporte_san"
+          ],
+          "depende_del_grado": false
+        }
+      ]
+    },
+    "chapa": {
+      "dominio": "materiaprima",
+      "nombre": "Chapa / bobina",
+      "pregunta_grado": true,
+      "complementos": [
+        {
+          "nombre": "Abrasivos: corte y acabado",
+          "prioridad": "oblig",
+          "motivo": "Para cortar, biselar y dar la terminación pedida.",
+          "familias": [
+            "disco_corte",
+            "flap",
+            "lija",
+            "acabado"
+          ],
+          "depende_del_grado": false
+        },
+        {
+          "nombre": "Química de terminación",
+          "prioridad": "oblig",
+          "motivo": "Decapar/pasivar zonas trabajadas; limpiador de inox.",
+          "familias": [
+            "decapante",
+            "pasivante",
+            "limpieza"
+          ],
+          "depende_del_grado": false
+        },
+        {
+          "nombre": "Consumible de aporte",
+          "prioridad": "reco",
+          "motivo": "Si se va a soldar la chapa.",
+          "familias": [
+            "varilla_tig",
+            "alambre_mig",
+            "electrodo_revestido"
+          ],
+          "depende_del_grado": true
+        },
+        {
+          "nombre": "Película / revestimiento protector",
+          "prioridad": "reco",
+          "motivo": "Proteger la cara durante manipuleo.",
+          "familias": [
+            "revestimiento"
+          ],
+          "depende_del_grado": false
+        },
+        {
+          "nombre": "Brocas",
+          "prioridad": "opc",
+          "motivo": "Si se perfora.",
+          "familias": [
+            "broca"
+          ],
+          "depende_del_grado": false
+        }
+      ]
+    },
+    "barra": {
+      "dominio": "materiaprima",
+      "nombre": "Barra redonda",
+      "pregunta_grado": true,
+      "complementos": [
+        {
+          "nombre": "Brocas",
+          "prioridad": "reco",
+          "motivo": "Mecanizado y perforado.",
+          "familias": [
+            "broca"
+          ],
+          "depende_del_grado": false
+        },
+        {
+          "nombre": "Abrasivos",
+          "prioridad": "reco",
+          "motivo": "Acabado y pulido.",
+          "familias": [
+            "flap",
+            "lija",
+            "pulido"
+          ],
+          "depende_del_grado": false
+        },
+        {
+          "nombre": "Consumible de aporte",
+          "prioridad": "opc",
+          "motivo": "Si se suelda.",
+          "familias": [
+            "varilla_tig",
+            "electrodo_revestido"
+          ],
+          "depende_del_grado": true
+        }
+      ]
+    },
+    "planchuela": {
+      "dominio": "materiaprima",
+      "nombre": "Planchuela",
+      "pregunta_grado": true,
+      "complementos": [
+        {
+          "nombre": "Abrasivos",
+          "prioridad": "reco",
+          "motivo": "Corte y acabado.",
+          "familias": [
+            "flap",
+            "lija",
+            "disco_corte"
+          ],
+          "depende_del_grado": false
+        },
+        {
+          "nombre": "Consumible de aporte",
+          "prioridad": "opc",
+          "motivo": "",
+          "familias": [
+            "varilla_tig",
+            "electrodo_revestido"
+          ],
+          "depende_del_grado": true
+        },
+        {
+          "nombre": "Brocas",
+          "prioridad": "opc",
+          "motivo": "",
+          "familias": [
+            "broca"
+          ],
+          "depende_del_grado": false
+        }
+      ]
+    },
+    "angulo": {
+      "dominio": "materiaprima",
+      "nombre": "Ángulo",
+      "pregunta_grado": true,
+      "complementos": [
+        {
+          "nombre": "Abrasivos",
+          "prioridad": "reco",
+          "motivo": "Corte y acabado.",
+          "familias": [
+            "flap",
+            "disco_corte"
+          ],
+          "depende_del_grado": false
+        },
+        {
+          "nombre": "Consumible de aporte",
+          "prioridad": "opc",
+          "motivo": "",
+          "familias": [
+            "varilla_tig",
+            "electrodo_revestido"
+          ],
+          "depende_del_grado": true
+        }
+      ]
+    },
+    "tapa_puerta": {
+      "dominio": "tapas",
+      "nombre": "Tapa / puerta de tanque",
+      "pregunta_grado": false,
+      "complementos": [
+        {
+          "nombre": "Juntas de tapa",
+          "prioridad": "oblig",
+          "motivo": "La tapa sella contra su junta: repuesto de desgaste habitual.",
+          "familias": [
+            "junta"
+          ],
+          "depende_del_grado": false
+        },
+        {
+          "nombre": "Herrajes (bisagras, manijas, cierres)",
+          "prioridad": "oblig",
+          "motivo": "Accesorios de la tapa.",
+          "familias": [
+            "acc_tapa"
+          ],
+          "depende_del_grado": false
+        },
+        {
+          "nombre": "Bulonería",
+          "prioridad": "reco",
+          "motivo": "Fijación de la tapa.",
+          "familias": [
+            "bulon",
+            "tuerca"
+          ],
+          "depende_del_grado": false
+        },
+        {
+          "nombre": "Accesorios de tanque",
+          "prioridad": "opc",
+          "motivo": "",
+          "familias": [
+            "acc_tanque"
+          ],
+          "depende_del_grado": false
+        }
+      ]
+    },
+    "bulon": {
+      "dominio": "bulones",
+      "nombre": "Tornillo / bulón",
+      "pregunta_grado": false,
+      "complementos": [
+        {
+          "nombre": "Tuercas",
+          "prioridad": "oblig",
+          "motivo": "Todo bulón necesita su tuerca del mismo paso.",
+          "familias": [
+            "tuerca"
+          ],
+          "depende_del_grado": false
+        },
+        {
+          "nombre": "Arandelas",
+          "prioridad": "reco",
+          "motivo": "Plana y de presión para distribuir la carga.",
+          "familias": [
+            "arandela"
+          ],
+          "depende_del_grado": false
+        },
+        {
+          "nombre": "Antigripante / pasta lubricante",
+          "prioridad": "oblig",
+          "motivo": "En inox el galling es crítico: la rosca se agarrota en seco. La pasta lo evita.",
+          "familias": [
+            "sellador_rosca",
+            "lubricante"
+          ],
+          "depende_del_grado": false
+        },
+        {
+          "nombre": "Fijador de rosca",
+          "prioridad": "reco",
+          "motivo": "Evita aflojamiento por vibración.",
+          "familias": [
+            "sellador_rosca"
+          ],
+          "depende_del_grado": false
+        }
+      ]
+    },
+    "varilla_roscada": {
+      "dominio": "bulones",
+      "nombre": "Varilla roscada / espárrago",
+      "pregunta_grado": false,
+      "complementos": [
+        {
+          "nombre": "Tuercas",
+          "prioridad": "oblig",
+          "motivo": "",
+          "familias": [
+            "tuerca"
+          ],
+          "depende_del_grado": false
+        },
+        {
+          "nombre": "Arandelas",
+          "prioridad": "reco",
+          "motivo": "",
+          "familias": [
+            "arandela"
+          ],
+          "depende_del_grado": false
+        },
+        {
+          "nombre": "Antigripante",
+          "prioridad": "oblig",
+          "motivo": "Evitar agarrotamiento de la rosca inox.",
+          "familias": [
+            "sellador_rosca",
+            "lubricante"
+          ],
+          "depende_del_grado": false
+        }
+      ]
+    },
+    "baranda": {
+      "dominio": "arquitectura",
+      "nombre": "Baranda / pasamanos",
+      "pregunta_grado": false,
+      "complementos": [
+        {
+          "nombre": "Herrajes y conectores",
+          "prioridad": "oblig",
+          "motivo": "Curvas, uniones, soportes de pared.",
+          "familias": [
+            "herraje_arq",
+            "arq_otro"
+          ],
+          "depende_del_grado": false
+        },
+        {
+          "nombre": "Accesorios para vidrio",
+          "prioridad": "reco",
+          "motivo": "Si lleva paños de vidrio.",
+          "familias": [
+            "acc_vidrio"
+          ],
+          "depende_del_grado": false
+        },
+        {
+          "nombre": "Adhesivo / sellador de montaje",
+          "prioridad": "oblig",
+          "motivo": "Loctite 680 para uniones tubo-conector + sellador.",
+          "familias": [
+            "adhesivo_montaje"
+          ],
+          "depende_del_grado": false
+        },
+        {
+          "nombre": "Abrasivos de acabado",
+          "prioridad": "reco",
+          "motivo": "Satinado o pulido del pasamanos.",
+          "familias": [
+            "flap",
+            "acabado",
+            "pulido"
+          ],
+          "depende_del_grado": false
+        },
+        {
+          "nombre": "Limpiador / pulidor",
+          "prioridad": "reco",
+          "motivo": "",
+          "familias": [
+            "limpieza"
+          ],
+          "depende_del_grado": false
+        }
+      ]
+    },
+    "griferia": {
+      "dominio": "arquitectura",
+      "nombre": "Grifería / herrajes de baño",
+      "pregunta_grado": false,
+      "complementos": [
+        {
+          "nombre": "Accesorios y repuestos",
+          "prioridad": "reco",
+          "motivo": "",
+          "familias": [
+            "acc_bano",
+            "herraje_arq"
+          ],
+          "depende_del_grado": false
+        },
+        {
+          "nombre": "Selladores / fijadores",
+          "prioridad": "reco",
+          "motivo": "",
+          "familias": [
+            "adhesivo_montaje",
+            "sellador_rosca"
+          ],
+          "depende_del_grado": false
+        },
+        {
+          "nombre": "Limpiador",
+          "prioridad": "opc",
+          "motivo": "",
+          "familias": [
+            "limpieza"
+          ],
+          "depende_del_grado": false
+        }
+      ]
+    },
+    "tungsteno": {
+      "dominio": "soldadura",
+      "nombre": "Electrodo de tungsteno",
+      "pregunta_grado": false,
+      "complementos": [
+        {
+          "nombre": "Varilla TIG de aporte",
+          "prioridad": "oblig",
+          "motivo": "Quien compra tungsteno suelda TIG: necesita la varilla.",
+          "familias": [
+            "varilla_tig"
+          ],
+          "depende_del_grado": false
+        },
+        {
+          "nombre": "Respaldo de raíz",
+          "prioridad": "reco",
+          "motivo": "Pasta cerámica para proteger la raíz.",
+          "familias": [
+            "respaldo"
+          ],
+          "depende_del_grado": false
+        },
+        {
+          "nombre": "Química de terminación",
+          "prioridad": "oblig",
+          "motivo": "Decapar y pasivar el cordón.",
+          "familias": [
+            "decapante",
+            "pasivante",
+            "neutralizante"
+          ],
+          "depende_del_grado": false
+        },
+        {
+          "nombre": "Acabado",
+          "prioridad": "reco",
+          "motivo": "",
+          "familias": [
+            "flap",
+            "acabado",
+            "lija"
+          ],
+          "depende_del_grado": false
+        }
+      ]
+    },
+    "varilla_tig": {
+      "dominio": "soldadura",
+      "nombre": "Varilla TIG",
+      "pregunta_grado": false,
+      "complementos": [
+        {
+          "nombre": "Electrodo de tungsteno",
+          "prioridad": "oblig",
+          "motivo": "La varilla no enciende sola; el tungsteno según espesor.",
+          "familias": [
+            "tungsteno"
+          ],
+          "depende_del_grado": false
+        },
+        {
+          "nombre": "Respaldo de raíz",
+          "prioridad": "reco",
+          "motivo": "",
+          "familias": [
+            "respaldo"
+          ],
+          "depende_del_grado": false
+        },
+        {
+          "nombre": "Química de terminación",
+          "prioridad": "oblig",
+          "motivo": "",
+          "familias": [
+            "decapante",
+            "pasivante",
+            "neutralizante"
+          ],
+          "depende_del_grado": false
+        },
+        {
+          "nombre": "Abrasivos",
+          "prioridad": "reco",
+          "motivo": "",
+          "familias": [
+            "flap",
+            "acabado"
+          ],
+          "depende_del_grado": false
+        }
+      ]
+    },
+    "alambre_mig": {
+      "dominio": "soldadura",
+      "nombre": "Alambre MIG",
+      "pregunta_grado": false,
+      "complementos": [
+        {
+          "nombre": "Antiproyecciones",
+          "prioridad": "oblig",
+          "motivo": "El MIG salpica; evita pegado de salpicaduras y reproceso.",
+          "familias": [
+            "antiproyecciones"
+          ],
+          "depende_del_grado": false
+        },
+        {
+          "nombre": "Química de terminación",
+          "prioridad": "oblig",
+          "motivo": "",
+          "familias": [
+            "decapante",
+            "pasivante",
+            "neutralizante"
+          ],
+          "depende_del_grado": false
+        },
+        {
+          "nombre": "Abrasivos",
+          "prioridad": "reco",
+          "motivo": "",
+          "familias": [
+            "disco_corte",
+            "flap",
+            "lija"
+          ],
+          "depende_del_grado": false
+        }
+      ]
+    },
+    "electrodo_revestido": {
+      "dominio": "soldadura",
+      "nombre": "Electrodo revestido (MMA)",
+      "pregunta_grado": false,
+      "complementos": [
+        {
+          "nombre": "Antiproyecciones",
+          "prioridad": "oblig",
+          "motivo": "",
+          "familias": [
+            "antiproyecciones"
+          ],
+          "depende_del_grado": false
+        },
+        {
+          "nombre": "Abrasivos",
+          "prioridad": "oblig",
+          "motivo": "Remoción de escoria y acabado.",
+          "familias": [
+            "disco_corte",
+            "flap",
+            "lija"
+          ],
+          "depende_del_grado": false
+        },
+        {
+          "nombre": "Química de terminación",
+          "prioridad": "oblig",
+          "motivo": "",
+          "familias": [
+            "decapante",
+            "pasivante",
+            "neutralizante"
+          ],
+          "depende_del_grado": false
+        }
+      ]
+    },
+    "disco_corte": {
+      "dominio": "abrasivos",
+      "nombre": "Disco de corte / abrasivo",
+      "pregunta_grado": false,
+      "complementos": [
+        {
+          "nombre": "Acabado progresivo",
+          "prioridad": "reco",
+          "motivo": "Bajar grano con flap, lija y vellón.",
+          "familias": [
+            "flap",
+            "lija",
+            "acabado"
+          ],
+          "depende_del_grado": false
+        },
+        {
+          "nombre": "Cepillo de inox",
+          "prioridad": "reco",
+          "motivo": "Carda de acero inox (nunca de carbono, contamina).",
+          "familias": [
+            "cepillo"
+          ],
+          "depende_del_grado": false
+        },
+        {
+          "nombre": "Decapado y pasivado",
+          "prioridad": "oblig",
+          "motivo": "Amolar inox altera la capa pasiva: decapar y pasivar.",
+          "familias": [
+            "decapante",
+            "pasivante"
+          ],
+          "depende_del_grado": false
+        }
+      ]
+    },
+    "decapante": {
+      "dominio": "quimica",
+      "nombre": "Decapante / pasivante",
+      "pregunta_grado": false,
+      "complementos": [
+        {
+          "nombre": "Secuencia: pasivar y neutralizar",
+          "prioridad": "oblig",
+          "motivo": "Decapar→pasivar→neutralizar es una sola secuencia.",
+          "familias": [
+            "pasivante",
+            "neutralizante"
+          ],
+          "depende_del_grado": false
+        },
+        {
+          "nombre": "Limpiadores y protección",
+          "prioridad": "reco",
+          "motivo": "",
+          "familias": [
+            "limpieza",
+            "revestimiento"
+          ],
+          "depende_del_grado": false
+        },
+        {
+          "nombre": "Verificación",
+          "prioridad": "opc",
+          "motivo": "Detector de ferrita/molibdeno.",
+          "familias": [
+            "detector",
+            "ndt"
+          ],
+          "depende_del_grado": false
+        }
+      ]
+    }
+  },
+  "notas_por_dominio": {
+    "tuberia": [
+      "Hacer coincidir el grado de caño, accesorio y aporte; mezclar grados causa corrosión y pérdida de propiedades.",
+      "Toda soldadura debe decaparse y pasivarse: la coloración de revenido es zona empobrecida en cromo."
+    ],
+    "sanitario": [
+      "En contacto con producto, aporte 316L bajo carbono y back-purge para no oxidar la raíz interior.",
+      "La junta es el punto de desgaste: confirmar material según fluido, temperatura y CIP."
+    ],
+    "materiaprima": [
+      "Abrasivos y cepillos de uso exclusivo en inox; si tocaron acero al carbono generan óxido.",
+      "Tras cortar o amolar, decapar y pasivar la zona trabajada."
+    ],
+    "bulones": [
+      "El galling es el problema nº1 del inox: ofrecer siempre antigripante con bulonería y espárragos.",
+      "Verificar que tuerca y arandela sean del mismo grado que el bulón."
+    ],
+    "arquitectura": [
+      "Las uniones de pasamanos van con adhesivo de montaje; ofrecer limpiador/pulidor para mantenimiento."
+    ],
+    "tapas": [
+      "La junta de la tapa es consumible: venta recurrente de repuesto."
+    ],
+    "soldadura": [
+      "No mezclar abrasivos usados en acero al carbono. Proteger la raíz en cañería."
+    ],
+    "abrasivos": [
+      "Respetar la secuencia de grano (corte→flap grueso→flap fino→vellón)."
+    ],
+    "quimica": [
+      "Seguridad: decapante y pasivante contienen ácidos (HF/HNO₃). Usar EPP y neutralizar residuos.",
+      "El pasivado no reemplaza al decapado: primero quitar el óxido, después pasivar."
+    ]
+  }
+}

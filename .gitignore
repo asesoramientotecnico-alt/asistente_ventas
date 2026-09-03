@@ -1,0 +1,11 @@
+node_modules/
+.next/
+.env
+.env.local
+.vercel/
+coverage/
+
+# El catálogo no va al repo: 16.973 filas de dato de negocio.
+# El archivo vive en Supabase Storage y se referencia desde import_batch.
+data/*.xlsx
+data/*.xls
