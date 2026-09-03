@@ -214,4 +214,43 @@ select pruebas.debe_fallar(
     where cat.codigo = 'cano' limit 1$$,
   'una sugerencia disparada por dos reglas a la vez');
 
+do $$
+begin
+  assert (select items from conteo_por_categoria('aaaaaaaa-0000-0000-0000-000000000001')
+          where categoria_codigo = 'cano') = 1,
+    'conteo_por_categoria tiene que contar el batch que se le pide';
+  assert (select count(*) from conteo_por_categoria('aaaaaaaa-0000-0000-0000-000000000002')) = 1,
+    'y funcionar sobre un batch que no esta activo';
+end;
+$$;
+
+-- ── Activacion y rollback de batch ──────────────────────────────────────────────────
+-- Va al final: deja el batch activo como estaba para no arrastrar efectos.
+select activar_batch('aaaaaaaa-0000-0000-0000-000000000002');
+do $$
+begin
+  assert batch_activo() = 'aaaaaaaa-0000-0000-0000-000000000002', 'no se activo el batch pedido';
+  assert (select estado from import_batch where id = 'aaaaaaaa-0000-0000-0000-000000000001') = 'descartado',
+    'el batch que estaba activo tiene que quedar descartado';
+  assert (select count(*) from import_batch where estado = 'activo') = 1,
+    'nunca puede haber dos batches activos';
+  assert (select items from v_conteo_categoria where codigo = 'tungsteno') = 0,
+    'los conteos tienen que seguir al batch activo';
+end;
+$$;
+
+-- Volver atras es la misma operacion sobre el batch anterior.
+select activar_batch('aaaaaaaa-0000-0000-0000-000000000001');
+do $$
+begin
+  assert batch_activo() = 'aaaaaaaa-0000-0000-0000-000000000001', 'el rollback no restauro el batch anterior';
+  assert (select items from v_conteo_categoria where codigo = 'tungsteno') = 1,
+    'despues del rollback los conteos vuelven a los del batch restaurado';
+end;
+$$;
+
+select pruebas.debe_fallar(
+  $$select activar_batch('00000000-0000-0000-0000-000000000000')$$,
+  'activar un batch que no existe');
+
 \o

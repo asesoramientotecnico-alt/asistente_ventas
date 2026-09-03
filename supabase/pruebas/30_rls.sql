@@ -50,6 +50,9 @@ select pruebas.debe_no_afectar(
 select pruebas.debe_no_afectar(
   $$delete from categoria where codigo = 'fresa'$$,
   'un asesor borrando una categoria');
+select pruebas.debe_fallar(
+  $$select activar_batch('aaaaaaaa-0000-0000-0000-000000000002')$$,
+  'un asesor activando un batch de catalogo');
 commit;
 
 -- ── Asesor: sus sesiones si, las de otro no ─────────────────────────────────────────
@@ -126,7 +129,16 @@ $$;
 insert into categoria (codigo, etiqueta) values ('prueba_ot', 'Categoria de prueba');
 update complemento set motivo = 'Motivo revisado por Oficina Tecnica.';
 update config set valor = 'https://www.famiq.com.ar' where clave = 'ecommerce_base_url';
-insert into import_batch (archivo, layout_hash, estado) values ('catalogo-2026-05.xlsx', 'hash1', 'pendiente');
+insert into import_batch (id, archivo, layout_hash, estado)
+values ('aaaaaaaa-0000-0000-0000-000000000003', 'catalogo-2026-05.xlsx', 'hash1', 'pendiente');
+select activar_batch('aaaaaaaa-0000-0000-0000-000000000003');
+do $$
+begin
+  assert batch_activo() = 'aaaaaaaa-0000-0000-0000-000000000003',
+    'oficina tecnica tiene que poder activar un batch';
+end;
+$$;
+select activar_batch('aaaaaaaa-0000-0000-0000-000000000001');
 insert into proceso (codigo, nombre, grado_tipico) values ('prueba_ot', 'Proceso de prueba', '316L');
 select pruebas.debe_no_afectar(
   $$update perfil set rol = 'admin' where user_id = '44444444-4444-4444-4444-444444444444'$$,

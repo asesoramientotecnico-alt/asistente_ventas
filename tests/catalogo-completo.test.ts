@@ -2,6 +2,7 @@ import { existsSync, readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
 import * as XLSX from "xlsx";
 import { CATEGORIA_OTRO, clasificar } from "../src/logica/clasificador.ts";
+import { analizar } from "../src/logica/importacion.ts";
 import {
   HEADERS_ESPERADOS,
   HOJA_DATOS,
@@ -80,5 +81,18 @@ describe.skipIf(!hayArchivo)("catalogo completo", () => {
   it("no produce ninguna categoria que no exista en el JSON de reglas", () => {
     const fuera = [...conteo.keys()].filter((c) => c !== CATEGORIA_OTRO && !(c in reglas.categorias));
     expect(fuera).toEqual([]);
+  });
+
+  it("el archivo real pasa el analisis de importacion completo", async () => {
+    const a = await analizar(headers, datos);
+
+    expect(a.diff.hayCambios).toBe(false);
+    expect(a.duplicados).toEqual([]);
+    expect(a.sinMaterialId).toBe(0);
+    expect(a.filasVacias).toBe(0);
+    expect(a.importable).toBe(true);
+    expect(a.filas).toBe(16973);
+    expect(a.filasOtro).toBe(397);
+    expect(Object.keys(a.conteo)).toHaveLength(Object.keys(reglas.categorias).length + 1);
   });
 });

@@ -1,8 +1,8 @@
 -- Shim de Supabase para probar las migraciones contra un Postgres local.
 --
--- NO se aplica al proyecto de Supabase: ahi el schema `auth`, los roles y `auth.uid()`
--- ya existen. Sirve solo para que `pnpm probar:migraciones` pueda correr el esquema
--- completo, con RLS incluido, sin depender de la nube.
+-- NO se aplica al proyecto de Supabase: ahi los schemas `auth` y `storage`, los roles y
+-- `auth.uid()` ya existen. Sirve solo para que `pnpm probar:migraciones` pueda correr el
+-- esquema completo, con RLS incluido, sin depender de la nube.
 
 create schema if not exists auth;
 
@@ -20,6 +20,25 @@ language sql stable as $$
   select nullif(current_setting('request.jwt.claim.sub', true), '')::uuid;
 $$;
 
+-- Lo minimo de Storage que tocan las migraciones.
+create schema if not exists storage;
+
+create table if not exists storage.buckets (
+  id     text primary key,
+  name   text not null,
+  public boolean not null default false
+);
+
+create table if not exists storage.objects (
+  id        uuid primary key default gen_random_uuid(),
+  bucket_id text not null references storage.buckets (id),
+  name      text not null,
+  owner     uuid,
+  created_at timestamptz not null default now()
+);
+
+alter table storage.objects enable row level security;
+
 do $$
 begin
   if not exists (select 1 from pg_roles where rolname = 'anon') then
@@ -34,7 +53,10 @@ begin
 end;
 $$;
 
-grant usage on schema public to anon, authenticated, service_role;
+-- En Supabase el rol `authenticated` puede llamar a auth.uid().
+grant usage on schema public, auth, storage to anon, authenticated, service_role;
+grant execute on function auth.uid() to anon, authenticated, service_role;
+grant all on all tables in schema storage to anon, authenticated, service_role;
 
 alter default privileges in schema public
   grant all on tables to anon, authenticated, service_role;
