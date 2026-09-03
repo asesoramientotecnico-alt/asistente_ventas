@@ -2,7 +2,7 @@
 --
 -- Cada bloque se hace pasar por un usuario distinto: `set local role authenticated` mas
 -- el claim `sub`, que es de donde sale auth.uid() en el shim. Depende de los datos que
--- deja 10_esquema.sql.
+-- deja 20_esquema.sql.
 --
 --   11111111… admin      22222222… asesor1      33333333… oficina_tecnica      44444444… asesor2
 --
@@ -48,7 +48,7 @@ select pruebas.debe_no_afectar(
   $$update config set valor = 'https://otro.com' where clave = 'ecommerce_base_url'$$,
   'un asesor cambiando la config del ecommerce');
 select pruebas.debe_no_afectar(
-  $$delete from categoria where codigo = 'cano'$$,
+  $$delete from categoria where codigo = 'fresa'$$,
   'un asesor borrando una categoria');
 commit;
 
@@ -123,11 +123,11 @@ begin
   assert (select count(*) from perfil) = 4, 'oficina tecnica lee los perfiles del equipo';
 end;
 $$;
-insert into categoria (codigo, etiqueta) values ('tapa_puerta', 'Tapas y puertas');
+insert into categoria (codigo, etiqueta) values ('prueba_ot', 'Categoria de prueba');
 update complemento set motivo = 'Motivo revisado por Oficina Tecnica.';
 update config set valor = 'https://www.famiq.com.ar' where clave = 'ecommerce_base_url';
 insert into import_batch (archivo, layout_hash, estado) values ('catalogo-2026-05.xlsx', 'hash1', 'pendiente');
-insert into proceso (codigo, nombre, grado_tipico) values ('farma', 'Farma', '316L');
+insert into proceso (codigo, nombre, grado_tipico) values ('prueba_ot', 'Proceso de prueba', '316L');
 select pruebas.debe_no_afectar(
   $$update perfil set rol = 'admin' where user_id = '44444444-4444-4444-4444-444444444444'$$,
   'oficina tecnica promoviendo a un asesor');

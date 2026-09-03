@@ -22,6 +22,12 @@ for m in supabase/migrations/*.sql; do
   run "$m"
 done
 
+echo "  sembrando seed.sql"
+run supabase/seed.sql
+# Segunda pasada: el seed tiene que ser idempotente. Si duplicara algo, los conteos
+# exactos de 10_seed.sql lo detectan.
+run supabase/seed.sql
+
 shopt -s nullglob
 for p in supabase/pruebas/[1-9]*.sql; do
   echo "  probando $(basename "$p")"

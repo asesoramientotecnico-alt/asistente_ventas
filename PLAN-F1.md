@@ -78,14 +78,17 @@ asistente_ventas/
 ├─ BLUEPRINT.md
 ├─ PLAN-F1.md
 ├─ data/
-│  └─ crosssell_rules.json          # fuente del seed de reglas
+│  ├─ crosssell_rules.json          # fuente del seed de reglas
+│  └─ procesos.json                 # los 8 procesos de la seccion 7, borrador
 ├─ referencia/
 │  └─ crosssell_bot.py              # referencia del port, no se ejecuta
 ├─ supabase/
-│  └─ migrations/                   # SQL versionado, ver sección 3
+│  ├─ migrations/                   # SQL versionado, ver sección 3
+│  ├─ seed.sql                      # GENERADO desde los JSON de data/
+│  └─ pruebas/                      # aserciones de esquema y RLS contra un Postgres local
 ├─ scripts/
-│  ├─ seed-reglas.ts                # lee data/crosssell_rules.json
-│  ├─ seed-procesos.ts              # tabla de la sección 7 del blueprint
+│  ├─ generar-seed.ts               # lee crosssell_rules.json y procesos.json
+│  ├─ probar-migraciones.sh         # aplica esquema + seed y corre las aserciones
 │  └─ verificar-conteos.ts          # 1.3: conteos del batch vs. JSON
 ├─ src/
 │  ├─ app/

@@ -1,0 +1,66 @@
+{
+  "_meta": {
+    "descripcion": "Los 8 procesos de la seccion 7 del BLUEPRINT.md, con sus familias asociadas.",
+    "estado": "BORRADOR. El grado tipico esta pendiente de firma de Oficina Tecnica: se siembra con revisado = false y el panel avisa mientras siga asi.",
+    "motivo_grado": "Deliberadamente vacio. La justificacion tecnica del grado la escribe Oficina Tecnica, no se genera.",
+    "prioridades": "Todas las familias entran como 'reco'. El blueprint lista las familias de cada proceso pero no su prioridad; asignarla es parte de la revision de Oficina Tecnica."
+  },
+  "procesos": [
+    {
+      "codigo": "cerveceria",
+      "nombre": "Cerveceria",
+      "grado_tipico": "304L / 316L en contacto",
+      "orden": 1,
+      "categorias": ["acc_valvula_san", "union_sanitaria", "valvula_san", "bomba", "acc_soldar_san"]
+    },
+    {
+      "codigo": "lacteos",
+      "nombre": "Lacteos y alimentos",
+      "grado_tipico": "304L / 316L",
+      "orden": 2,
+      "categorias": ["acc_soldar_san", "union_sanitaria", "bomba", "tapa_puerta", "valvula_san"]
+    },
+    {
+      "codigo": "farma",
+      "nombre": "Farma",
+      "grado_tipico": "316L",
+      "orden": 3,
+      "categorias": ["acc_soldar_san", "tubo", "junta", "union_sanitaria"]
+    },
+    {
+      "codigo": "vinos",
+      "nombre": "Vinos y tanques",
+      "grado_tipico": "304L / 316L",
+      "orden": 4,
+      "categorias": ["tapa_puerta", "acc_tanque", "sistema_limpieza", "junta", "valvula_san"]
+    },
+    {
+      "codigo": "quimica",
+      "nombre": "Quimica e industrial",
+      "grado_tipico": "304L / 316L / 310 con temperatura",
+      "orden": 5,
+      "categorias": ["cano", "acc_soldar_ind", "brida", "valvula_ind", "junta"]
+    },
+    {
+      "codigo": "oil_gas",
+      "nombre": "O&G y alta presion",
+      "grado_tipico": "316L",
+      "orden": 6,
+      "categorias": ["instrumentacion", "acc_rosc_sw", "valvula_ind", "niple"]
+    },
+    {
+      "codigo": "arquitectura",
+      "nombre": "Arquitectura",
+      "grado_tipico": "304 interior / 316 exterior y costa",
+      "orden": 7,
+      "categorias": ["baranda", "griferia", "herraje_arq", "acc_vidrio", "acc_bano"]
+    },
+    {
+      "codigo": "estructural",
+      "nombre": "Estructural y taller",
+      "grado_tipico": "304 / 430 segun exposicion",
+      "orden": 8,
+      "categorias": ["chapa", "barra", "planchuela", "angulo", "cano"]
+    }
+  ]
+}

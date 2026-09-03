@@ -1,5 +1,7 @@
 -- Aserciones sobre el esquema: constraints, derivados y vistas.
--- Corren como superusuario, que se saltea RLS. Las politicas se prueban en 20_rls.sql.
+--
+-- Corren despues del seed, sobre la taxonomia real (9 dominios, 70 categorias, 27 tipos),
+-- y como superusuario, que se saltea RLS. Las politicas se prueban en 20_rls.sql.
 --
 -- La salida se descarta: lo que importa es que ninguna asercion levante excepcion.
 \o /dev/null
@@ -36,7 +38,7 @@ $$;
 grant usage on schema pruebas to authenticated, anon;
 grant execute on all functions in schema pruebas to authenticated, anon;
 
--- ── Datos minimos ───────────────────────────────────────────────────────────────────
+-- ── Usuarios ────────────────────────────────────────────────────────────────────────
 insert into auth.users (id, email) values
   ('11111111-1111-1111-1111-111111111111', 'admin@famiq.com.ar'),
   ('22222222-2222-2222-2222-222222222222', 'asesor1@famiq.com.ar'),
@@ -66,33 +68,7 @@ select pruebas.debe_fallar(
   $$insert into auth.users (email) values ('externo@gmail.com')$$,
   'alta con mail fuera del dominio corporativo');
 
--- ── Taxonomia ───────────────────────────────────────────────────────────────────────
-insert into dominio (codigo, nombre, orden) values ('tuberia', 'Tuberia de proceso industrial', 1);
-
-insert into categoria (codigo, etiqueta) values
-  ('cano', 'Caños / tubos'),
-  ('brida', 'Bridas'),
-  ('varilla_tig', 'Varilla TIG'),
-  ('mirilla', 'Mirillas');
-insert into categoria (codigo, etiqueta, activo) values ('otro', 'Sin clasificar', false);
-
-insert into tipo_producto (codigo, dominio_id, nombre, pregunta_grado)
-select 'cano', id, 'Caño / tubo de proceso', true from dominio where codigo = 'tuberia';
-
-insert into complemento (tipo_producto_id, nombre, prioridad, motivo, depende_del_grado)
-select id, 'Consumible de aporte', 'oblig', 'Para unir los tramos.', true
-from tipo_producto where codigo = 'cano';
-
-insert into complemento_categoria (complemento_id, categoria_id)
-select c.id, cat.id from complemento c, categoria cat
-where c.nombre = 'Consumible de aporte' and cat.codigo = 'varilla_tig';
-
-insert into aporte_por_grado (grado, aporte, motivo) values
-  ('304', '308L', 'Sobre-aleado: compensa la dilucion.'),
-  ('316', '316L', 'Conserva el molibdeno.');
-insert into grado_equivalencia (grado, familia) values
-  ('316L', '316'), ('304L', '304');
-
+-- ── Integridad de la taxonomia ──────────────────────────────────────────────────────
 select pruebas.debe_fallar(
   $$insert into grado_equivalencia (grado, familia) values ('321', '347')$$,
   'equivalencia hacia una familia sin aporte definido');
@@ -104,8 +80,12 @@ select pruebas.debe_fallar(
 
 select pruebas.debe_fallar(
   $$insert into complemento (tipo_producto_id, nombre, prioridad)
-    select id, 'Otro', 'obligatorio' from tipo_producto where codigo = 'cano'$$,
+    select id, 'Inventado', 'obligatorio' from tipo_producto where codigo = 'cano'$$,
   'prioridad fuera de oblig | reco | opc');
+
+select pruebas.debe_fallar(
+  $$delete from categoria where codigo = 'varilla_tig'$$,
+  'borrar una categoria referenciada por una regla');
 
 -- ── Catalogo ────────────────────────────────────────────────────────────────────────
 insert into import_batch (id, archivo, layout_hash, estado, filas, filas_otro, activado_at) values
@@ -121,11 +101,12 @@ select pruebas.debe_fallar(
     values ('mal.xlsx', 'hash1', 10, 20)$$,
   'filas_otro mayor que filas');
 
-insert into catalogo_item (import_batch_id, material_id, descripcion, negocio, familia, categoria_codigo, grado_norm) values
-  ('aaaaaaaa-0000-0000-0000-000000000001', '303798', 'CA CD 100,0x100,0 2,00 304', 'CAÑOS', 'CAÑOS ESTRUCTURALES', 'cano', '304'),
-  ('aaaaaaaa-0000-0000-0000-000000000001', '300000', 'ABCL  1 1/2"        304', 'INOXSALE', 'INOXSALE', 'otro', '304'),
-  ('aaaaaaaa-0000-0000-0000-000000000001', '336057', 'VAR TIG 308L 2,40MM', 'SOLDADURA', 'SOLDADURA', 'varilla_tig', '308L'),
-  ('aaaaaaaa-0000-0000-0000-000000000002', '303798', 'CA CD 100,0x100,0 2,00 304', 'CAÑOS', 'CAÑOS ESTRUCTURALES', 'cano', '304');
+-- Filas reales del archivo.
+insert into catalogo_item (import_batch_id, material_id, descripcion, negocio, familia, tipo, calidad, categoria_codigo, grado_norm) values
+  ('aaaaaaaa-0000-0000-0000-000000000001', '303798', 'CA CD 100,0x100,0 2,00 304', 'CAÑOS', 'CAÑOS ESTRUCTURALES', 'CAÑO CON COSTURA', '304', 'cano', '304'),
+  ('aaaaaaaa-0000-0000-0000-000000000001', '300105', 'ABOM   073                 304', 'INOXSALE', 'INOXSALE', 'Abrazadera', '304', 'otro', '304'),
+  ('aaaaaaaa-0000-0000-0000-000000000001', '336057', 'ELECTRODO TUNGSTENO 1,60MM BOHLER WT20', 'SOLDADURA', 'SOLDADURA', 'Electrodo', '', 'tungsteno', null),
+  ('aaaaaaaa-0000-0000-0000-000000000002', '303798', 'CA CD 100,0x100,0 2,00 304', 'CAÑOS', 'CAÑOS ESTRUCTURALES', 'CAÑO CON COSTURA', '304', 'cano', '304');
 
 select pruebas.debe_fallar(
   $$insert into catalogo_item (import_batch_id, material_id, categoria_codigo)
@@ -149,25 +130,21 @@ do $$
 begin
   assert (select items from v_conteo_categoria where codigo = 'cano') = 1,
     'el conteo tiene que ser contra el batch activo, no contra todos los batches';
+  assert (select items from v_conteo_categoria where codigo = 'tungsteno') = 1,
+    'la fila de tungsteno tiene que contar en su categoria';
   assert (select items from v_conteo_categoria where codigo = 'brida') = 0,
     'una categoria sin items en el batch activo cuenta 0';
-  -- brida no la usa ninguna regla todavia: no es una familia vacia problematica.
-  assert not exists (select 1 from v_familias_vacias where codigo = 'brida'),
-    'una categoria sin reglas no deberia aparecer como familia vacia';
-end;
-$$;
 
--- Ahora si: mirilla queda referenciada por una regla y sin items en el batch activo.
-insert into complemento_categoria (complemento_id, categoria_id)
-select c.id, cat.id from complemento c, categoria cat
-where c.nombre = 'Consumible de aporte' and cat.codigo = 'mirilla';
-
-do $$
-begin
+  -- Invariante 1: una familia que alguna regla sugiere y que quedo sin items se reporta.
   assert exists (select 1 from v_familias_vacias where codigo = 'mirilla'),
-    'invariante 1: una familia referenciada por una regla y sin items tiene que reportarse';
-  assert not exists (select 1 from v_familias_vacias where codigo = 'varilla_tig'),
+    'mirilla la sugiere el complemento de acc_tanque y no tiene items: tendria que reportarse';
+  assert not exists (select 1 from v_familias_vacias where codigo = 'cano'),
     'una familia con items no es una familia vacia';
+  -- fresa no la referencia ningun complemento ni ningun proceso.
+  assert not exists (select 1 from v_familias_vacias where codigo = 'fresa'),
+    'una categoria que ninguna regla sugiere no es un problema de cobertura';
+  assert not exists (select 1 from v_familias_vacias where codigo = 'otro'),
+    'la categoria de descarte esta inactiva y no entra en el reporte';
 end;
 $$;
 
@@ -178,18 +155,20 @@ begin
     'faltan las claves de config del ecommerce';
   assert (select valor from config where clave = 'ecommerce_base_url') = '',
     'la config del ecommerce arranca vacia: sin base_url no se generan links';
+  assert (select count(*) from link_categoria) = (select count(*) from categoria where activo),
+    'el seed tiene que dejar una fila de link por categoria activa';
 end;
 $$;
 
 select pruebas.debe_fallar(
-  $$insert into link_categoria (categoria_id, url_fija)
-    select id, 'famiq.com.ar/canos' from categoria where codigo = 'cano'$$,
+  $$update link_categoria set url_fija = 'famiq.com.ar/canos'
+    where categoria_id = (select id from categoria where codigo = 'cano')$$,
   'url_fija sin esquema http');
 
-insert into link_categoria (categoria_id, url_fija)
-select id, 'https://www.famiq.com.ar/canos' from categoria where codigo = 'cano';
-insert into link_categoria (categoria_id, terminos_busqueda)
-select id, 'varilla tig inox' from categoria where codigo = 'varilla_tig';
+update link_categoria set url_fija = 'https://www.famiq.com.ar/canos'
+where categoria_id = (select id from categoria where codigo = 'cano');
+update link_categoria set terminos_busqueda = 'varilla tig inox'
+where categoria_id = (select id from categoria where codigo = 'varilla_tig');
 
 do $$
 begin
@@ -205,16 +184,6 @@ end;
 $$;
 
 -- ── Procesos ────────────────────────────────────────────────────────────────────────
-insert into proceso (codigo, nombre, grado_tipico, motivo_grado, orden) values
-  ('cerveceria', 'Cerveceria', '304L / 316L en contacto', 'Borrador de Oficina Tecnica.', 1);
-
-do $$
-begin
-  assert (select revisado from proceso where codigo = 'cerveceria') = false,
-    'el grado tipico arranca sin firmar';
-end;
-$$;
-
 select pruebas.debe_fallar(
   $$update proceso set revisado = true where codigo = 'cerveceria'$$,
   'marcar revisado sin dejar quien y cuando');
@@ -223,18 +192,16 @@ update proceso
 set revisado = true, revisado_por = '33333333-3333-3333-3333-333333333333', revisado_at = now()
 where codigo = 'cerveceria';
 
-insert into proceso_categoria (proceso_id, categoria_id, prioridad)
-select p.id, c.id, 'oblig' from proceso p, categoria c
-where p.codigo = 'cerveceria' and c.codigo = 'cano';
-
 -- ── Trazabilidad ────────────────────────────────────────────────────────────────────
 insert into sesion (id, usuario_id, puerta) values
   ('bbbbbbbb-0000-0000-0000-000000000001', '22222222-2222-2222-2222-222222222222', 'producto');
 
 insert into sesion_sugerencia (sesion_id, complemento_id, categoria_id, prioridad)
-select 'bbbbbbbb-0000-0000-0000-000000000001', c.id, cat.id, 'oblig'
-from complemento c, categoria cat
-where c.nombre = 'Consumible de aporte' and cat.codigo = 'varilla_tig';
+select 'bbbbbbbb-0000-0000-0000-000000000001', c.id, cat.id, c.prioridad
+from complemento c
+join tipo_producto tp on tp.id = c.tipo_producto_id
+join categoria cat on cat.codigo = 'varilla_tig'
+where tp.codigo = 'cano' and c.nombre = 'Consumible de aporte';
 
 -- La puerta por material sugiere formatos sin regla previa: las dos referencias en null es valido.
 insert into sesion_sugerencia (sesion_id, categoria_id, prioridad)
