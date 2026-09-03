@@ -12,7 +12,8 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "verificar": "pnpm typecheck && pnpm lint && pnpm test",
-    "verificar:conteos": "node --experimental-strip-types scripts/verificar-conteos.ts"
+    "verificar:conteos": "node --experimental-strip-types scripts/verificar-conteos.ts",
+    "probar:migraciones": "bash scripts/probar-migraciones.sh"
   },
   "dependencies": {
     "@supabase/ssr": "^0.12.5",
