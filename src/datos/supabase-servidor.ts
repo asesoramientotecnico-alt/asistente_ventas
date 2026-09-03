@@ -23,7 +23,7 @@ export async function clienteServidor() {
           }
         } catch {
           // Un Server Component no puede escribir cookies. El refresco de la sesion lo
-          // hace el middleware, asi que ignorar aca es correcto.
+          // hace el proxy, asi que ignorar aca es correcto.
         }
       },
     },

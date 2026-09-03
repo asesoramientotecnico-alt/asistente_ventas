@@ -9,8 +9,10 @@ import { esRutaPublica } from "@/logica/acceso";
  * Aca NO se chequea el rol: eso implicaria una consulta a la base en cada request. El rol
  * lo verifica el layout de la seccion protegida (src/app/admin/layout.tsx), y la ultima
  * palabra la tienen las politicas de RLS.
+ *
+ * El archivo se llama `proxy` y no `middleware`: Next 16 renombro la convencion.
  */
-export async function middleware(request: NextRequest) {
+export async function proxy(request: NextRequest) {
   let respuesta = NextResponse.next({ request });
 
   const supabase = createServerClient(urlSupabase(), clavePublicaSupabase(), {
@@ -58,7 +60,11 @@ export async function middleware(request: NextRequest) {
 
 export const config = {
   matcher: [
-    // Todo menos assets estaticos y el favicon.
-    "/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp|ico)$).*)",
+    // Todo menos lo interno de Next y los assets.
+    //
+    // El prefijo `_next/` va entero, no solo `_next/static` y `_next/image`: por
+    // `_next/hmr` pasa el websocket del servidor de desarrollo, y redirigirlo a /login
+    // rompe el handshake.
+    "/((?!_next/|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp|ico)$).*)",
   ],
 };

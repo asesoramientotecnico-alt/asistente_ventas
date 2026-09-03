@@ -51,6 +51,24 @@ por las políticas de RLS. No hay atajos.
 
 ---
 
+## Levantar todo local
+
+Con Docker corriendo:
+
+```bash
+npx supabase start          # aplica las migraciones y el seed
+cp .env.example .env.local  # completar con las claves que imprime `supabase start`
+pnpm build && pnpm start
+```
+
+Los correos de acceso no salen a internet: quedan en Mailpit, en
+http://127.0.0.1:54324. El primer admin se crea con el `update` de arriba.
+
+En modo `pnpm dev` el navegador puede no hidratar si el websocket de HMR no conecta; con
+`pnpm build && pnpm start` no pasa.
+
+---
+
 ## Probar el esquema sin Supabase
 
 ```bash

@@ -7,8 +7,21 @@ import { clienteServidor } from "@/datos/supabase-servidor";
  * Segun como este armada la plantilla del mail, Supabase vuelve con `code` (flujo PKCE)
  * o con `token_hash` + `type`. Se contemplan los dos para no depender de esa config.
  */
+
+/**
+ * Redirige con un Location relativo, que el navegador resuelve contra el host que pidio.
+ *
+ * No se puede armar el destino con `request.url` ni con `request.nextUrl`: en un route
+ * handler de Next 16 los dos pueden traer otro host (localhost en vez del que uso el
+ * navegador). La cookie de sesion queda atada al host original, con lo cual al llegar al
+ * otro ya no viaja y el login vuelve a empezar en un bucle silencioso.
+ */
+function redirigirA(ruta: string): NextResponse {
+  return new NextResponse(null, { status: 303, headers: { Location: ruta } });
+}
+
 export async function GET(request: NextRequest) {
-  const url = request.nextUrl;
+  const url = new URL(request.url);
   const code = url.searchParams.get("code");
   const tokenHash = url.searchParams.get("token_hash");
   const tipo = url.searchParams.get("type");
@@ -27,16 +40,12 @@ export async function GET(request: NextRequest) {
     }));
   }
 
-  const destino = url.clone();
-  destino.search = "";
-
   if (error !== null) {
-    destino.pathname = "/login";
-    destino.searchParams.set("error", "El enlace no es válido o ya venció. Pedí uno nuevo.");
-    return NextResponse.redirect(destino);
+    const motivo = encodeURIComponent("El enlace no es válido o ya venció. Pedí uno nuevo.");
+    return redirigirA(`/login?error=${motivo}`);
   }
 
   // `volver` solo puede ser una ruta interna: si no, seria un redirect abierto.
-  destino.pathname = volver !== null && volver.startsWith("/") && !volver.startsWith("//") ? volver : "/";
-  return NextResponse.redirect(destino);
+  const interna = volver !== null && volver.startsWith("/") && !volver.startsWith("//");
+  return redirigirA(interna ? volver : "/");
 }

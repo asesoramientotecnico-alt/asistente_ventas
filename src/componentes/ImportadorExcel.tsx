@@ -26,6 +26,7 @@ const pct = (n: number) => `${n.toFixed(2).replace(".", ",")} %`;
 export function ImportadorExcel({ batches: iniciales }: { batches: BatchResumen[] }) {
   const [batches, setBatches] = useState(iniciales);
   const [estado, setEstado] = useState<Estado>({ paso: "inicial" });
+  const [nombreArchivo, setNombreArchivo] = useState<string | null>(null);
   const supabase = clienteNavegador();
 
   const activo = batches.find((b) => b.estado === "activo") ?? null;
@@ -35,6 +36,7 @@ export function ImportadorExcel({ batches: iniciales }: { batches: BatchResumen[
   }
 
   async function elegirArchivo(archivo: File) {
+    setNombreArchivo(archivo.name);
     setEstado({ paso: "leyendo" });
     try {
       // SheetJS pesa ~350 KB: se carga recien cuando se elige un archivo, y no entra en
@@ -127,16 +129,22 @@ export function ImportadorExcel({ batches: iniciales }: { batches: BatchResumen[
         <h2 className="text-sm font-semibold uppercase tracking-wide text-slate-500">
           Importar un archivo
         </h2>
-        <input
-          type="file"
-          accept=".xlsx,.xls"
-          disabled={estado.paso === "leyendo" || estado.paso === "importando"}
-          onChange={(e) => {
-            const archivo = e.target.files?.[0];
-            if (archivo !== undefined) void elegirArchivo(archivo);
-          }}
-          className="mt-2 block w-full text-sm file:mr-3 file:rounded-md file:border-0 file:bg-slate-900 file:px-4 file:py-2 file:text-white"
-        />
+        <div className="mt-2 flex items-center gap-3">
+          <label className="cursor-pointer rounded-md bg-slate-900 px-4 py-2 text-sm font-medium text-white has-disabled:opacity-50">
+            Elegir archivo
+            <input
+              type="file"
+              accept=".xlsx,.xls"
+              className="sr-only"
+              disabled={estado.paso === "leyendo" || estado.paso === "importando"}
+              onChange={(e) => {
+                const archivo = e.target.files?.[0];
+                if (archivo !== undefined) void elegirArchivo(archivo);
+              }}
+            />
+          </label>
+          <span className="text-sm text-slate-600">{nombreArchivo ?? "Ningún archivo elegido"}</span>
+        </div>
 
         {estado.paso === "leyendo" && <p className="mt-3 text-slate-600">Leyendo el archivo…</p>}
 
@@ -331,24 +339,24 @@ function Historial({
       <table className="mt-2 w-full text-sm">
         <thead className="text-left text-slate-500">
           <tr>
-            <th className="py-1 font-medium">Archivo</th>
-            <th className="py-1 font-medium">Subido</th>
-            <th className="py-1 text-right font-medium">Filas</th>
-            <th className="py-1 text-right font-medium">Sin clasificar</th>
-            <th className="py-1 font-medium">Estado</th>
+            <th className="py-1 pr-4 font-medium">Archivo</th>
+            <th className="py-1 pr-4 font-medium">Subido</th>
+            <th className="py-1 pr-4 text-right font-medium">Filas</th>
+            <th className="py-1 pr-4 text-right font-medium">Sin clasificar</th>
+            <th className="py-1 pr-4 font-medium">Estado</th>
             <th />
           </tr>
         </thead>
         <tbody>
           {batches.map((b) => (
             <tr key={b.id} className="border-t border-slate-100">
-              <td className="py-1.5">{b.archivo}</td>
-              <td className="py-1.5 text-slate-600">
+              <td className="py-1.5 pr-4">{b.archivo}</td>
+              <td className="py-1.5 pr-4 whitespace-nowrap text-slate-600">
                 {new Date(b.subido_at).toLocaleDateString("es-AR")}
               </td>
-              <td className="py-1.5 text-right tabular-nums">{numero(b.filas)}</td>
-              <td className="py-1.5 text-right tabular-nums">{numero(b.filas_otro)}</td>
-              <td className="py-1.5">{b.estado}</td>
+              <td className="py-1.5 pr-4 text-right tabular-nums">{numero(b.filas)}</td>
+              <td className="py-1.5 pr-4 text-right tabular-nums">{numero(b.filas_otro)}</td>
+              <td className="py-1.5 pr-4">{b.estado}</td>
               <td className="py-1.5 text-right">
                 {b.estado !== "activo" && b.estado !== "pendiente" && (
                   <button

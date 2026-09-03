@@ -1,6 +1,6 @@
 /**
  * Reglas de acceso por ruta. Logica pura: no conoce Next ni Supabase, y por eso se puede
- * probar. El middleware y los layouts la consultan, no la reimplementan.
+ * probar. El proxy y los layouts la consultan, no la reimplementan.
  *
  * Los roles son acumulativos, igual que en las politicas de RLS de 0008:
  * un admin puede todo lo de oficina_tecnica, y oficina_tecnica todo lo de asesor.

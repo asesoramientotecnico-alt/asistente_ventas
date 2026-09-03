@@ -2,8 +2,8 @@ import { sesionActual } from "@/datos/perfil";
 import { rolAlcanza, rolRequerido } from "@/logica/acceso";
 
 /**
- * Puerta del panel. El middleware ya garantizo que hay sesion; lo que falta chequear es
- * el rol, y eso necesita una consulta a la base que no conviene hacer en el middleware.
+ * Puerta del panel. El proxy ya garantizo que hay sesion; lo que falta chequear es
+ * el rol, y eso necesita una consulta a la base que no conviene hacer en el proxy.
  *
  * Esto es conveniencia de UI: aunque alguien llegue igual, las politicas de RLS de 0008
  * no le van a dejar escribir nada.
