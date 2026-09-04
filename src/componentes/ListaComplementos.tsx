@@ -3,6 +3,7 @@
 import { useState, useTransition } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
+import { Boton } from "./Boton";
 import { EtiquetaPrioridad } from "./EtiquetaPrioridad";
 import { useCarrito, type ItemCarrito } from "@/carrito/estado";
 import { clienteNavegador } from "@/datos/supabase-navegador";
@@ -109,38 +110,44 @@ export function ListaComplementos({
   return (
     <div className="space-y-6">
       {grados.length > 0 && (
-        <section className="rounded-lg border border-slate-200 bg-white p-4">
-          <label htmlFor="grado" className="block text-sm font-medium text-slate-700">
-            Grado del material
-          </label>
-          <select
-            id="grado"
-            value={grado ?? ""}
-            disabled={cambiandoGrado}
-            onChange={(e) => elegirGrado(e.target.value)}
-            className="mt-1 rounded-md border border-slate-300 px-3 py-2 text-base"
-          >
-            <option value="">Sin definir</option>
-            {grados.map((g) => (
-              <option key={g.grado} value={g.grado}>
-                {g.grado} · {numero(g.items)} ítems en catálogo
-              </option>
-            ))}
-          </select>
-          <p className="mt-2 text-sm text-slate-600">
-            La app no decide el grado: son los que hay en el catálogo. Elegilo con el cliente
-            y, si el servicio es crítico, derivá la consulta a Oficina Técnica.
-          </p>
+        <section className="tarjeta p-5">
+          <div className="flex flex-wrap items-end gap-x-5 gap-y-3">
+            <div>
+              <label htmlFor="grado" className="block text-sm font-medium">
+                Grado del material
+              </label>
+              <select
+                id="grado"
+                value={grado ?? ""}
+                disabled={cambiandoGrado}
+                onChange={(e) => elegirGrado(e.target.value)}
+                className="mt-1.5 rounded-md border border-borde-fuerte bg-superficie px-3 py-2.5 text-base"
+              >
+                <option value="">Sin definir</option>
+                {grados.map((g) => (
+                  <option key={g.grado} value={g.grado}>
+                    {g.grado} · {numero(g.items)} en catálogo
+                  </option>
+                ))}
+              </select>
+            </div>
+            <p className="max-w-md text-sm text-texto-suave">
+              La app no decide el grado: son los que hay en el catálogo. Elegilo con el cliente
+              y, si el servicio es crítico, derivá la consulta a Oficina Técnica.
+            </p>
+          </div>
+
           {gradoSinAporte && (
-            <p className="mt-2 text-sm text-amber-800">
-              Para {grado} no hay aporte definido por Oficina Técnica. El consumible se sugiere
-              igual, pero sin justificación de grado: confirmalo antes de cerrar la venta.
+            <p className="mt-4 rounded-md border border-aviso-200 bg-aviso-50 p-3 text-sm text-aviso-900">
+              Para <strong>{grado}</strong> no hay aporte definido por Oficina Técnica. El
+              consumible se sugiere igual, pero sin justificación de grado: confirmalo antes de
+              cerrar la venta.
             </p>
           )}
         </section>
       )}
 
-      <section className="space-y-2">
+      <section className="space-y-3">
         {complementos.map((c) => {
           const marcadasDelGrupo = c.familias.filter((f) =>
             marcadas.has(claveSeleccion(c.id, f.codigo)),
@@ -149,45 +156,47 @@ export function ListaComplementos({
           return (
             <details
               key={c.id}
-              className="group rounded-lg border border-slate-200 bg-white [&_summary::-webkit-details-marker]:hidden"
+              className={`tarjeta group overflow-hidden [&_summary::-webkit-details-marker]:hidden ${
+                c.prioridad === "oblig" ? "border-l-4 border-l-acento-600" : ""
+              }`}
             >
-              <summary className="flex cursor-pointer items-start gap-3 p-4">
+              <summary className="flex cursor-pointer items-start gap-3 p-5 hover:bg-fondo">
                 <svg
                   viewBox="0 0 20 20"
                   aria-hidden="true"
-                  className="mt-1 size-4 shrink-0 fill-slate-400 transition-transform group-open:rotate-90"
+                  className="mt-1.5 size-3.5 shrink-0 fill-texto-tenue transition-transform group-open:rotate-90"
                 >
                   <path d="M7 4l7 6-7 6z" />
                 </svg>
-                <span className="flex-1">
-                  <span className="flex flex-wrap items-center gap-2">
-                    <span className="font-medium">{c.nombre}</span>
+                <span className="min-w-0 flex-1">
+                  <span className="flex flex-wrap items-center gap-x-3 gap-y-1.5">
+                    <span className="text-lg font-semibold">{c.nombre}</span>
                     <EtiquetaPrioridad prioridad={c.prioridad} />
-                    <span className="text-sm text-slate-500">
+                    <span className="text-sm text-texto-tenue tabular">
                       {marcadasDelGrupo} de {c.familias.length}
                     </span>
                   </span>
                   {/* El motivo no es decorativo: es lo que el asesor le repite al cliente. */}
                   {c.motivo !== "" && (
-                    <span className="mt-1 block text-sm text-slate-600">{c.motivo}</span>
+                    <span className="mt-1.5 block text-texto-suave">{c.motivo}</span>
                   )}
                 </span>
               </summary>
 
-              <ul className="border-t border-slate-100 px-4 py-2">
+              <ul className="border-t border-borde bg-fondo/60 px-5 py-2">
                 {c.familias.map((f) => {
                   const clave = claveSeleccion(c.id, f.codigo);
                   return (
-                    <li key={clave} className="py-1">
-                      <label className="flex cursor-pointer items-center gap-2">
+                    <li key={clave}>
+                      <label className="flex cursor-pointer items-center gap-3 py-2.5">
                         <input
                           type="checkbox"
                           checked={marcadas.has(clave)}
                           onChange={() => alternar(clave)}
-                          className="size-4"
+                          className="size-5 accent-acento-600"
                         />
-                        <span>{f.etiqueta}</span>
-                        <span className="text-sm text-slate-500">
+                        <span className="font-medium">{f.etiqueta}</span>
+                        <span className="ml-auto text-sm text-texto-tenue tabular">
                           {numero(f.items)} ítems
                         </span>
                       </label>
@@ -200,19 +209,14 @@ export function ListaComplementos({
         })}
       </section>
 
-      <section className="flex flex-wrap items-center gap-3">
-        <button
-          type="button"
-          onClick={() => void sumarAlCarrito()}
-          disabled={marcadas.size === 0}
-          className="rounded-md bg-slate-900 px-4 py-2 text-sm font-medium text-white disabled:opacity-40"
-        >
+      <section className="sticky bottom-0 -mx-5 flex flex-wrap items-center gap-4 border-t border-borde bg-superficie px-5 py-4 shadow-[0_-8px_16px_-12px_rgba(0,0,0,0.18)]">
+        <Boton onClick={() => void sumarAlCarrito()} disabled={marcadas.size === 0}>
           Sumar {marcadas.size} al carrito
-        </button>
+        </Boton>
         {sumadas > 0 && (
-          <span className="text-sm text-slate-700" role="status">
+          <span role="status" className="text-sm">
             {sumadas} {sumadas === 1 ? "familia" : "familias"} en el carrito.{" "}
-            <Link href="/carrito" className="underline">
+            <Link href="/carrito" className="font-medium text-acento-700 underline">
               Ver el carrito
             </Link>
           </span>

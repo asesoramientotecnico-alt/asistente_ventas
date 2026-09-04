@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { Boton } from "./Boton";
 import { EtiquetaPrioridad } from "./EtiquetaPrioridad";
 import { PanelLinks } from "./PanelLinks";
 import { useCarrito } from "@/carrito/estado";
@@ -26,11 +27,11 @@ export function VistaCarrito({
   const { items, listo, quitar, vaciar } = useCarrito();
   const [confirmado, setConfirmado] = useState(false);
 
-  if (!listo) return <p className="text-slate-600">Cargando…</p>;
+  if (!listo) return <p className="text-texto-suave">Cargando…</p>;
 
   if (items.length === 0) {
     return (
-      <p className="text-slate-600">
+      <p className="text-texto-suave">
         El carrito está vacío.{" "}
         <Link href="/producto" className="underline">
           Empezá por un producto
@@ -40,6 +41,11 @@ export function VistaCarrito({
     );
   }
 
+  // Con todo viniendo del mismo producto, repetir el origen en cada fila es ruido: se
+  // muestra una vez arriba. Con varios origenes si hace falta fila por fila.
+  const origenes = [...new Set(items.map((i) => `${i.origen.nombreTipo}|${i.origen.grado ?? ""}`))];
+  const unSoloOrigen = origenes.length === 1;
+
   const ordenados = [...items].sort(
     (a, b) =>
       ORDEN_PRIORIDAD[a.prioridad] - ORDEN_PRIORIDAD[b.prioridad] ||
@@ -48,19 +54,28 @@ export function VistaCarrito({
 
   return (
     <div className="space-y-6">
-      <ul className="divide-y divide-slate-100 rounded-lg border border-slate-200 bg-white">
+      {unSoloOrigen && (
+        <p className="text-sm text-texto-suave">
+          Todo desde <strong className="font-semibold text-texto">{items[0]?.origen.nombreTipo}</strong>
+          {items[0]?.origen.grado !== null && ` · grado ${items[0]?.origen.grado}`}
+        </p>
+      )}
+
+      <ul className="tarjeta divide-y divide-borde">
         {ordenados.map((i) => (
-          <li key={i.clave} className="flex items-start gap-3 p-4">
+          <li key={i.clave} className="flex items-start gap-4 p-5">
             <div className="flex-1">
               <div className="flex flex-wrap items-center gap-2">
-                <span className="font-medium">{i.etiqueta}</span>
+                <span className="font-semibold">{i.etiqueta}</span>
                 <EtiquetaPrioridad prioridad={i.prioridad} />
               </div>
-              <p className="mt-1 text-sm text-slate-600">{i.motivo}</p>
-              <p className="mt-1 text-xs text-slate-500">
-                Desde {i.origen.nombreTipo}
-                {i.origen.grado !== null && ` · grado ${i.origen.grado}`}
-              </p>
+              <p className="mt-1.5 text-texto-suave">{i.motivo}</p>
+              {!unSoloOrigen && (
+                <p className="mt-1.5 text-xs text-texto-tenue">
+                  Desde {i.origen.nombreTipo}
+                  {i.origen.grado !== null && ` · grado ${i.origen.grado}`}
+                </p>
+              )}
             </div>
             <button
               type="button"
@@ -68,7 +83,7 @@ export function VistaCarrito({
                 quitar(i.clave);
                 setConfirmado(false);
               }}
-              className="text-sm text-slate-500 hover:text-slate-900 hover:underline"
+              className="text-sm text-texto-tenue hover:text-texto hover:underline"
             >
               Quitar
             </button>
@@ -78,27 +93,21 @@ export function VistaCarrito({
 
       <div className="flex flex-wrap items-center gap-4">
         {!confirmado && (
-          <button
-            type="button"
-            onClick={() => setConfirmado(true)}
-            className="rounded-md bg-slate-900 px-4 py-2 text-sm font-medium text-white"
-          >
-            Generar los links ({items.length})
-          </button>
+          <Boton onClick={() => setConfirmado(true)}>Generar los links ({items.length})</Boton>
         )}
-        <Link href="/producto" className="text-sm text-slate-600 hover:underline">
+        <Link href="/producto" className="text-sm text-texto-suave hover:underline">
           Seguir agregando
         </Link>
-        <button
-          type="button"
+        <Boton
+          variante="texto"
+          className="text-sm"
           onClick={() => {
             vaciar();
             setConfirmado(false);
           }}
-          className="text-sm text-slate-600 hover:underline"
         >
           Vaciar el carrito
-        </button>
+        </Boton>
       </div>
 
       {confirmado && <PanelLinks items={ordenados} config={config} links={links} />}

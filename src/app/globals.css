@@ -1,1 +1,82 @@
 @import "tailwindcss";
+
+/*
+ * Tokens de la app.
+ *
+ * El contexto es un mostrador: el asesor lee de reojo mientras habla con el cliente, y a
+ * veces le gira la pantalla. De ahi las dos decisiones que gobiernan todo lo demas: el
+ * cuerpo de texto arranca en 17px y no en 16, y la jerarquia se marca con tamaño y peso
+ * antes que con color.
+ *
+ * `--color-acento-*` es un azul acero de arranque, NO el color institucional de Famiq.
+ * Cuando este definido, se cambia aca y toda la app lo toma.
+ */
+@theme {
+  --color-fondo: oklch(98.2% 0.003 250);
+  --color-superficie: oklch(100% 0 0);
+  --color-borde: oklch(92% 0.005 250);
+  --color-borde-fuerte: oklch(85% 0.008 250);
+
+  --color-texto: oklch(24% 0.015 255);
+  --color-texto-suave: oklch(48% 0.012 255);
+  --color-texto-tenue: oklch(62% 0.01 255);
+
+  --color-acento-50: oklch(96.5% 0.015 240);
+  --color-acento-100: oklch(92% 0.03 240);
+  --color-acento-600: oklch(48% 0.11 245);
+  --color-acento-700: oklch(41% 0.1 245);
+  --color-acento-900: oklch(28% 0.06 250);
+
+  --color-aviso-50: oklch(97% 0.03 85);
+  --color-aviso-200: oklch(88% 0.07 85);
+  --color-aviso-900: oklch(38% 0.07 70);
+
+  --color-ok-50: oklch(96.5% 0.03 155);
+  --color-ok-200: oklch(87% 0.07 155);
+  --color-ok-900: oklch(36% 0.06 155);
+
+  --text-base: 1.0625rem;
+  --text-base--line-height: 1.55;
+
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+}
+
+@layer base {
+  body {
+    background-color: var(--color-fondo);
+    color: var(--color-texto);
+  }
+
+  /* El foco tiene que verse: en el mostrador se navega con teclado mas de lo que parece. */
+  :focus-visible {
+    outline: 2px solid var(--color-acento-600);
+    outline-offset: 2px;
+    border-radius: 3px;
+  }
+
+  /* Los numeros de cantidades no tienen que bailar al cambiar. */
+  table,
+  .tabular {
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+@layer components {
+  /* Tarjeta: la unidad de todo el layout. */
+  .tarjeta {
+    background-color: var(--color-superficie);
+    border: 1px solid var(--color-borde);
+    border-radius: var(--radius-lg);
+  }
+
+  .tarjeta-clickeable {
+    transition:
+      border-color 120ms,
+      box-shadow 120ms;
+  }
+  .tarjeta-clickeable:hover {
+    border-color: var(--color-acento-600);
+    box-shadow: 0 1px 2px oklch(24% 0.015 255 / 0.06);
+  }
+}

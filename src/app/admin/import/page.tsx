@@ -10,11 +10,11 @@ export default async function ImportarCatalogo() {
   const batches = await listarBatches(supabase);
 
   return (
-    <main className="mx-auto max-w-4xl p-6">
-      <Link href="/admin" className="text-sm text-slate-600 hover:underline">
+    <main className="mx-auto max-w-4xl px-5 py-8">
+      <Link href="/admin" className="text-sm text-texto-suave hover:underline">
         ← Panel
       </Link>
-      <h1 className="mt-2 mb-6 text-xl font-semibold">Importar catálogo</h1>
+      <h1 className="mt-2 mb-6 text-2xl font-semibold tracking-tight">Importar catálogo</h1>
       <ImportadorExcel batches={batches} />
     </main>
   );

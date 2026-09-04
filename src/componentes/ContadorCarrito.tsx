@@ -11,8 +11,14 @@ export function ContadorCarrito() {
   if (!listo || items.length === 0) return null;
 
   return (
-    <Link href="/carrito" className="hover:text-slate-900 hover:underline">
-      Carrito <span className="rounded bg-slate-900 px-1.5 py-0.5 text-xs text-white">{items.length}</span>
+    <Link
+      href="/carrito"
+      className="inline-flex items-center gap-2 rounded-md bg-acento-50 px-2.5 py-1 font-medium text-acento-700 hover:bg-acento-100"
+    >
+      Carrito
+      <span className="rounded bg-acento-600 px-1.5 text-xs text-white tabular">
+        {items.length}
+      </span>
     </Link>
   );
 }

@@ -31,7 +31,7 @@ export default async function Complementos({
   const sinCatalogo = tipo.complementos.length > 0 && complementos.length === 0;
 
   return (
-    <main className="mx-auto max-w-3xl p-6">
+    <main className="mx-auto max-w-4xl px-5 py-8">
       <MigasDePan
         pasos={[
           { texto: "Inicio", href: "/" },
@@ -40,13 +40,13 @@ export default async function Complementos({
           { texto: tipo.nombre },
         ]}
       />
-      <h1 className="mt-2 mb-1 text-xl font-semibold">{tipo.nombre}</h1>
-      <p className="mb-6 text-slate-600">
+      <h1 className="mt-3 text-2xl font-semibold tracking-tight">{tipo.nombre}</h1>
+      <p className="mt-1 mb-6 text-texto-suave">
         Lo que suele ir junto. Los obligatorios vienen marcados; desmarcá lo que no va.
       </p>
 
       {sinCatalogo ? (
-        <p className="rounded-md bg-amber-50 p-4 text-sm text-amber-900">
+        <p className="rounded-lg border border-aviso-200 bg-aviso-50 p-4 text-sm text-aviso-900">
           Las familias que complementan este producto no tienen ítems en el catálogo vigente.
           Avisale a Oficina Técnica antes de seguir.
         </p>
@@ -62,11 +62,11 @@ export default async function Complementos({
       )}
 
       {tipo.notas.length > 0 && (
-        <section className="mt-8">
-          <h2 className="text-sm font-semibold uppercase tracking-wide text-slate-500">
+        <section className="mt-10">
+          <h2 className="text-xs font-semibold uppercase tracking-widest text-texto-tenue">
             Notas técnicas de la línea
           </h2>
-          <ul className="mt-2 list-disc space-y-1 pl-5 text-sm text-slate-700">
+          <ul className="mt-3 list-disc space-y-1.5 pl-5 text-sm text-texto-suave">
             {tipo.notas.map((n) => (
               <li key={n}>{n}</li>
             ))}

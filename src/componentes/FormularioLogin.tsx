@@ -36,9 +36,9 @@ export function FormularioLogin({ volver }: { volver?: string }) {
 
   if (estado.tipo === "enviado") {
     return (
-      <div className="rounded-lg border border-emerald-200 bg-emerald-50 p-4">
-        <p className="font-medium text-emerald-900">Te mandamos un enlace a {email.trim().toLowerCase()}.</p>
-        <p className="mt-1 text-sm text-emerald-800">
+      <div className="rounded-lg border border-ok-200 bg-ok-50 p-4">
+        <p className="font-medium text-ok-900">Te mandamos un enlace a {email.trim().toLowerCase()}.</p>
+        <p className="mt-1 text-sm text-ok-900">
           Abrilo desde este mismo dispositivo. Vence en una hora.
         </p>
       </div>
@@ -48,7 +48,7 @@ export function FormularioLogin({ volver }: { volver?: string }) {
   return (
     <form onSubmit={enviar} className="space-y-4">
       <div>
-        <label htmlFor="email" className="block text-sm font-medium text-slate-700">
+        <label htmlFor="email" className="block text-sm font-medium text-texto">
           Correo de Famiq
         </label>
         <input
@@ -63,12 +63,12 @@ export function FormularioLogin({ volver }: { volver?: string }) {
             if (estado.tipo === "error") setEstado({ tipo: "inicial" });
           }}
           placeholder={`nombre${DOMINIO}`}
-          className="mt-1 w-full rounded-md border border-slate-300 px-3 py-2 text-base outline-none focus:border-slate-900"
+          className="mt-1 w-full rounded-md border border-borde-fuerte px-3 py-2.5 text-base"
         />
       </div>
 
       {estado.tipo === "error" && (
-        <p role="alert" className="text-sm text-red-700">
+        <p role="alert" className="text-sm text-aviso-900">
           {estado.mensaje}
         </p>
       )}
@@ -76,12 +76,12 @@ export function FormularioLogin({ volver }: { volver?: string }) {
       <button
         type="submit"
         disabled={estado.tipo === "enviando"}
-        className="w-full rounded-md bg-slate-900 px-4 py-2 font-medium text-white disabled:opacity-50"
+        className="w-full rounded-md bg-acento-600 px-4 py-2.5 font-medium text-white transition-colors hover:bg-acento-700 disabled:opacity-50"
       >
         {estado.tipo === "enviando" ? "Enviando…" : "Entrar"}
       </button>
 
-      <p className="text-sm text-slate-500">
+      <p className="text-sm text-texto-tenue">
         No hay contraseña: te llega un enlace de acceso por correo.
       </p>
     </form>

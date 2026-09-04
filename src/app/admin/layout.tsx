@@ -14,9 +14,9 @@ export default async function AdminLayout({ children }: { children: React.ReactN
 
   if (minimo !== null && !rolAlcanza(sesion?.perfil.rol, minimo)) {
     return (
-      <main className="mx-auto max-w-4xl p-6">
-        <h1 className="text-xl font-semibold">Panel de Oficina Técnica</h1>
-        <p className="mt-2 text-slate-600">
+      <main className="mx-auto max-w-4xl px-5 py-8">
+        <h1 className="text-2xl font-semibold tracking-tight">Panel de Oficina Técnica</h1>
+        <p className="mt-2 text-texto-suave">
           Tu usuario no tiene acceso a esta sección. Si necesitás entrar, pedile a
           Administración que te cambie el rol.
         </p>

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { Boton } from "./Boton";
 import { clienteNavegador } from "@/datos/supabase-navegador";
 import {
   activar,
@@ -108,11 +109,11 @@ export function ImportadorExcel({ batches: iniciales }: { batches: BatchResumen[
   return (
     <div className="space-y-8">
       <section>
-        <h2 className="text-sm font-semibold uppercase tracking-wide text-slate-500">
+        <h2 className="text-xs font-semibold uppercase tracking-widest text-texto-tenue">
           Catálogo vigente
         </h2>
         {activo === null ? (
-          <p className="mt-2 text-slate-600">
+          <p className="mt-2 text-texto-suave">
             Todavía no hay ningún catálogo activo. Hasta que lo haya, la app no tiene familias
             que sugerir.
           </p>
@@ -126,11 +127,11 @@ export function ImportadorExcel({ batches: iniciales }: { batches: BatchResumen[
       </section>
 
       <section>
-        <h2 className="text-sm font-semibold uppercase tracking-wide text-slate-500">
+        <h2 className="text-xs font-semibold uppercase tracking-widest text-texto-tenue">
           Importar un archivo
         </h2>
         <div className="mt-2 flex items-center gap-3">
-          <label className="cursor-pointer rounded-md bg-slate-900 px-4 py-2 text-sm font-medium text-white has-disabled:opacity-50">
+          <label className="cursor-pointer rounded-md bg-acento-600 px-4 py-2 text-sm font-medium text-white has-disabled:opacity-50">
             Elegir archivo
             <input
               type="file"
@@ -143,36 +144,32 @@ export function ImportadorExcel({ batches: iniciales }: { batches: BatchResumen[
               }}
             />
           </label>
-          <span className="text-sm text-slate-600">{nombreArchivo ?? "Ningún archivo elegido"}</span>
+          <span className="text-sm text-texto-suave">{nombreArchivo ?? "Ningún archivo elegido"}</span>
         </div>
 
-        {estado.paso === "leyendo" && <p className="mt-3 text-slate-600">Leyendo el archivo…</p>}
+        {estado.paso === "leyendo" && <p className="mt-3 text-texto-suave">Leyendo el archivo…</p>}
 
         {estado.paso === "error" && (
-          <p role="alert" className="mt-3 rounded-md bg-red-50 p-3 text-sm text-red-800">
+          <p role="alert" className="mt-3 rounded-md bg-aviso-50 p-3 text-sm text-aviso-900">
             {estado.mensaje}
           </p>
         )}
 
         {estado.paso === "importando" && (
-          <p className="mt-3 text-slate-600">
+          <p className="mt-3 text-texto-suave">
             Importando {numero(estado.insertadas)} de {numero(estado.total)} filas…
           </p>
         )}
 
         {estado.paso === "importado" && (
-          <div className="mt-3 rounded-md border border-emerald-200 bg-emerald-50 p-4">
-            <p className="font-medium text-emerald-900">
+          <div className="mt-3 rounded-md border border-ok-200 bg-ok-50 p-4">
+            <p className="font-medium text-ok-900">
               Importadas {numero(estado.analisis.filas)} filas. El catálogo vigente todavía no
               cambió.
             </p>
-            <button
-              type="button"
-              onClick={() => void activarBatch(estado.batchId)}
-              className="mt-3 rounded-md bg-slate-900 px-4 py-2 text-sm font-medium text-white"
-            >
+            <Boton className="mt-3" onClick={() => void activarBatch(estado.batchId)}>
               Activar este catálogo
-            </button>
+            </Boton>
           </div>
         )}
 
@@ -205,9 +202,9 @@ function Previsualizacion({
   const { diff } = analisis;
 
   return (
-    <div className="mt-4 space-y-4 rounded-md border border-slate-200 bg-white p-4">
+    <div className="tarjeta mt-4 space-y-4 p-5">
       {!analisis.importable && (
-        <div role="alert" className="rounded-md bg-red-50 p-3 text-sm text-red-900">
+        <div role="alert" className="rounded-md bg-aviso-50 p-3 text-sm text-aviso-900">
           <p className="font-medium">No se puede importar este archivo.</p>
           <ul className="mt-1 list-disc pl-5">
             {analisis.motivos.map((m) => (
@@ -220,7 +217,7 @@ function Previsualizacion({
       {diff.hayCambios && (
         <div className="text-sm">
           <p className="font-medium">Diferencias de layout contra el último import</p>
-          <ul className="mt-1 list-disc pl-5 text-slate-700">
+          <ul className="mt-1 list-disc pl-5 text-texto">
             {diff.faltantes.map((h) => (
               <li key={`f-${h}`}>
                 Falta la columna <code>{h}</code>
@@ -254,7 +251,7 @@ function Previsualizacion({
       {comparacion !== null && (
         <div
           className={`rounded-md p-3 text-sm ${
-            comparacion.alerta ? "bg-amber-50 text-amber-900" : "bg-slate-50 text-slate-700"
+            comparacion.alerta ? "bg-aviso-50 text-aviso-900" : "bg-fondo text-texto"
           }`}
         >
           <p>
@@ -282,33 +279,28 @@ function Previsualizacion({
       )}
 
       <details className="text-sm">
-        <summary className="cursor-pointer text-slate-600">Ver el detalle por familia</summary>
+        <summary className="cursor-pointer text-texto-suave">Ver el detalle por familia</summary>
         <ul className="mt-2 grid grid-cols-2 gap-x-6 sm:grid-cols-3">
           {Object.entries(analisis.conteo)
             .sort(([, a], [, b]) => b - a)
             .map(([codigo, items]) => (
-              <li key={codigo} className="flex justify-between border-b border-slate-100 py-0.5">
+              <li key={codigo} className="flex justify-between border-b border-borde py-0.5">
                 <span>{codigo}</span>
-                <span className="tabular-nums text-slate-600">{numero(items)}</span>
+                <span className="tabular-nums text-texto-suave">{numero(items)}</span>
               </li>
             ))}
         </ul>
       </details>
 
       <div className="flex gap-3">
-        <button
-          type="button"
-          disabled={!analisis.importable}
-          onClick={onConfirmar}
-          className="rounded-md bg-slate-900 px-4 py-2 text-sm font-medium text-white disabled:opacity-40"
-        >
+        <Boton disabled={!analisis.importable} onClick={onConfirmar}>
           Importar {numero(analisis.filas)} filas
-        </button>
-        <button type="button" onClick={onCancelar} className="text-sm text-slate-600 hover:underline">
+        </Boton>
+        <Boton variante="texto" className="text-sm" onClick={onCancelar}>
           Cancelar
-        </button>
+        </Boton>
       </div>
-      <p className="text-xs text-slate-500">
+      <p className="text-xs text-texto-tenue">
         Importar no cambia el catálogo vigente: primero se guarda y después se activa.
       </p>
     </div>
@@ -318,7 +310,7 @@ function Previsualizacion({
 function Dato({ etiqueta, valor }: { etiqueta: string; valor: string }) {
   return (
     <div>
-      <dt className="text-slate-500">{etiqueta}</dt>
+      <dt className="text-texto-tenue">{etiqueta}</dt>
       <dd className="font-medium tabular-nums">{valor}</dd>
     </div>
   );
@@ -335,9 +327,9 @@ function Historial({
 
   return (
     <section>
-      <h2 className="text-sm font-semibold uppercase tracking-wide text-slate-500">Historial</h2>
+      <h2 className="text-xs font-semibold uppercase tracking-widest text-texto-tenue">Historial</h2>
       <table className="mt-2 w-full text-sm">
-        <thead className="text-left text-slate-500">
+        <thead className="text-left text-texto-tenue">
           <tr>
             <th className="py-1 pr-4 font-medium">Archivo</th>
             <th className="py-1 pr-4 font-medium">Subido</th>
@@ -349,9 +341,9 @@ function Historial({
         </thead>
         <tbody>
           {batches.map((b) => (
-            <tr key={b.id} className="border-t border-slate-100">
+            <tr key={b.id} className="border-t border-borde">
               <td className="py-1.5 pr-4">{b.archivo}</td>
-              <td className="py-1.5 pr-4 whitespace-nowrap text-slate-600">
+              <td className="py-1.5 pr-4 whitespace-nowrap text-texto-suave">
                 {new Date(b.subido_at).toLocaleDateString("es-AR")}
               </td>
               <td className="py-1.5 pr-4 text-right tabular-nums">{numero(b.filas)}</td>
@@ -362,7 +354,7 @@ function Historial({
                   <button
                     type="button"
                     onClick={() => onActivar(b.id)}
-                    className="text-slate-600 hover:text-slate-900 hover:underline"
+                    className="text-texto-suave hover:text-texto hover:underline"
                   >
                     Activar
                   </button>
@@ -372,7 +364,7 @@ function Historial({
           ))}
         </tbody>
       </table>
-      <p className="mt-2 text-xs text-slate-500">
+      <p className="mt-2 text-xs text-texto-tenue">
         Activar un import anterior es la forma de volver atrás: descarta el vigente y restaura
         ese, en una sola operación.
       </p>

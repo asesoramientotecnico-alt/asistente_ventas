@@ -2,14 +2,14 @@ import Link from "next/link";
 
 export function MigasDePan({ pasos }: { pasos: Array<{ texto: string; href?: string }> }) {
   return (
-    <nav aria-label="Ubicación" className="text-sm text-slate-600">
+    <nav aria-label="Ubicación" className="flex flex-wrap items-center gap-1.5 text-sm">
       {pasos.map((p, i) => (
-        <span key={p.texto}>
-          {i > 0 && <span className="mx-1.5 text-slate-400">/</span>}
+        <span key={p.texto} className="flex items-center gap-1.5">
+          {i > 0 && <span className="text-texto-tenue">›</span>}
           {p.href === undefined ? (
-            <span className="text-slate-900">{p.texto}</span>
+            <span className="text-texto">{p.texto}</span>
           ) : (
-            <Link href={p.href} className="hover:underline">
+            <Link href={p.href} className="text-texto-suave hover:text-texto hover:underline">
               {p.texto}
             </Link>
           )}

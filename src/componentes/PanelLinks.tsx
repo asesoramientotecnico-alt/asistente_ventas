@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { Boton } from "./Boton";
 import {
   MAXIMO_PESTANAS_COMODO,
   configCompleta,
@@ -83,12 +84,12 @@ export function PanelLinks({
 
   return (
     <section className="space-y-4">
-      <h2 className="text-sm font-semibold uppercase tracking-wide text-slate-500">
+      <h2 className="text-xs font-semibold uppercase tracking-widest text-texto-tenue">
         Links al ecommerce
       </h2>
 
       {!configCompleta(config) && (
-        <p role="alert" className="rounded-md bg-amber-50 p-3 text-sm text-amber-900">
+        <p role="alert" className="rounded-md bg-aviso-50 p-3 text-sm text-aviso-900">
           Falta cargar la base del ecommerce y la plantilla de búsqueda. Hasta que Oficina
           Técnica las configure, solo se generan los links de las familias que tienen URL
           propia. La app no arma links a mano: uno roto en el mostrador es peor que ninguno.
@@ -97,18 +98,18 @@ export function PanelLinks({
 
       {conLink.length > 0 && (
         <>
-          <ul className="divide-y divide-slate-100 rounded-lg border border-slate-200 bg-white">
+          <ul className="tarjeta divide-y divide-borde">
             {conLink.map((r) => (
-              <li key={r.item.clave} className="flex flex-wrap items-baseline gap-x-2 p-3">
-                <span className="font-medium">{r.item.etiqueta}</span>
-                <span className="text-xs text-slate-500">
+              <li key={r.item.clave} className="flex flex-wrap items-baseline gap-x-3 gap-y-1 p-4">
+                <span className="font-semibold">{r.item.etiqueta}</span>
+                <span className="text-xs text-texto-tenue">
                   {r.link !== null && ETIQUETA_RESOLUCION[r.link.resolucion]}
                 </span>
                 <a
                   href={r.link?.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-full truncate text-sm text-slate-600 underline sm:w-auto"
+                  className="w-full truncate text-sm text-texto-suave underline sm:w-auto"
                 >
                   {r.link?.url}
                 </a>
@@ -117,29 +118,21 @@ export function PanelLinks({
           </ul>
 
           <div className="flex flex-wrap items-center gap-3">
-            <button
-              type="button"
-              onClick={abrirTodos}
-              className="rounded-md bg-slate-900 px-4 py-2 text-sm font-medium text-white"
-            >
+            <Boton onClick={abrirTodos}>
               Abrir todos ({conLink.length} {conLink.length === 1 ? "pestaña" : "pestañas"})
-            </button>
-            <button
-              type="button"
-              onClick={() => void copiar()}
-              className="rounded-md border border-slate-300 px-4 py-2 text-sm font-medium"
-            >
+            </Boton>
+            <Boton variante="secundario" onClick={() => void copiar()}>
               Copiar lista
-            </button>
+            </Boton>
             {copiado && (
-              <span role="status" className="text-sm text-slate-600">
+              <span role="status" className="text-sm text-texto-suave">
                 Lista copiada.
               </span>
             )}
           </div>
 
           {demasiadas && (
-            <p className="text-sm text-slate-600">
+            <p className="text-sm text-texto-suave">
               Son {conLink.length} pestañas. Conviene copiar la lista y abrirlas de a poco.
             </p>
           )}
@@ -153,7 +146,7 @@ export function PanelLinks({
             <p
               role="alert"
               className={`rounded-md p-3 text-sm ${
-                bloqueadas > 0 ? "bg-amber-50 text-amber-900" : "bg-slate-100 text-slate-700"
+                bloqueadas > 0 ? "bg-aviso-50 text-aviso-900" : "bg-fondo text-texto"
               }`}
             >
               {bloqueadas > 0
@@ -165,24 +158,24 @@ export function PanelLinks({
           )}
 
           <details className="text-sm">
-            <summary className="cursor-pointer text-slate-600">
+            <summary className="cursor-pointer text-texto-suave">
               Ver la lista para copiar a mano
             </summary>
             <textarea
               readOnly
               rows={Math.min(conLink.length + 1, 12)}
               value={listaParaCopiar(resueltos)}
-              className="mt-2 w-full rounded-md border border-slate-300 p-2 font-mono text-xs"
+              className="mt-2 w-full rounded-md border border-borde-fuerte p-2 font-mono text-xs"
             />
           </details>
         </>
       )}
 
       {sinLink.length > 0 && (
-        <div className="rounded-md bg-slate-100 p-3 text-sm text-slate-700">
+        <div className="rounded-md bg-fondo p-3 text-sm text-texto">
           <p className="font-medium">Sin link ({sinLink.length}):</p>
           <p className="mt-1">{sinLink.map((r) => r.item.etiqueta).join(", ")}.</p>
-          <p className="mt-1 text-slate-600">
+          <p className="mt-1 text-texto-suave">
             Estas familias hay que buscarlas a mano en el ecommerce hasta que se configure la
             resolución.
           </p>

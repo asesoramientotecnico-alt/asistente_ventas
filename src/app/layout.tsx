@@ -14,7 +14,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
 
   return (
     <html lang="es-AR">
-      <body className="min-h-screen bg-slate-50 text-slate-900 antialiased">
+      <body className="min-h-screen antialiased">
         {sesion !== null && <Encabezado sesion={sesion} />}
         {children}
       </body>

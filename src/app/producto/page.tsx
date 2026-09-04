@@ -10,20 +10,22 @@ export default async function Lineas() {
   const dominios = await listarDominios(supabase);
 
   return (
-    <main className="mx-auto max-w-3xl p-6">
+    <main className="mx-auto max-w-4xl px-5 py-8">
       <MigasDePan pasos={[{ texto: "Inicio", href: "/" }, { texto: "Línea" }]} />
-      <h1 className="mt-2 mb-1 text-xl font-semibold">¿De qué línea es el producto?</h1>
-      <p className="mb-6 text-slate-600">Elegí la línea y después el producto puntual.</p>
+      <h1 className="mt-3 text-2xl font-semibold tracking-tight">
+        ¿De qué línea es el producto?
+      </h1>
+      <p className="mt-1 mb-6 text-texto-suave">Elegí la línea y después el producto puntual.</p>
 
-      <ul className="grid gap-2 sm:grid-cols-2">
+      <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
         {dominios.map((d) => (
           <li key={d.codigo}>
             <Link
               href={`/producto/${d.codigo}`}
-              className="block rounded-lg border border-slate-200 bg-white p-4 hover:border-slate-400"
+              className="tarjeta tarjeta-clickeable flex h-full flex-col justify-between p-5"
             >
-              <span className="font-medium">{d.nombre}</span>
-              <span className="mt-0.5 block text-sm text-slate-500">
+              <span className="font-semibold">{d.nombre}</span>
+              <span className="mt-2 text-sm text-texto-tenue tabular">
                 {d.tipos} {d.tipos === 1 ? "producto" : "productos"}
               </span>
             </Link>

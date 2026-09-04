@@ -16,7 +16,7 @@ export default async function Productos({
   if (linea === null) notFound();
 
   return (
-    <main className="mx-auto max-w-3xl p-6">
+    <main className="mx-auto max-w-4xl px-5 py-8">
       <MigasDePan
         pasos={[
           { texto: "Inicio", href: "/" },
@@ -24,18 +24,18 @@ export default async function Productos({
           { texto: linea.nombre },
         ]}
       />
-      <h1 className="mt-2 mb-6 text-xl font-semibold">{linea.nombre}</h1>
+      <h1 className="mt-3 mb-6 text-2xl font-semibold tracking-tight">{linea.nombre}</h1>
 
-      <ul className="grid gap-2 sm:grid-cols-2">
+      <ul className="grid gap-3 sm:grid-cols-2">
         {linea.tipos.map((t) => (
           <li key={t.codigo}>
             <Link
               href={`/producto/${linea.codigo}/${t.codigo}`}
-              className="block rounded-lg border border-slate-200 bg-white p-4 hover:border-slate-400"
+              className="tarjeta tarjeta-clickeable block p-5"
             >
-              <span className="font-medium">{t.nombre}</span>
+              <span className="font-semibold">{t.nombre}</span>
               {t.pregunta_grado && (
-                <span className="mt-0.5 block text-sm text-slate-500">Pregunta el grado</span>
+                <span className="mt-1.5 block text-sm text-texto-tenue">Pregunta el grado</span>
               )}
             </Link>
           </li>
