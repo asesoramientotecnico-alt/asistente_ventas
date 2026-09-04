@@ -1,7 +1,7 @@
 -- ARCHIVO GENERADO. No editar a mano: se regenera con `pnpm instalador:generar`.
 --
 -- Puesta en marcha de un proyecto de Supabase desde cero, para pegar en el editor SQL
--- del panel. Contiene las 12 migraciones en orden mas el seed.
+-- del panel. Contiene las 13 migraciones en orden mas el seed.
 --
 -- Es idempotente en el seed (on conflict do nothing) pero NO en las migraciones: si se
 -- corre dos veces, la segunda falla en el primer `create type`. Eso es a proposito —
@@ -862,6 +862,40 @@ comment on function registrar_sugerencias is
   'Registra una consulta y todas las sugerencias que se le mostraron al asesor, marcando cuales acepto. Base de las metricas de F3.';
 
 -- ═══════════════════════════════════════════════════════════════════════════════
+-- 0013_motivos_aporte.sql
+-- ═══════════════════════════════════════════════════════════════════════════════
+
+-- 0013 — Los motivos del aporte dejan de repetir el nombre del aporte.
+--
+-- La pantalla ahora muestra el aporte como etiqueta al lado del complemento ("Aporte
+-- 316L"), asi que el motivo ya no tiene que nombrarlo: quedaba "Aporte 316L · Aporte 316L
+-- para conservar el molibdeno...". Pasaba con los tres grados.
+--
+-- El contenido tecnico se preserva palabra por palabra; se saca solo la mencion repetida.
+--
+-- El seed entra con `on conflict do nothing`, con lo cual en un proyecto ya sembrado no
+-- alcanza con regenerarlo: hace falta este UPDATE.
+--
+-- Cada UPDATE esta condicionado al texto viejo EXACTO. Si Oficina Tecnica ya edito ese
+-- motivo, la condicion no matchea y su version queda intacta: una migracion no tiene por
+-- que pisar una decision tecnica de otro.
+
+update aporte_por_grado
+set motivo = 'Sobre-aleado: compensa la dilución; es el estándar de los austeníticos 18/8.'
+where grado = '304'
+  and motivo = '308L sobre-aleado: compensa la dilución; aporte estándar de austeníticos 18/8.';
+
+update aporte_por_grado
+set motivo = '25/20: mantiene el alto Cr/Ni y la resistencia en caliente.'
+where grado = '310'
+  and motivo = 'Aporte 310 (25/20) para mantener el alto Cr/Ni y la resistencia en caliente.';
+
+update aporte_por_grado
+set motivo = 'Conserva el molibdeno y la resistencia al picado por cloruros.'
+where grado = '316'
+  and motivo = 'Aporte 316L para conservar el molibdeno y la resistencia al picado por cloruros.';
+
+-- ═══════════════════════════════════════════════════════════════════════════════
 -- seed.sql — taxonomia, reglas y procesos
 -- ═══════════════════════════════════════════════════════════════════════════════
 
@@ -1292,9 +1326,9 @@ on conflict do nothing;
 
 -- Aporte de soldadura por familia de grado.
 insert into aporte_por_grado (grado, aporte, motivo) values
-  ('304', '308L', '308L sobre-aleado: compensa la dilución; aporte estándar de austeníticos 18/8.'),
-  ('310', '310', 'Aporte 310 (25/20) para mantener el alto Cr/Ni y la resistencia en caliente.'),
-  ('316', '316L', 'Aporte 316L para conservar el molibdeno y la resistencia al picado por cloruros.')
+  ('304', '308L', 'Sobre-aleado: compensa la dilución; es el estándar de los austeníticos 18/8.'),
+  ('310', '310', '25/20: mantiene el alto Cr/Ni y la resistencia en caliente.'),
+  ('316', '316L', 'Conserva el molibdeno y la resistencia al picado por cloruros.')
 on conflict (grado) do nothing;
 
 -- La columna Calidad del catalogo trae 304L / 316L / 310S, no 304 / 316 / 310.

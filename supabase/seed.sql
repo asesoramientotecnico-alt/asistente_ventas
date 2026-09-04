@@ -425,9 +425,9 @@ on conflict do nothing;
 
 -- Aporte de soldadura por familia de grado.
 insert into aporte_por_grado (grado, aporte, motivo) values
-  ('304', '308L', '308L sobre-aleado: compensa la dilución; aporte estándar de austeníticos 18/8.'),
-  ('310', '310', 'Aporte 310 (25/20) para mantener el alto Cr/Ni y la resistencia en caliente.'),
-  ('316', '316L', 'Aporte 316L para conservar el molibdeno y la resistencia al picado por cloruros.')
+  ('304', '308L', 'Sobre-aleado: compensa la dilución; es el estándar de los austeníticos 18/8.'),
+  ('310', '310', '25/20: mantiene el alto Cr/Ni y la resistencia en caliente.'),
+  ('316', '316L', 'Conserva el molibdeno y la resistencia al picado por cloruros.')
 on conflict (grado) do nothing;
 
 -- La columna Calidad del catalogo trae 304L / 316L / 310S, no 304 / 316 / 310.

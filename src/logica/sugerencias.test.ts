@@ -82,15 +82,22 @@ describe("motivoConAporte", () => {
   it("antepone la justificacion del aporte al motivo del complemento", () => {
     const motivo = motivoConAporte("Para unir los tramos.", aporte316);
     expect(motivo).toBe(
-      "Aporte 316L para conservar el molibdeno y la resistencia al picado por cloruros. Para unir los tramos.",
+      "Conserva el molibdeno y la resistencia al picado por cloruros. Para unir los tramos.",
     );
   });
 
-  it("no duplica el nombre del aporte: los tres motivos del JSON ya lo nombran", () => {
+  /**
+   * La pantalla muestra el aporte como etiqueta ("Aporte 316L") al lado del complemento.
+   * Si el motivo tambien lo nombra, el asesor lee el mismo dato dos veces seguidas.
+   * El primer arreglo saco el prefijo de la composicion, pero los motivos del JSON
+   * SEGUIAN nombrando el aporte, asi que la repeticion quedo entre la etiqueta y el
+   * texto. Este test cubre lo que se ve en pantalla, etiqueta incluida.
+   */
+  it("el numero del aporte aparece una sola vez entre la etiqueta y el motivo", () => {
     for (const [grado, a] of Object.entries(reglas.aporte_por_grado)) {
-      const motivo = motivoConAporte("Para unir los tramos.", a);
-      const veces = motivo.split(a.aporte).length - 1;
-      expect(veces, `el aporte de ${grado} aparece ${veces} veces`).toBe(1);
+      const enPantalla = `Aporte ${a.aporte} ${motivoConAporte("Para unir los tramos.", a)}`;
+      const veces = enPantalla.split(a.aporte).length - 1;
+      expect(veces, `el aporte de ${grado} aparece ${veces} veces en pantalla`).toBe(1);
     }
   });
 
@@ -107,7 +114,7 @@ describe("aplicarAporte", () => {
     const aporte = con.find((c) => c.nombre === "Consumible de aporte");
     const bridas = con.find((c) => c.nombre === "Bridas");
 
-    expect(aporte?.motivo).toContain("308L sobre-aleado");
+    expect(aporte?.motivo).toContain("compensa la dilución");
     expect(bridas?.motivo).toBe("Conexiones desmontables a equipos y válvulas.");
   });
 
@@ -165,6 +172,6 @@ describe("prepararSugerencias", () => {
 
     expect(c.map((x) => x.prioridad)).toEqual(["oblig", "oblig", "oblig", "reco"]);
     expect(c.map((x) => x.nombre)).not.toContain("Abrasivos");
-    expect(c.find((x) => x.dependeDelGrado)?.motivo).toContain("conservar el molibdeno");
+    expect(c.find((x) => x.dependeDelGrado)?.motivo).toContain("Conserva el molibdeno");
   });
 });

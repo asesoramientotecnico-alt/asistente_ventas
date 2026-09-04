@@ -235,6 +235,33 @@ begin
 end;
 $$;
 
+-- ── Motivos del aporte (0013) ───────────────────────────────────────────────────────
+do $$
+begin
+  -- El seed ya trae los textos corregidos, y 0013 no tiene nada que hacer sobre ellos.
+  assert (select motivo from aporte_por_grado where grado = '316')
+         = 'Conserva el molibdeno y la resistencia al picado por cloruros.',
+    'el motivo del aporte 316 no tiene que nombrar al aporte';
+  assert not exists (
+    select 1 from aporte_por_grado where position(aporte in motivo) > 0
+  ), 'ningun motivo puede repetir el nombre de su propio aporte: se muestra como etiqueta';
+end;
+$$;
+
+-- Una edicion de Oficina Tecnica sobrevive a que 0013 se vuelva a aplicar: el UPDATE esta
+-- condicionado al texto viejo exacto.
+update aporte_por_grado set motivo = 'Texto propio de Oficina Tecnica.' where grado = '316';
+\i supabase/migrations/0013_motivos_aporte.sql
+do $$
+begin
+  assert (select motivo from aporte_por_grado where grado = '316') = 'Texto propio de Oficina Tecnica.',
+    '0013 piso una edicion de Oficina Tecnica';
+end;
+$$;
+update aporte_por_grado
+set motivo = 'Conserva el molibdeno y la resistencia al picado por cloruros.'
+where grado = '316';
+
 -- ── Activacion y rollback de batch ──────────────────────────────────────────────────
 -- Va al final: deja el batch activo como estaba para no arrastrar efectos.
 select activar_batch('aaaaaaaa-0000-0000-0000-000000000002');
