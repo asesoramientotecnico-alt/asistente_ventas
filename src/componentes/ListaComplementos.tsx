@@ -8,7 +8,12 @@ import { EtiquetaPrioridad } from "./EtiquetaPrioridad";
 import { useCarrito, type ItemCarrito } from "@/carrito/estado";
 import { clienteNavegador } from "@/datos/supabase-navegador";
 import { registrarSugerencias, type SugerenciaMostrada } from "@/datos/trazabilidad";
-import { claveSeleccion, seleccionInicial, type ComplementoSugerido } from "@/logica/sugerencias";
+import {
+  claveSeleccion,
+  seleccionInicial,
+  type Aporte,
+  type ComplementoSugerido,
+} from "@/logica/sugerencias";
 
 const numero = (n: number) => n.toLocaleString("es-AR");
 
@@ -18,15 +23,15 @@ export function ListaComplementos({
   complementos,
   grados,
   grado,
-  gradoSinAporte,
+  aporte,
 }: {
   tipo: string;
   nombreTipo: string;
   complementos: readonly ComplementoSugerido[];
   grados: ReadonlyArray<{ grado: string; items: number }>;
   grado: string | null;
-  /** El grado elegido no tiene aporte declarado por Oficina Técnica. */
-  gradoSinAporte: boolean;
+  /** Aporte del grado elegido, o null si Oficina Técnica no lo definió para ese grado. */
+  aporte: Aporte | null;
 }) {
   const router = useRouter();
   const ruta = usePathname();
@@ -137,7 +142,7 @@ export function ListaComplementos({
             </p>
           </div>
 
-          {gradoSinAporte && (
+          {grado !== null && aporte === null && (
             <p className="mt-4 rounded-md border border-aviso-200 bg-aviso-50 p-3 text-sm text-aviso-900">
               Para <strong>{grado}</strong> no hay aporte definido por Oficina Técnica. El
               consumible se sugiere igual, pero sin justificación de grado: confirmalo antes de
@@ -172,6 +177,12 @@ export function ListaComplementos({
                   <span className="flex flex-wrap items-center gap-x-3 gap-y-1.5">
                     <span className="text-lg font-semibold">{c.nombre}</span>
                     <EtiquetaPrioridad prioridad={c.prioridad} />
+                    {/* El aporte va como dato, no metido en la frase del motivo. */}
+                    {c.dependeDelGrado && aporte !== null && (
+                      <span className="shrink-0 rounded bg-acento-50 px-2 py-0.5 text-xs font-semibold text-acento-700">
+                        Aporte {aporte.aporte}
+                      </span>
+                    )}
                     <span className="text-sm text-texto-tenue tabular">
                       {marcadasDelGrupo} de {c.familias.length}
                     </span>

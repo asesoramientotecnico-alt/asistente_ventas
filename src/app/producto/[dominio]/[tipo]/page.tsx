@@ -57,7 +57,7 @@ export default async function Complementos({
           complementos={complementos}
           grados={grados}
           grado={grado}
-          gradoSinAporte={grado !== null && aporte === null}
+          aporte={aporte}
         />
       )}
 

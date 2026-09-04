@@ -55,14 +55,18 @@ export function ordenarPorPrioridad<T extends { prioridad: Prioridad }>(items: r
 
 /**
  * Reescribe el motivo del complemento de aporte con la justificacion del grado elegido.
- * Misma composicion que el original en Python.
+ *
+ * A diferencia del original en Python, NO prefija "Aporte 316L:": los tres motivos de
+ * `aporte_por_grado` ya nombran el aporte en su primera frase, con lo cual el prefijo
+ * producia "Aporte 316L: Aporte 316L para conservar el molibdeno...". El aporte se
+ * muestra aparte, como etiqueta, que es mas claro que meterlo en el texto.
  *
  * Si el grado no tiene aporte definido, el motivo queda como esta: no se inventa una
  * justificacion tecnica para un grado sobre el que Oficina Tecnica no se pronuncio.
  */
 export function motivoConAporte(motivo: string, aporte: Aporte | null): string {
   if (aporte === null) return motivo;
-  return `Aporte ${aporte.aporte}: ${aporte.motivo} ${motivo}`.trim();
+  return `${aporte.motivo} ${motivo}`.trim();
 }
 
 export function aplicarAporte(

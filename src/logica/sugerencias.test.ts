@@ -79,11 +79,19 @@ describe("filtrarPorCatalogo", () => {
 describe("motivoConAporte", () => {
   const aporte316 = reglas.aporte_por_grado["316"];
 
-  it("prefija la justificacion del aporte al motivo del complemento", () => {
+  it("antepone la justificacion del aporte al motivo del complemento", () => {
     const motivo = motivoConAporte("Para unir los tramos.", aporte316);
     expect(motivo).toBe(
-      "Aporte 316L: Aporte 316L para conservar el molibdeno y la resistencia al picado por cloruros. Para unir los tramos.",
+      "Aporte 316L para conservar el molibdeno y la resistencia al picado por cloruros. Para unir los tramos.",
     );
+  });
+
+  it("no duplica el nombre del aporte: los tres motivos del JSON ya lo nombran", () => {
+    for (const [grado, a] of Object.entries(reglas.aporte_por_grado)) {
+      const motivo = motivoConAporte("Para unir los tramos.", a);
+      const veces = motivo.split(a.aporte).length - 1;
+      expect(veces, `el aporte de ${grado} aparece ${veces} veces`).toBe(1);
+    }
   });
 
   it("sin aporte definido deja el motivo como esta", () => {
@@ -99,7 +107,7 @@ describe("aplicarAporte", () => {
     const aporte = con.find((c) => c.nombre === "Consumible de aporte");
     const bridas = con.find((c) => c.nombre === "Bridas");
 
-    expect(aporte?.motivo).toContain("Aporte 308L");
+    expect(aporte?.motivo).toContain("308L sobre-aleado");
     expect(bridas?.motivo).toBe("Conexiones desmontables a equipos y válvulas.");
   });
 
@@ -157,6 +165,6 @@ describe("prepararSugerencias", () => {
 
     expect(c.map((x) => x.prioridad)).toEqual(["oblig", "oblig", "oblig", "reco"]);
     expect(c.map((x) => x.nombre)).not.toContain("Abrasivos");
-    expect(c.find((x) => x.dependeDelGrado)?.motivo).toContain("Aporte 316L");
+    expect(c.find((x) => x.dependeDelGrado)?.motivo).toContain("conservar el molibdeno");
   });
 });
