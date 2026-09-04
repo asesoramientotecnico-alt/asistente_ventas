@@ -11,11 +11,13 @@
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "test:watch": "vitest",
-    "verificar": "pnpm typecheck && pnpm lint && pnpm seed:verificar && pnpm test",
+    "verificar": "pnpm typecheck && pnpm lint && pnpm seed:verificar && pnpm instalador:verificar && pnpm test",
     "verificar:conteos": "node --experimental-strip-types scripts/verificar-conteos.ts",
     "probar:migraciones": "bash scripts/probar-migraciones.sh",
     "seed:generar": "node --experimental-strip-types scripts/generar-seed.ts",
-    "seed:verificar": "node --experimental-strip-types scripts/generar-seed.ts --verificar"
+    "seed:verificar": "node --experimental-strip-types scripts/generar-seed.ts --verificar",
+    "instalador:generar": "node --experimental-strip-types scripts/generar-instalador.ts",
+    "instalador:verificar": "node --experimental-strip-types scripts/generar-instalador.ts --verificar"
   },
   "dependencies": {
     "@supabase/ssr": "^0.12.5",
