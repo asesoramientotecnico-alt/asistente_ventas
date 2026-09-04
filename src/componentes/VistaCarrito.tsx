@@ -1,19 +1,30 @@
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
 import { EtiquetaPrioridad } from "./EtiquetaPrioridad";
+import { PanelLinks } from "./PanelLinks";
 import { useCarrito } from "@/carrito/estado";
 import { ORDEN_PRIORIDAD } from "@/logica/sugerencias";
+import type { ConfigEcommerce, LinkCategoria } from "@/logica/links";
 
 /**
- * Checklist de lo acumulado, agrupado por prioridad.
+ * Checklist de lo acumulado, agrupado por prioridad. Al confirmar aparece el panel de
+ * links.
  *
- * El panel de links —`Abrir todos` y `Copiar lista`— es el bloque 8: necesita el
- * resolvedor, y el resolvedor necesita la configuración del ecommerce, que todavía no
- * está cargada.
+ * La resolucion de links se hace aca y no en el servidor porque el carrito vive en el
+ * navegador: el servidor no sabe que junto el asesor. La config y las URLs propias de las
+ * 69 familias vienen del servidor de una sola vez.
  */
-export function VistaCarrito() {
+export function VistaCarrito({
+  config,
+  links,
+}: {
+  config: ConfigEcommerce;
+  links: Readonly<Record<string, LinkCategoria>>;
+}) {
   const { items, listo, quitar, vaciar } = useCarrito();
+  const [confirmado, setConfirmado] = useState(false);
 
   if (!listo) return <p className="text-slate-600">Cargando…</p>;
 
@@ -36,7 +47,7 @@ export function VistaCarrito() {
   );
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-6">
       <ul className="divide-y divide-slate-100 rounded-lg border border-slate-200 bg-white">
         {ordenados.map((i) => (
           <li key={i.clave} className="flex items-start gap-3 p-4">
@@ -53,7 +64,10 @@ export function VistaCarrito() {
             </div>
             <button
               type="button"
-              onClick={() => quitar(i.clave)}
+              onClick={() => {
+                quitar(i.clave);
+                setConfirmado(false);
+              }}
               className="text-sm text-slate-500 hover:text-slate-900 hover:underline"
             >
               Quitar
@@ -63,18 +77,31 @@ export function VistaCarrito() {
       </ul>
 
       <div className="flex flex-wrap items-center gap-4">
-        <button type="button" onClick={vaciar} className="text-sm text-slate-600 hover:underline">
-          Vaciar el carrito
-        </button>
+        {!confirmado && (
+          <button
+            type="button"
+            onClick={() => setConfirmado(true)}
+            className="rounded-md bg-slate-900 px-4 py-2 text-sm font-medium text-white"
+          >
+            Generar los links ({items.length})
+          </button>
+        )}
         <Link href="/producto" className="text-sm text-slate-600 hover:underline">
           Seguir agregando
         </Link>
+        <button
+          type="button"
+          onClick={() => {
+            vaciar();
+            setConfirmado(false);
+          }}
+          className="text-sm text-slate-600 hover:underline"
+        >
+          Vaciar el carrito
+        </button>
       </div>
 
-      <p className="rounded-md bg-slate-100 p-3 text-sm text-slate-700">
-        El panel de links al ecommerce —<strong>Abrir todos</strong> y{" "}
-        <strong>Copiar lista</strong>— es el bloque 8 de la Fase 1.
-      </p>
+      {confirmado && <PanelLinks items={ordenados} config={config} links={links} />}
     </div>
   );
 }
