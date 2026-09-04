@@ -224,6 +224,17 @@ begin
 end;
 $$;
 
+do $$
+begin
+  assert (select grado from grados_de_categoria('cano')) = '304',
+    'grados_de_categoria tiene que devolver los grados del batch activo';
+  assert (select count(*) from grados_de_categoria('tungsteno')) = 0,
+    'una familia sin grado en Calidad no aporta grados al selector';
+  assert (select count(*) from grados_de_categoria('brida')) = 0,
+    'una familia sin items no ofrece grados';
+end;
+$$;
+
 -- ── Activacion y rollback de batch ──────────────────────────────────────────────────
 -- Va al final: deja el batch activo como estaba para no arrastrar efectos.
 select activar_batch('aaaaaaaa-0000-0000-0000-000000000002');

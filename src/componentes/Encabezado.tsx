@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type { Sesion } from "@/tipos/dominio";
 import { rolAlcanza } from "@/logica/acceso";
+import { ContadorCarrito } from "./ContadorCarrito";
 
 const ETIQUETA_ROL = {
   asesor: "Asesor",
@@ -25,6 +26,7 @@ export function Encabezado({ sesion }: { sesion: Sesion }) {
         )}
 
         <div className="ml-auto flex items-center gap-3 text-sm text-slate-600">
+          <ContadorCarrito />
           <span>
             {perfil.nombre}
             {perfil.sucursal !== null && ` · ${perfil.sucursal}`}
