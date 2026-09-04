@@ -13,6 +13,14 @@ export default function Panel() {
             Subir el Excel, validar el layout, previsualizar y activar.
           </p>
         </li>
+        <li>
+          <Link href="/admin/links" className="text-slate-900 hover:underline">
+            Cobertura de links
+          </Link>
+          <p className="text-sm text-slate-600">
+            Qué familias resuelven con su propia URL y cuáles caen en la búsqueda.
+          </p>
+        </li>
       </ul>
     </main>
   );

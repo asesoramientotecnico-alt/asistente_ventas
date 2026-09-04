@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   MAXIMO_PESTANAS_COMODO,
   configCompleta,
@@ -10,6 +10,8 @@ import {
   type LinkCategoria,
 } from "@/logica/links";
 import type { ItemCarrito } from "@/carrito/estado";
+import { clienteNavegador } from "@/datos/supabase-navegador";
+import { marcarLinksGenerados } from "@/datos/trazabilidad";
 
 const ETIQUETA_RESOLUCION = {
   url_fija: "URL propia",
@@ -41,6 +43,17 @@ export function PanelLinks({
   const conLink = resueltos.filter((r) => r.link !== null);
   const sinLink = resueltos.filter((r) => r.link === null);
   const demasiadas = conLink.length > MAXIMO_PESTANAS_COMODO;
+
+  // Traza: que sugerencias llegaron a tener un link. Se marca una sola vez, cuando el
+  // panel se muestra, que es el momento en que el link efectivamente se genero.
+  const yaMarcadas = useRef(false);
+  useEffect(() => {
+    if (yaMarcadas.current) return;
+    const ids = conLink.map((r) => r.item.trazaId).filter((id): id is string => id !== null);
+    if (ids.length === 0) return;
+    yaMarcadas.current = true;
+    void marcarLinksGenerados(clienteNavegador(), ids);
+  }, [conLink]);
 
   function abrirTodos() {
     let fallaron = 0;

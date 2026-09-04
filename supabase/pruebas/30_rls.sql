@@ -72,6 +72,42 @@ select pruebas.debe_fallar(
   $$insert into sesion (usuario_id, puerta)
     values ('44444444-4444-4444-4444-444444444444', 'producto')$$,
   'un asesor abriendo una sesion a nombre de otro');
+
+-- Registro completo de una consulta: lo que se mostro y lo que el asesor acepto.
+create temp table traza as
+select * from registrar_sugerencias('producto', 'cano', '316L', $json$[
+  {"clave": "a:varilla_tig",    "complemento_id": null, "categoria": "varilla_tig",    "prioridad": "oblig", "aceptada": true},
+  {"clave": "a:electrodo",      "complemento_id": null, "categoria": "electrodo_revestido", "prioridad": "oblig", "aceptada": false},
+  {"clave": "b:brida",          "complemento_id": null, "categoria": "brida",          "prioridad": "reco",  "aceptada": false},
+  {"clave": "c:inexistente",    "complemento_id": null, "categoria": "no_existe",      "prioridad": "opc",   "aceptada": false}
+]$json$::jsonb);
+
+do $$
+begin
+  assert (select count(*) from traza) = 3,
+    'una familia que ya no existe se saltea, pero el resto se registra';
+  assert (select count(*) from sesion_sugerencia ss
+          join sesion s on s.id = ss.sesion_id
+          where s.grado = '316L' and ss.aceptada) = 1,
+    'tiene que quedar registrada una sola sugerencia aceptada';
+  assert (select count(*) from sesion_sugerencia ss
+          join sesion s on s.id = ss.sesion_id
+          where s.grado = '316L' and not ss.aceptada) = 2,
+    'y las dos que el asesor no acepto, que son las que dicen que regla no sirve';
+  assert (select usuario_id from sesion where grado = '316L') = '22222222-2222-2222-2222-222222222222',
+    'la sesion se atribuye al asesor que la registro, no a otro';
+end;
+$$;
+
+-- El asesor puede marcar que llego a generar el link de sus propias sugerencias.
+update sesion_sugerencia set generado_link = true
+where id in (select sugerencia_id from traza);
+do $$
+begin
+  assert (select count(*) from sesion_sugerencia where generado_link) = 3,
+    'el asesor tiene que poder marcar sus propias sugerencias como generadas';
+end;
+$$;
 commit;
 
 begin;
@@ -87,6 +123,9 @@ select pruebas.debe_fallar(
   $$insert into sesion_sugerencia (sesion_id, categoria_id, prioridad)
     select 'bbbbbbbb-0000-0000-0000-000000000002', id, 'reco' from categoria where codigo = 'cano'$$,
   'un asesor sumando sugerencias a la sesion de otro');
+select pruebas.debe_no_afectar(
+  $$update sesion_sugerencia set generado_link = false$$,
+  'un asesor tocando la traza de otro');
 commit;
 
 -- ── Perfil propio: se edita el nombre, no el rol ────────────────────────────────────

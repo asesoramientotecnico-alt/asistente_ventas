@@ -5,6 +5,8 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { EtiquetaPrioridad } from "./EtiquetaPrioridad";
 import { useCarrito, type ItemCarrito } from "@/carrito/estado";
+import { clienteNavegador } from "@/datos/supabase-navegador";
+import { registrarSugerencias, type SugerenciaMostrada } from "@/datos/trazabilidad";
 import { claveSeleccion, seleccionInicial, type ComplementoSugerido } from "@/logica/sugerencias";
 
 const numero = (n: number) => n.toLocaleString("es-AR");
@@ -56,25 +58,52 @@ export function ListaComplementos({
     });
   }
 
-  function sumarAlCarrito() {
-    const items: ItemCarrito[] = [];
+  async function sumarAlCarrito() {
+    // Se registran TODAS las que se mostraron, marcando cuales acepto: las que desmarco
+    // son justamente las que dicen que regla no sirve.
+    const mostradas: SugerenciaMostrada[] = [];
+    const items: Array<Omit<ItemCarrito, "trazaId">> = [];
+
     for (const c of complementos) {
       for (const f of c.familias) {
         const clave = claveSeleccion(c.id, f.codigo);
-        if (!marcadas.has(clave)) continue;
-        items.push({
+        const aceptada = marcadas.has(clave);
+
+        mostradas.push({
           clave,
+          complemento_id: c.id,
           categoria: f.codigo,
-          etiqueta: f.etiqueta,
           prioridad: c.prioridad,
-          motivo: c.motivo,
-          origen: { tipo, nombreTipo, grado },
-          complementoId: c.id,
+          aceptada,
         });
+
+        if (aceptada) {
+          items.push({
+            clave,
+            categoria: f.codigo,
+            etiqueta: f.etiqueta,
+            prioridad: c.prioridad,
+            motivo: c.motivo,
+            origen: { tipo, nombreTipo, grado },
+            complementoId: c.id,
+          });
+        }
       }
     }
-    agregar(items);
+
+    // El carrito se llena primero: la traza no puede demorar lo que el asesor ve.
+    agregar(items.map((i) => ({ ...i, trazaId: null })));
     setSumadas(items.length);
+
+    const ids = await registrarSugerencias(clienteNavegador(), {
+      puerta: "producto",
+      tipo,
+      grado,
+      sugerencias: mostradas,
+    });
+    if (Object.keys(ids).length > 0) {
+      agregar(items.map((i) => ({ ...i, trazaId: ids[i.clave] ?? null })));
+    }
   }
 
   return (
@@ -174,7 +203,7 @@ export function ListaComplementos({
       <section className="flex flex-wrap items-center gap-3">
         <button
           type="button"
-          onClick={sumarAlCarrito}
+          onClick={() => void sumarAlCarrito()}
           disabled={marcadas.size === 0}
           className="rounded-md bg-slate-900 px-4 py-2 text-sm font-medium text-white disabled:opacity-40"
         >

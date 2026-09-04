@@ -34,6 +34,8 @@ export interface ItemCarrito {
     readonly grado: string | null;
   };
   readonly complementoId: string | null;
+  /** Fila de `sesion_sugerencia` que registro esta sugerencia. Null si el registro fallo. */
+  readonly trazaId: string | null;
 }
 
 const VACIO: ItemCarrito[] = [];
