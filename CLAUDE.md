@@ -27,8 +27,12 @@ Estos no se negocian. Si una tarea parece pedir romper alguno, parar y preguntar
    de teflón ni fluido de corte por más lógico que parezca: Famiq no los vende, y sugerirlos
    destruye la confianza del asesor en la herramienta.
 
-2. **Sugerencias a nivel familia, nunca SKU individual.** La bajada a producto la hace el
-   ecommerce. No inventar códigos de material.
+2. **La app enumera, el asesor elige.** La sugerencia se decide a nivel familia. A partir de
+   F2 la app además puede *listar* los ítems del catálogo importado que quedan después de
+   filtrar por medida y grado, con su descripción y su link. Lo que no puede hacer:
+   premarcar un ítem, presentarlo como "el correcto", ni afirmar precio o stock — el Excel
+   no los trae y el catálogo es la foto del día del import. Nunca inventar códigos de
+   material: solo se muestran los que vinieron en el archivo.
 
 3. **La app no decide el grado de acero.** Sugiere el típico del proceso, muestra el motivo,
    y el asesor lo puede cambiar siempre. Para un servicio puntual crítico, la app deriva a
