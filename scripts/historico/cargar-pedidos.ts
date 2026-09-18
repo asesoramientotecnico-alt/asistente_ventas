@@ -78,21 +78,48 @@ export function cargarDossier(ruta = RUTA_DOSSIER): Map<string, FilaDossier> {
   return mapa;
 }
 
-/** "12,50" o "12.50" -> 12.5. El 2025 y el 2026 coinciden en punto decimal, pero no confiar. */
-function numero(s: string): number {
-  const limpio = s.trim().replace(",", ".");
+/**
+ * "4,000.000" -> 4000. La coma es separador de MILES y el punto el decimal.
+ *
+ * 8.932 lineas del historico vienen asi, y son las de mayor volumen. Un replace de coma
+ * por punto las convierte en "4.000.000" -> NaN, y devolverlas como 0 en silencio borra
+ * justo las ventas mas grandes. Por eso devuelve null y el que llama lo cuenta.
+ */
+function numero(s: string): number | null {
+  const limpio = s.trim().replace(/,/g, "");
+  if (limpio === "") return null;
   const n = Number(limpio);
-  return Number.isFinite(n) ? n : 0;
+  return Number.isFinite(n) ? n : null;
 }
 
-/** "1/1/25" o "1/1/2026" -> Date. Ambos archivos vienen D/M/AA(AA), sin ceros a la izquierda. */
-function fechaDDMMAA(s: string): Date {
-  const partes = s.trim().split("/").map(Number);
-  const d = partes[0] ?? 1;
-  const m = partes[1] ?? 1;
-  const a = partes[2] ?? 2000;
-  const anio = a < 100 ? 2000 + a : a;
-  return new Date(anio, m - 1, d);
+/**
+ * Los dos archivos traen la fecha con el orden INVERTIDO. No es un detalle menor: tratarlos
+ * igual corrompe en silencio las ventanas de 7 y 30 dias.
+ *
+ *   pedidos_2025.xlsx -> M/D/AA    (primer campo llega a 12, el segundo a 31)
+ *   pedidos_2026.csv  -> D/M/AAAA  (primer campo llega a 31, el segundo a 8)
+ *
+ * Verificado sobre los dos archivos completos. Si se regenera el export, `validarAnio()`
+ * avisa si el orden cambio en vez de dejar pasar fechas mal parseadas.
+ */
+type OrdenFecha = "MDA" | "DMA";
+
+function parsearFecha(s: string, orden: OrdenFecha): Date | null {
+  const partes = s.trim().split("/");
+  if (partes.length !== 3) return null;
+  const n = partes.map(Number);
+  if (n.some((x) => !Number.isFinite(x))) return null;
+
+  const [p0, p1, p2] = n as [number, number, number];
+  const mes = orden === "MDA" ? p0 : p1;
+  const dia = orden === "MDA" ? p1 : p0;
+  const anio = p2 < 100 ? 2000 + p2 : p2;
+
+  if (mes < 1 || mes > 12 || dia < 1 || dia > 31) return null;
+  const f = new Date(anio, mes - 1, dia);
+  // Rebote: new Date(2025, 1, 30) da 2 de marzo. Si el dia no sobrevive, la fecha no existia.
+  if (f.getMonth() !== mes - 1 || f.getDate() !== dia) return null;
+  return f;
 }
 
 function resolverCategoria(materialId: string, dossier: ReadonlyMap<string, FilaDossier>): string {
@@ -118,13 +145,20 @@ function cargar2025(ruta: string, dossier: ReadonlyMap<string, FilaDossier>): Li
     const f = filas[i] as string[];
     const materialId = String(f[3] ?? "").trim();
     if (materialId === "") continue;
+    const fecha = parsearFecha(String(f[0] ?? ""), "MDA");
+    if (fecha === null) {
+      descartes.fechaIlegible++;
+      continue;
+    }
+    const cantidad = numero(String(f[6] ?? ""));
+    if (cantidad === null) descartes.cantidadIlegible++;
     out.push({
-      fecha: fechaDDMMAA(String(f[0] ?? "")),
+      fecha,
       anioOrigen: 2025,
       clienteId: String(f[1] ?? "").trim(),
       documento: String(f[2] ?? "").trim(),
       materialId,
-      cantidad: numero(String(f[6] ?? "0")),
+      cantidad: cantidad ?? 0,
       categoria: resolverCategoria(materialId, dossier),
     });
   }
@@ -140,22 +174,52 @@ function cargar2026(ruta: string, dossier: ReadonlyMap<string, FilaDossier>): Li
     const c = (lineas[i] ?? "").split(";");
     const materialId = (c[4] ?? "").trim();
     if (materialId === "") continue;
+    const fecha = parsearFecha(c[0] ?? "", "DMA");
+    if (fecha === null) {
+      descartes.fechaIlegible++;
+      continue;
+    }
+    const cantidad = numero(c[5] ?? "");
+    if (cantidad === null) descartes.cantidadIlegible++;
     out.push({
-      fecha: fechaDDMMAA(c[0] ?? ""),
+      fecha,
       anioOrigen: 2026,
       clienteId: (c[1] ?? "").trim(),
       documento: (c[3] ?? "").trim(),
       materialId,
-      cantidad: numero(c[5] ?? "0"),
+      cantidad: cantidad ?? 0,
       categoria: resolverCategoria(materialId, dossier),
     });
   }
   return out;
 }
 
+export interface Descartes {
+  fechaIlegible: number;
+  cantidadIlegible: number;
+}
+
+/** Contador compartido por los dos cargadores. Se resetea en cada cargarHistorico(). */
+const descartes: Descartes = { fechaIlegible: 0, cantidadIlegible: 0 };
+
 export interface HistoricoCargado {
   readonly lineas: readonly LineaPedido[];
   readonly dossier: ReadonlyMap<string, FilaDossier>;
+  readonly descartes: Readonly<Descartes>;
+}
+
+/**
+ * Toda linea tiene que caer en el anio de su archivo. Si el export se regenera con otro
+ * orden de fecha, esto falla fuerte en vez de dejar pasar ventanas corrompidas.
+ */
+function validarAnio(lineas: readonly LineaPedido[]): void {
+  const fuera = lineas.filter((l) => l.fecha.getFullYear() !== l.anioOrigen);
+  if (fuera.length === 0) return;
+  const m = fuera.slice(0, 3).map((l) => `${l.fecha.toISOString().slice(0, 10)} (archivo ${l.anioOrigen})`);
+  throw new Error(
+    `${fuera.length} lineas con fecha fuera del anio de su archivo. ` +
+      `Probablemente cambio el orden D/M vs M/D en el export. Ejemplos: ${m.join(", ")}`,
+  );
 }
 
 export function cargarHistorico(opts?: {
@@ -175,9 +239,13 @@ export function cargarHistorico(opts?: {
     if (!existsSync(ruta)) throw new Error(`Falta el archivo de ${etiqueta}: ${ruta}`);
   }
 
+  descartes.fechaIlegible = 0;
+  descartes.cantidadIlegible = 0;
+
   const dossier = cargarDossier(rutaDossier);
   const lineas = [...cargar2025(ruta2025, dossier), ...cargar2026(ruta2026, dossier)];
-  return { lineas, dossier };
+  validarAnio(lineas);
+  return { lineas, dossier, descartes: { ...descartes } };
 }
 
 // Ejecutado directo (no importado): imprime un resumen minimo de carga.
