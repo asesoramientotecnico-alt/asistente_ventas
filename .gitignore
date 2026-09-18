@@ -10,6 +10,12 @@ coverage/
 data/*.xlsx
 data/*.xls
 
+# Histórico de pedidos para el analisis de F4 (PLAN-F4.md): datos de clientes reales.
+# Se procesa offline, nunca entra a la base salvo las reglas candidatas ya aprobadas.
+data/pedidos_*.csv
+data/pedidos_*.xlsx
+data/link_producto.xlsx
+
 # artefactos de build
 tsconfig.tsbuildinfo
 next-env.d.ts
