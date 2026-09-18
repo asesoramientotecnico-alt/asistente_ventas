@@ -46,31 +46,64 @@ cambia el alcance de seguridad del proyecto entero.
 
 ---
 
-## 3. Qué necesito en el export
+## 3. El export — lo que efectivamente llegó
 
-Una fila por **línea de pedido**. Mínimo indispensable:
+Esta sección se escribió pidiendo campos antes de ver los archivos. Ya llegaron, así que
+queda actualizada con lo que hay de verdad. Lo medido está en el bloque 1
+(`scripts/historico/`).
 
-| Campo | Para qué | Obligatorio |
+**Dos archivos con formatos distintos**, los dos con una fila por línea de comprobante:
+
+| | `data/pedidos_2025.xlsx` | `data/pedidos_2026.csv` |
 |---|---|---|
-| `pedido_id` | Agrupar la canasta | Sí |
-| `fecha` | Ventana temporal y estacionalidad | Sí |
-| `cliente_id` | Agrupar por cliente y armar el listado de oportunidad | Sí |
-| `material_id` | Mapear a familia con el clasificador que ya tenemos | Sí |
-| `cantidad` | Distinguir "compró uno de prueba" de "compró la obra" | Deseable |
-| `sucursal` | Ver si las reglas cambian por sucursal | Deseable |
-| `vendedor_id` | Detectar si el patrón es del cliente o del asesor | Deseable |
+| Formato | xlsx, 1 hoja | CSV `;`, Latin-1 |
+| Líneas | 392.604 | 249.057 |
+| Rango | 1/1/2025 – 31/12/2025 | 1/1/2026 – 31/8/2026 |
+| Columnas | Fecha, Cliente, Documento, Material, Descripción, Gr.Art., Cant.Vta, Creador | Fecha, Cliente, Razón Social, Documento, Material, Cant.Vta, Creador |
 
-### 3.1 Un requisito que es fácil pasar por alto
+Total: **641.661 líneas** en 20 meses.
 
-El clasificador **no funciona con `material_id` solo**: necesita `Negocio`, `Familia`,
-`Tipo` y `Material Desc`. Para los ítems que siguen en el catálogo actual eso se resuelve
-cruzando contra las 16.973 filas ya importadas. Para los **discontinuados** —que en nueve
-meses de histórico van a ser bastantes— no hay de dónde sacarlo.
+`sucursal` y `vendedor_id` **no vienen** en ninguno de los dos. Lo único que se pierde es
+poder distinguir si un patrón es del cliente o de la costumbre del asesor; no bloquea nada.
 
-**Pedir que el export traiga esas cuatro columnas de descripción junto a cada línea.** Si no
-vienen, el análisis se limita a los ítems que todavía están en catálogo y hay que reportar
-qué porcentaje del histórico quedó afuera, porque no es un descarte neutral: lo discontinuado
-tiende a concentrarse en familias enteras.
+### 3.1 Dos trampas de formato, las dos verificadas
+
+1. **El orden de la fecha está invertido entre archivos**: 2025 es `M/D/AA` y 2026 es
+   `D/M/AAAA`. Tratarlos igual no falla, corrompe: `12/31/25` leído como D/M pide el mes 31.
+   Cada cargador declara su orden y `validarAnio()` corta si alguna línea cae fuera del año
+   de su archivo.
+2. **La coma es separador de miles**, no decimal: `4,000.000` son 4000 unidades. Un replace
+   de coma por punto las vuelve `NaN`, y devolverlas como 0 borra justo las ventas más
+   grandes — 8.932 líneas, con la cantidad máxima real en 140.280.
+
+Las dos están cubiertas por tests con strings literales de los archivos.
+
+### 3.2 La cobertura resultó mucho mejor de lo previsto
+
+El plan asumía que los discontinuados se iban a comer una parte grande del histórico y que
+por eso hacía falta pedir `Negocio` / `Familia` / `Tipo` / `Material Desc` en cada línea.
+**No hizo falta**: cruzando `Material` contra `Material_ID` del dossier alcanza.
+
+| | Líneas | % |
+|---|---|---|
+| Clasificadas en alguna de las 69 categorías | 632.721 | **98,6 %** |
+| En el dossier pero `clasificar()` → `'otro'` | 6.975 | 1,1 % |
+| Sin match contra el dossier | 1.965 | 0,3 % |
+
+Y ese 0,3 % casi no son discontinuados: **1.526 líneas son códigos administrativos** de 1 a
+4 dígitos con `Creador = "SIN ASIGNAR"` — `2170` es "corte estándar", `2160` es "Anticipo de
+Cliente". Nunca fueron material. Los discontinuados reales son 439 líneas y 212 materiales.
+
+Las **69 categorías aparecen con pedidos reales**: ninguna familia sembrada está huérfana de
+demanda.
+
+### 3.3 La columna `Creador` no se usa
+
+Trae la familia comercial ya clasificada (`CAÑOS`, `BULONERIA`, `BRIDAS INDUSTRIALES`…),
+pero son 33 valores contra las 69 categorías del clasificador. Se descartó como atajo: el
+análisis tiene que ser comparable contra las 100 reglas sembradas, y para eso la
+granularidad tiene que ser la misma. Se usa solo para diagnóstico, como en el caso de
+`SIN ASIGNAR` de arriba.
 
 ### 3.2 Anonimato
 
@@ -266,18 +299,26 @@ con el histórico apenas esté. El 7 es el único que necesita el panel de regla
 
 Cada una con el default que aplico si no decís otra cosa.
 
-1. **Período.** Definido: **1/1/2025 hasta la fecha del export** (2026 inclusive). Los dos
-   años, para poder validar fuera de muestra según 4.5.
-2. **Pedidos o facturas.** El pedido muestra la intención; la factura, lo que efectivamente
-   salió. **Default:** facturado, porque no arrastra pedidos cancelados ni parciales.
-3. **Devoluciones y notas de crédito.** **Default:** se descuentan; una línea devuelta no
-   cuenta como compra.
-4. **Clientes internos y transferencias entre sucursales.** Ensucian todo el análisis.
-   **Default:** excluidos, y reporto cuántas líneas se fueron por ese filtro.
+1. ~~**Período.**~~ **Resuelto:** 1/1/2025 al 31/8/2026, los dos años, para validar fuera
+   de muestra según 4.5.
+2. **Pedidos o facturas.** Los archivos se llaman "Pedidos" y la columna de agrupación es
+   `Documento`. **Falta confirmar** si son pedidos o comprobantes facturados. Cambia la
+   lectura del resultado: si son pedidos, hay cancelados y parciales adentro.
+3. **Devoluciones y notas de crédito.** No se identificaron en los archivos: no hay columna
+   de tipo de comprobante ni cantidades negativas (mínimo observado: 0). **Falta confirmar**
+   si el reporte ya las excluye o si vienen mezcladas sin marca.
+4. **Clientes internos y transferencias entre sucursales.** Tampoco hay columna que las
+   marque. Lo único detectado son los códigos administrativos de `Creador = "SIN ASIGNAR"`
+   (anticipos, servicios de corte), que quedan afuera solos porque no cruzan contra el
+   dossier. **Falta confirmar** si el reporte ya excluye las transferencias.
 5. **Umbral de soporte.** **Default:** 30 canastas, ajustable después de ver la distribución.
-6. **Dónde vive el análisis.** **Default:** scripts en `scripts/historico/` con salida a
-   planillas, fuera del runtime de la app. La base solo recibe las reglas candidatas cuando
-   Oficina Técnica las aprueba en F2.
+6. **Dónde vive el análisis.** **Resuelto:** `scripts/historico/`, offline, fuera del
+   runtime de la app. La base solo recibe las reglas candidatas cuando Oficina Técnica las
+   aprueba en F2.
+
+Los puntos 2, 3 y 4 no bloquean el bloque 2, pero conviene resolverlos antes de sacar
+conclusiones: si hay pedidos cancelados o notas de crédito mezcladas, inflan el soporte de
+los pares sin que se note.
 
 ---
 

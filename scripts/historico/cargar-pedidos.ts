@@ -85,7 +85,7 @@ export function cargarDossier(ruta = RUTA_DOSSIER): Map<string, FilaDossier> {
  * por punto las convierte en "4.000.000" -> NaN, y devolverlas como 0 en silencio borra
  * justo las ventas mas grandes. Por eso devuelve null y el que llama lo cuenta.
  */
-function numero(s: string): number | null {
+export function numero(s: string): number | null {
   const limpio = s.trim().replace(/,/g, "");
   if (limpio === "") return null;
   const n = Number(limpio);
@@ -102,9 +102,9 @@ function numero(s: string): number | null {
  * Verificado sobre los dos archivos completos. Si se regenera el export, `validarAnio()`
  * avisa si el orden cambio en vez de dejar pasar fechas mal parseadas.
  */
-type OrdenFecha = "MDA" | "DMA";
+export type OrdenFecha = "MDA" | "DMA";
 
-function parsearFecha(s: string, orden: OrdenFecha): Date | null {
+export function parsearFecha(s: string, orden: OrdenFecha): Date | null {
   const partes = s.trim().split("/");
   if (partes.length !== 3) return null;
   const n = partes.map(Number);
