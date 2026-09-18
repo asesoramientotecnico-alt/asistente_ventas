@@ -134,6 +134,18 @@ lift alto y tres casos de respaldo.
 **Default:** no se reporta ningún par con menos de 30 canastas de soporte, y el reporte
 muestra siempre soporte y confianza junto al lift. Nunca el lift solo.
 
+### 4.5 Validación fuera de muestra
+
+El umbral de soporte filtra ruido, pero no alcanza: con 2.346 pares posibles, algunos van a
+pasar el umbral por casualidad.
+
+Como el histórico cubre 2025 completo más 2026 hasta la fecha, se puede partir: **derivar con
+2025, verificar contra 2026**. Un par que es fuerte en 2025 y se sostiene en 2026 es un
+patrón; uno que se cae era ruido. Recién después de esa verificación se calcula la métrica
+final sobre el período completo.
+
+Es la razón principal para pedir los dos años y no solo el último.
+
 ---
 
 ## 5. Los tres entregables
@@ -254,8 +266,8 @@ con el histórico apenas esté. El 7 es el único que necesita el panel de regla
 
 Cada una con el default que aplico si no decís otra cosa.
 
-1. **Período exacto.** ¿Todo 2025 hasta hoy, o arrancamos en una fecha puntual?
-   **Default:** 1/1/2025 hasta la fecha del export.
+1. **Período.** Definido: **1/1/2025 hasta la fecha del export** (2026 inclusive). Los dos
+   años, para poder validar fuera de muestra según 4.5.
 2. **Pedidos o facturas.** El pedido muestra la intención; la factura, lo que efectivamente
    salió. **Default:** facturado, porque no arrastra pedidos cancelados ni parciales.
 3. **Devoluciones y notas de crédito.** **Default:** se descuentan; una línea devuelta no
