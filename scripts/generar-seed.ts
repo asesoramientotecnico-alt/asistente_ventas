@@ -19,6 +19,7 @@ import { CATEGORIA_OTRO } from "../src/logica/clasificador.ts";
 
 const RUTA_REGLAS = "data/crosssell_rules.json";
 const RUTA_PROCESOS = "data/procesos.json";
+const RUTA_CRITERIOS = "data/criterios.json";
 const RUTA_SALIDA = "supabase/seed.sql";
 
 interface Complemento {
@@ -52,6 +53,21 @@ interface Procesos {
 
 const reglas = JSON.parse(readFileSync(RUTA_REGLAS, "utf8")) as Reglas;
 const procesos = (JSON.parse(readFileSync(RUTA_PROCESOS, "utf8")) as Procesos).procesos;
+
+/**
+ * Que tipos preguntan la medida y que pares se filtran por ella. Va en un archivo aparte
+ * y no en `crosssell_rules.json` porque no salio del bot original: es informacion nueva,
+ * medida sobre el catalogo. En F2 pasa a editarse desde el panel.
+ */
+interface Criterios {
+  tipos_con_medida: { codigos: string[] };
+  familias_filtrables_por_medida: { codigos: string[] };
+  dominios_con_medida: { codigos: string[] };
+}
+const criterios = JSON.parse(readFileSync(RUTA_CRITERIOS, "utf8")) as Criterios;
+const TIPOS_CON_MEDIDA = new Set(criterios.tipos_con_medida.codigos);
+const FAMILIAS_POR_MEDIDA = new Set(criterios.familias_filtrables_por_medida.codigos);
+const DOMINIOS_CON_MEDIDA = new Set(criterios.dominios_con_medida.codigos);
 
 const txt = (v: string) => `'${v.replace(/'/g, "''")}'`;
 const bool = (v: boolean) => (v ? "true" : "false");
@@ -132,17 +148,20 @@ on conflict (codigo) do nothing;
   // ── Tipos de producto ─────────────────────────────────────────────────────────────
   const tipos = Object.entries(reglas.tipos);
   s.push(`-- ${tipos.length} disparadores de venta cruzada.
-insert into tipo_producto (codigo, dominio_id, nombre, pregunta_grado, orden)
-select v.codigo, d.id, v.nombre, v.pregunta_grado, v.orden
+--
+-- pregunta_medida sale de data/criterios.json: solo los tipos cuyo catalogo declara la
+-- medida en pulgadas. En los otros el selector no se muestra, porque estaria vacio.
+insert into tipo_producto (codigo, dominio_id, nombre, pregunta_grado, pregunta_medida, orden)
+select v.codigo, d.id, v.nombre, v.pregunta_grado, v.pregunta_medida, v.orden
 from (values`);
   s.push(
     tipos
       .map(
         ([codigo, t], i) =>
-          `  (${txt(codigo)}, ${txt(t.dominio)}, ${txt(t.nombre)}, ${bool(t.pregunta_grado)}, ${i + 1})`,
+          `  (${txt(codigo)}, ${txt(t.dominio)}, ${txt(t.nombre)}, ${bool(t.pregunta_grado)}, ${bool(TIPOS_CON_MEDIDA.has(codigo))}, ${i + 1})`,
       )
       .join(",\n") +
-      `\n) as v(codigo, dominio, nombre, pregunta_grado, orden)
+      `\n) as v(codigo, dominio, nombre, pregunta_grado, pregunta_medida, orden)
 join dominio d on d.codigo = v.dominio
 on conflict (codigo) do nothing;\n`,
   );
@@ -168,18 +187,52 @@ on conflict (tipo_producto_id, nombre) do nothing;\n`,
   );
 
   // ── Familias de cada complemento ──────────────────────────────────────────────────
+  //
+  // El criterio dice COMO se filtra ese par. Es por par y no global: la medida del cano
+  // no filtra el aporte, porque el diametro de una varilla TIG es el de la varilla
+  // (1,60 / 2,40 mm) y no el del cano. Lo que une cano y aporte es el grado.
+  const criterioDe = (tipo: string, categoria: string, dependeDelGrado: boolean): string => {
+    if (dependeDelGrado) return "aporte";
+    const dominioDelTipo = reglas.tipos[tipo]?.dominio ?? "";
+    // La designacion en pulgadas es ambigua ENTRE lineas: una brida industrial de 2"
+    // (60,30 mm) no monta en tubo sanitario de 2" (50,80 mm). Solo se filtra dentro de
+    // las lineas donde la medida es comparable.
+    if (
+      DOMINIOS_CON_MEDIDA.has(dominioDelTipo) &&
+      TIPOS_CON_MEDIDA.has(tipo) &&
+      FAMILIAS_POR_MEDIDA.has(categoria)
+    ) {
+      return "medida";
+    }
+    return "ninguno";
+  };
+
   const familias = complementos.flatMap((c) =>
-    c.familias.map((f, i) => ({ tipo: c.tipo, complemento: c.nombre, categoria: f, orden: i + 1 })),
+    c.familias.map((f, i) => ({
+      tipo: c.tipo,
+      complemento: c.nombre,
+      categoria: f,
+      orden: i + 1,
+      criterio: criterioDe(c.tipo, f, c.depende_del_grado),
+    })),
   );
+  const porMedida = familias.filter((f) => f.criterio === "medida").length;
+  const porAporte = familias.filter((f) => f.criterio === "aporte").length;
   s.push(`-- ${familias.length} familias asociadas a los complementos.
-insert into complemento_categoria (complemento_id, categoria_id, orden)
-select c.id, cat.id, v.orden
+--
+-- criterio sale de data/criterios.json: ${porMedida} pares se filtran por medida,
+-- ${porAporte} por el aporte del grado, el resto no se filtra.
+insert into complemento_categoria (complemento_id, categoria_id, orden, criterio)
+select c.id, cat.id, v.orden, v.criterio::criterio_filtro
 from (values`);
   s.push(
     familias
-      .map((f) => `  (${txt(f.tipo)}, ${txt(f.complemento)}, ${txt(f.categoria)}, ${f.orden})`)
+      .map(
+        (f) =>
+          `  (${txt(f.tipo)}, ${txt(f.complemento)}, ${txt(f.categoria)}, ${f.orden}, ${txt(f.criterio)})`,
+      )
       .join(",\n") +
-      `\n) as v(tipo, complemento, categoria, orden)
+      `\n) as v(tipo, complemento, categoria, orden, criterio)
 join tipo_producto tp on tp.codigo = v.tipo
 join complemento c on c.tipo_producto_id = tp.id and c.nombre = v.complemento
 join categoria cat on cat.codigo = v.categoria

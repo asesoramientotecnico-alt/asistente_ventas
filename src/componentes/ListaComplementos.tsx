@@ -6,6 +6,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { Boton } from "./Boton";
 import { EtiquetaPrioridad } from "./EtiquetaPrioridad";
 import { useCarrito, type ItemCarrito } from "@/carrito/estado";
+import type { ItemsDeFamilia } from "@/datos/items";
 import { clienteNavegador } from "@/datos/supabase-navegador";
 import { registrarSugerencias, type SugerenciaMostrada } from "@/datos/trazabilidad";
 import {
@@ -23,6 +24,9 @@ export function ListaComplementos({
   complementos,
   grados,
   grado,
+  medidas,
+  medida,
+  itemsPorFamilia,
   aporte,
 }: {
   tipo: string;
@@ -30,6 +34,10 @@ export function ListaComplementos({
   complementos: readonly ComplementoSugerido[];
   grados: ReadonlyArray<{ grado: string; items: number }>;
   grado: string | null;
+  medidas: ReadonlyArray<{ medida: string; items: number }>;
+  medida: string | null;
+  /** Ítems del catálogo de cada familia, ya filtrados por el criterio de ese par. */
+  itemsPorFamilia: Readonly<Record<string, ItemsDeFamilia>>;
   /** Aporte del grado elegido, o null si Oficina Técnica no lo definió para ese grado. */
   aporte: Aporte | null;
 }) {
@@ -54,13 +62,17 @@ export function ListaComplementos({
     setSumadas(0);
   }
 
-  // El grado viaja en la URL: la pantalla queda compartible y el motivo del aporte lo
-  // reescribe el servidor con la justificación que corresponde.
-  function elegirGrado(nuevo: string) {
+  // Grado y medida viajan en la URL: la pantalla queda compartible, y el servidor
+  // reescribe el motivo del aporte y vuelve a filtrar los ítems de cada familia.
+  function navegarCon(cambios: { grado?: string | null; medida?: string | null }) {
+    const p = new URLSearchParams();
+    const g = cambios.grado === undefined ? grado : cambios.grado;
+    const m = cambios.medida === undefined ? medida : cambios.medida;
+    if (g !== null && g !== "") p.set("grado", g);
+    if (m !== null && m !== "") p.set("medida", m);
+    const qs = p.toString();
     iniciarCambio(() => {
-      router.replace(nuevo === "" ? ruta : `${ruta}?grado=${encodeURIComponent(nuevo)}`, {
-        scroll: false,
-      });
+      router.replace(qs === "" ? ruta : `${ruta}?${qs}`, { scroll: false });
     });
   }
 
@@ -114,33 +126,64 @@ export function ListaComplementos({
 
   return (
     <div className="space-y-6">
-      {grados.length > 0 && (
+      {(grados.length > 0 || medidas.length > 0) && (
         <section className="tarjeta p-5">
           <div className="flex flex-wrap items-end gap-x-5 gap-y-3">
-            <div>
-              <label htmlFor="grado" className="block text-sm font-medium">
-                Grado del material
-              </label>
-              <select
-                id="grado"
-                value={grado ?? ""}
-                disabled={cambiandoGrado}
-                onChange={(e) => elegirGrado(e.target.value)}
-                className="mt-1.5 rounded-md border border-borde-fuerte bg-superficie px-3 py-2.5 text-base"
-              >
-                <option value="">Sin definir</option>
-                {grados.map((g) => (
-                  <option key={g.grado} value={g.grado}>
-                    {g.grado} · {numero(g.items)} en catálogo
-                  </option>
-                ))}
-              </select>
-            </div>
+            {medidas.length > 0 && (
+              <div>
+                <label htmlFor="medida" className="block text-sm font-medium">
+                  Medida que pide el cliente
+                </label>
+                <select
+                  id="medida"
+                  value={medida ?? ""}
+                  disabled={cambiandoGrado}
+                  onChange={(e) => navegarCon({ medida: e.target.value })}
+                  className="mt-1.5 rounded-md border border-borde-fuerte bg-superficie px-3 py-2.5 text-base"
+                >
+                  <option value="">Sin definir</option>
+                  {medidas.map((m) => (
+                    <option key={m.medida} value={m.medida}>
+                      {m.medida} · {numero(m.items)} en catálogo
+                    </option>
+                  ))}
+                </select>
+              </div>
+            )}
+            {grados.length > 0 && (
+              <div>
+                <label htmlFor="grado" className="block text-sm font-medium">
+                  Grado del material
+                </label>
+                <select
+                  id="grado"
+                  value={grado ?? ""}
+                  disabled={cambiandoGrado}
+                  onChange={(e) => navegarCon({ grado: e.target.value })}
+                  className="mt-1.5 rounded-md border border-borde-fuerte bg-superficie px-3 py-2.5 text-base"
+                >
+                  <option value="">Sin definir</option>
+                  {grados.map((g) => (
+                    <option key={g.grado} value={g.grado}>
+                      {g.grado} · {numero(g.items)} en catálogo
+                    </option>
+                  ))}
+                </select>
+              </div>
+            )}
             <p className="max-w-md text-sm text-texto-suave">
               La app no decide el grado: son los que hay en el catálogo. Elegilo con el cliente
               y, si el servicio es crítico, derivá la consulta a Oficina Técnica.
             </p>
           </div>
+
+          {medida !== null && (
+            <p className="mt-4 text-sm text-texto-suave">
+              Con <strong>{medida}</strong> elegida, las familias que dependen de la medida
+              muestran solo lo que coincide. El consumible de aporte no se filtra por medida:
+              lo define el grado, no el diámetro de la línea.
+            </p>
+          )}
 
           {grado !== null && aporte === null && (
             <p className="mt-4 rounded-md border border-aviso-200 bg-aviso-50 p-3 text-sm text-aviso-900">
@@ -197,8 +240,11 @@ export function ListaComplementos({
               <ul className="border-t border-borde bg-fondo/60 px-5 py-2">
                 {c.familias.map((f) => {
                   const clave = claveSeleccion(c.id, f.codigo);
+                  const detalle = itemsPorFamilia[clave];
+                  const filtrada = f.criterio !== "ninguno" && detalle?.sinCoincidencia === false;
+
                   return (
-                    <li key={clave}>
+                    <li key={clave} className="border-b border-borde/60 last:border-b-0">
                       <label className="flex cursor-pointer items-center gap-3 py-2.5">
                         <input
                           type="checkbox"
@@ -207,10 +253,47 @@ export function ListaComplementos({
                           className="size-5 accent-acento-600"
                         />
                         <span className="font-medium">{f.etiqueta}</span>
+                        {filtrada && (
+                          <span className="rounded bg-acento-50 px-2 py-0.5 text-xs font-semibold text-acento-700">
+                            {f.criterio === "medida" ? medida : (aporte?.aporte ?? grado)}
+                          </span>
+                        )}
                         <span className="ml-auto text-sm text-texto-tenue tabular">
-                          {numero(f.items)} ítems
+                          {numero(detalle?.total ?? f.items)} ítems
                         </span>
                       </label>
+
+                      {/* Invariante 2: la app enumera, el asesor elige. Ninguno viene
+                          premarcado y no se afirma precio ni stock: eso lo resuelve el
+                          ecommerce, que es lo que el catálogo importado no sabe. */}
+                      {detalle !== undefined && detalle.items.length > 0 && (
+                        <div className="pb-2.5 pl-8">
+                          {detalle.sinCoincidencia && (
+                            <p className="mb-1.5 text-xs text-aviso-900">
+                              No hay {f.etiqueta.toLowerCase()} en {medida}. Estos son todos los
+                              que hay; confirmá la medida con el cliente.
+                            </p>
+                          )}
+                          <ul className="space-y-0.5">
+                            {detalle.items.slice(0, 6).map((it) => (
+                              <li
+                                key={it.materialId}
+                                className="flex gap-2 text-xs text-texto-suave"
+                              >
+                                <span className="shrink-0 tabular text-texto-tenue">
+                                  {it.materialId}
+                                </span>
+                                <span className="min-w-0 flex-1 truncate">{it.descripcion}</span>
+                              </li>
+                            ))}
+                          </ul>
+                          {detalle.total > 6 && (
+                            <p className="mt-1 text-xs text-texto-tenue">
+                              y {numero(detalle.total - 6)} más en el ecommerce
+                            </p>
+                          )}
+                        </div>
+                      )}
                     </li>
                   );
                 })}

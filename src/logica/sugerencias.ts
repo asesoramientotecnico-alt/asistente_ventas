@@ -7,11 +7,24 @@
  */
 import type { Prioridad } from "@/tipos/dominio";
 
+/**
+ * Como se filtra una familia complementaria segun lo que eligio el asesor.
+ *
+ * Vive por par disparador-familia en `complemento_categoria`, no global: la medida del
+ * caño no filtra el aporte, porque el diámetro de una varilla TIG es el de la varilla
+ * (1,60 / 2,40 mm) y no el de la línea. Lo que une caño y aporte es el grado.
+ *
+ * `rosca` filtra por TIPO de rosca (métrica / Bsw / Unc), no por paso: el paso no está
+ * en el catálogo como columna, vive dentro de la descripción.
+ */
+export type Criterio = "ninguno" | "medida" | "grado" | "aporte" | "rosca";
+
 export interface FamiliaSugerida {
   readonly codigo: string;
   readonly etiqueta: string;
   /** Items en el batch activo. Una familia en cero no se muestra. */
   readonly items: number;
+  readonly criterio: Criterio;
 }
 
 export interface ComplementoSugerido {

@@ -31,6 +31,9 @@ function complementosDe(
       codigo: f,
       etiqueta: (reglas.categorias as Record<string, { etiqueta: string }>)[f]?.etiqueta ?? f,
       items: items[f] ?? 0,
+      // El criterio no cambia nada de lo que prueba este archivo (filtrado por catalogo,
+      // orden por prioridad y aporte); el filtrado por medida se prueba en medida.test.ts.
+      criterio: "ninguno" as const,
     })),
   }));
 }

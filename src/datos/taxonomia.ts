@@ -1,5 +1,6 @@
 import type { SupabaseClient } from "@supabase/supabase-js";
-import type { Aporte, ComplementoSugerido } from "@/logica/sugerencias";
+import type { Aporte, ComplementoSugerido, Criterio } from "@/logica/sugerencias";
+import { ordenarMedidas } from "@/logica/medida";
 import type { Prioridad } from "@/tipos/dominio";
 
 /**
@@ -25,6 +26,7 @@ export interface TipoDetalle {
   readonly codigo: string;
   readonly nombre: string;
   readonly preguntaGrado: boolean;
+  readonly preguntaMedida: boolean;
   readonly dominio: { readonly codigo: string; readonly nombre: string };
   readonly complementos: readonly ComplementoSugerido[];
   readonly notas: readonly string[];
@@ -72,6 +74,7 @@ export async function dominio(
 
 interface FilaCategoria {
   orden: number;
+  criterio: Criterio;
   categoria: { codigo: string; etiqueta: string; activo: boolean } | null;
 }
 
@@ -99,11 +102,11 @@ export async function tipoConComplementos(
   const { data, error } = await supabase
     .from("tipo_producto")
     .select(
-      `codigo, nombre, pregunta_grado,
+      `codigo, nombre, pregunta_grado, pregunta_medida,
        dominio:dominio_id ( id, codigo, nombre ),
        complemento (
          id, nombre, prioridad, motivo, depende_del_grado, orden,
-         complemento_categoria ( orden, categoria:categoria_id ( codigo, etiqueta, activo ) )
+         complemento_categoria ( orden, criterio, categoria:categoria_id ( codigo, etiqueta, activo ) )
        )`,
     )
     .eq("codigo", codigo)
@@ -116,6 +119,7 @@ export async function tipoConComplementos(
     codigo: string;
     nombre: string;
     pregunta_grado: boolean;
+    pregunta_medida: boolean;
     dominio: { id: string; codigo: string; nombre: string };
     complemento: FilaComplemento[];
   };
@@ -143,6 +147,7 @@ export async function tipoConComplementos(
                   codigo: cc.categoria.codigo,
                   etiqueta: cc.categoria.etiqueta,
                   items: conteo[cc.categoria.codigo] ?? 0,
+                  criterio: cc.criterio,
                 },
               ],
         ),
@@ -152,6 +157,7 @@ export async function tipoConComplementos(
     codigo: fila.codigo,
     nombre: fila.nombre,
     preguntaGrado: fila.pregunta_grado,
+    preguntaMedida: fila.pregunta_medida,
     dominio: { codigo: fila.dominio.codigo, nombre: fila.dominio.nombre },
     complementos,
     notas,
@@ -181,6 +187,27 @@ async function notasDeDominio(supabase: SupabaseClient, dominioId: string): Prom
 
   if (error !== null) throw new Error(`No se pudieron leer las notas técnicas: ${error.message}`);
   return (data ?? []).map((n) => (n as { texto: string }).texto);
+}
+
+/**
+ * Medidas con items en el batch activo para una familia. Alimenta el selector de medida.
+ *
+ * El orden lo pone `ordenarMedidas`: en SQL `10"` ordena antes que `2"`, que en mostrador
+ * no tiene sentido.
+ */
+export async function medidasDisponibles(
+  supabase: SupabaseClient,
+  categoria: string,
+): Promise<Array<{ medida: string; items: number }>> {
+  const { data, error } = await supabase.rpc("medidas_de_categoria", { p_categoria: categoria });
+  if (error !== null) throw new Error(`No se pudieron leer las medidas: ${error.message}`);
+
+  const filas = ((data ?? []) as Array<{ medida: string; items: number }>).map((m) => ({
+    medida: m.medida,
+    items: Number(m.items),
+  }));
+  const orden = new Map(ordenarMedidas(filas.map((f) => f.medida)).map((m, i) => [m, i]));
+  return filas.sort((a, b) => (orden.get(a.medida) ?? 0) - (orden.get(b.medida) ?? 0));
 }
 
 /** Grados con items en el batch activo para una familia. Alimenta el selector de grado. */

@@ -1,0 +1,78 @@
+{
+  "_meta": {
+    "descripcion": "Que tipos preguntan la medida y como se filtra cada par disparador-familia. Lo lee scripts/generar-seed.ts; en F2 esto pasa a editarse desde el panel de Oficina Tecnica.",
+    "fuente": "Medido sobre las 16.973 filas del dossier con src/logica/medida.ts. Los porcentajes son la cobertura de Diametrodinpulgadas por familia.",
+    "criterios": {
+      "ninguno": "No se filtra. La familia se muestra entera.",
+      "medida": "Misma designacion en pulgadas que la elegida por el asesor.",
+      "grado": "Mismo grado que el elegido.",
+      "aporte": "El grado de aporte que resuelve aporte_por_grado (308L para 304, 316L para 316).",
+      "rosca": "Mismo TIPO de rosca (metrica / Bsw / Unc). NO es el mismo paso: el paso no esta en el catalogo como columna, vive dentro de la descripcion."
+    }
+  },
+
+  "tipos_con_medida": {
+    "_nota": "Los 11 tipos con medida en pulgadas en >90% de sus items, salvo cano (77%) y acc_tanque (67%), que se incluyen igual porque son disparadores centrales y el filtro cae a la familia completa si no hay coincidencia.",
+    "codigos": [
+      "cano",
+      "acc_soldar_ind",
+      "brida",
+      "niple",
+      "acc_rosc_sw",
+      "valvula_ind",
+      "union_sanitaria",
+      "acc_soldar_san",
+      "valvula_san",
+      "instrumentacion",
+      "acc_tanque"
+    ],
+    "cobertura": {
+      "instrumentacion": 98,
+      "brida": 98,
+      "niple": 98,
+      "acc_rosc_sw": 98,
+      "acc_soldar_san": 97,
+      "acc_soldar_ind": 96,
+      "union_sanitaria": 95,
+      "valvula_ind": 94,
+      "valvula_san": 93,
+      "cano": 77,
+      "acc_tanque": 67
+    }
+  },
+
+  "familias_filtrables_por_medida": {
+    "_nota": "Familias con medida en pulgadas en >=87% de sus items. Solo se filtra por medida cuando el disparador tambien tiene medida Y esta en la misma linea: una brida industrial de 2\" (60,30 mm) no monta en un tubo sanitario de 2\" (50,80 mm). La designacion en pulgadas es ambigua ENTRE lineas.",
+    "codigos": [
+      "cano",
+      "tubo",
+      "acc_soldar_ind",
+      "acc_soldar_san",
+      "brida",
+      "niple",
+      "acc_rosc_sw",
+      "valvula_ind",
+      "valvula_san",
+      "union_sanitaria",
+      "instrumentacion",
+      "acople_rapido",
+      "soporte_san",
+      "mirilla",
+      "filtro_san",
+      "filtro_ind"
+    ]
+  },
+
+  "dominios_con_medida": {
+    "_nota": "El match por medida se hace solo dentro de estas lineas. Fuera de aca la designacion en pulgadas o no existe o no es comparable.",
+    "codigos": ["tuberia", "sanitario"]
+  },
+
+  "excluidas_de_medida": {
+    "_nota": "Familias que aparecen como complemento en las lineas de tuberia y sanitario pero NO se filtran por medida, aunque el disparador tenga una. El motivo esta al lado de cada una.",
+    "junta": "La junta se elige por material y temperatura de servicio, no solo por diametro, y la misma familia sirve a las dos lineas con designaciones que no son comparables entre si.",
+    "abrazadera": "Acompana a la union sanitaria, pero su medida no esta declarada de forma consistente.",
+    "actuador": "Se elige por la valvula, no por el diametro de la linea.",
+    "acc_valvula_san": "Es un kit de repuesto: la medida la define el modelo de valvula."
+  }
+}

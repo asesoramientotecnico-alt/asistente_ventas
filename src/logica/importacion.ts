@@ -9,6 +9,7 @@
  */
 import { CATEGORIA_OTRO, clasificar } from "./clasificador.ts";
 import { normalizarGrado } from "./grado.ts";
+import { medidasDeItem } from "./medida.ts";
 import {
   HEADERS_ESPERADOS,
   type DiffLayout,
@@ -36,6 +37,12 @@ export interface ItemImportado {
   readonly tipojunta: string | null;
   readonly categoria_codigo: string;
   readonly grado_norm: string | null;
+  /**
+   * Medidas nominales en pulgadas, ya normalizadas. Dos entradas en las reducciones,
+   * vacio si el item no declara medida. Sale de `Diametrodinpulgadas`, no de `Diametro`:
+   * en milimetros la linea industrial y la sanitaria no coinciden nunca.
+   */
+  readonly medidas: readonly string[];
 }
 
 export interface Analisis {
@@ -123,6 +130,7 @@ export async function analizar(
       tipojunta: opcional(celda(fila, indices, "Tipojunta")),
       categoria_codigo,
       grado_norm: normalizarGrado(calidad, descripcion),
+      medidas: medidasDeItem(celda(fila, indices, "Diametrodinpulgadas")),
     });
   }
 
