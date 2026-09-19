@@ -16,6 +16,11 @@ data/pedidos_*.csv
 data/pedidos_*.xlsx
 data/link_producto.xlsx
 
+# Ranking de venta: agregado del historico, sin dato de cliente, pero expone volumenes
+# de venta por tipo de producto. Se genera con scripts/historico/ranking-venta.ts --sql
+# y se aplica a mano; no va al repo mientras sea publico.
+supabase/ranking-venta.sql
+
 # artefactos de build
 tsconfig.tsbuildinfo
 next-env.d.ts

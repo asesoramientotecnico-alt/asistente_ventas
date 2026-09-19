@@ -35,6 +35,8 @@ export interface ItemImportado {
   readonly schedule: string | null;
   readonly serie: string | null;
   readonly tipojunta: string | null;
+  readonly terminacion: string | null;
+  readonly forma: string | null;
   readonly categoria_codigo: string;
   readonly grado_norm: string | null;
   /**
@@ -43,6 +45,12 @@ export interface ItemImportado {
    * en milimetros la linea industrial y la sanitaria no coinciden nunca.
    */
   readonly medidas: readonly string[];
+  /**
+   * Lo que el asesor escribiria en el buscador, todo junto y en minusculas: descripcion,
+   * tipo, calidad, grado y medidas. Asi "curva 2 316" encuentra el item sin que tenga
+   * que acertar en que columna esta cada cosa.
+   */
+  readonly texto_busqueda: string;
 }
 
 export interface Analisis {
@@ -113,6 +121,9 @@ export async function analizar(
     const categoria_codigo = clasificar({ negocio, familia, tipo, desc: descripcion });
     conteo[categoria_codigo] = (conteo[categoria_codigo] ?? 0) + 1;
 
+    const grado = normalizarGrado(calidad, descripcion);
+    const medidas = medidasDeItem(celda(fila, indices, "Diametrodinpulgadas"));
+
     items.push({
       material_id,
       descripcion,
@@ -128,9 +139,14 @@ export async function analizar(
       schedule: opcional(celda(fila, indices, "Schedule")),
       serie: opcional(celda(fila, indices, "Serie")),
       tipojunta: opcional(celda(fila, indices, "Tipojunta")),
+      terminacion: opcional(celda(fila, indices, "Terminación")),
+      forma: opcional(celda(fila, indices, "Forma")),
       categoria_codigo,
-      grado_norm: normalizarGrado(calidad, descripcion),
-      medidas: medidasDeItem(celda(fila, indices, "Diametrodinpulgadas")),
+      grado_norm: grado,
+      medidas,
+      texto_busqueda: [descripcion, tipo, calidad, grado ?? "", medidas.join(" ")]
+        .join(" ")
+        .toLowerCase(),
     });
   }
 
