@@ -202,3 +202,142 @@ Los bloques 1 a 6 no dependen de nada externo. El 7 está bloqueado por el dato 
 - **La enumeración abruma si la familia es grande.** `chapa` tiene 2.082 ítems: sin filtro
   efectivo no se enumera, se lista la familia y listo. Definir un tope por encima del cual no
   se enumera.
+
+---
+
+## 8. Rediseño de la pantalla de mostrador
+
+La primera versión del filtro por medida se probó contra el catálogo real y no resiste el
+uso. Esta sección es la corrección, y nace de tres cosas que se vieron en pantalla.
+
+### 8.1 Lo que estaba mal
+
+**Bujes roscados ofrecidos como accesorios para soldar.** Bajo "Accesorios para soldar",
+arriba de todo, aparecían `BNS3 2" x h 1 1/2" BSPT` y `... NPT`: fittings roscados forjados
+clase 3000, que no se sueldan.
+
+La causa no es el filtro sino **el orden**. Son 15 ítems sobre 1.142 (1,3 %), y salen
+primeros porque la lista se ordena alfabéticamente por descripción: `BNS3` gana contra
+`CURVA`. Las curvas de 90°, que son 158 y lo más pedido de la familia, no se veían.
+
+**La familia es un balde demasiado grueso.** `acc_soldar_ind` mezcla cosas que el vendedor
+jamás mezclaría:
+
+| Ítems | `Tipo` |
+|---|---|
+| 252 | REDUCCIÓN CONCÉNTRICA |
+| 160 | REDUCCIÓN EXCÉNTRICA |
+| 158 | CURVA 90° |
+| 133 | Tee |
+| 121 | Collar |
+| 103 | TEE DE REDUCCIÓN |
+| 67 | CASQUETE PARA SOLDAR |
+| 47 | CURVA 45° |
+| 15 | BUJE DE REDUCCIÓN ← los roscados |
+
+**Faltan criterios.** Medida y grado no alcanzan para identificar un material.
+
+### 8.2 `Tipo` es el eje que falta
+
+Medido sobre las 16.973 filas:
+
+| Columna | Cobertura | Valores |
+|---|---|---|
+| **`Tipo`** | **95 %** | **455** |
+| `Norma` | 60 % | 126 |
+| `Terminación` | 55 % | 83 |
+| `Forma` | 42 % | 296 |
+| `Rosca` | 17 % | 14 |
+| `Schedule` | 6 % | 15 |
+| `Tipojunta` | 5 % | 55 |
+
+`Tipo` está casi siempre, y sus valores son los que usa el mostrador: "CURVA 90°",
+"REDUCCIÓN CONCÉNTRICA", "Collar". Es el dato que hoy se importa y no se usa para nada.
+
+**Los ejes son distintos en cada familia**, no hay un set universal:
+
+| Familia | Ejes que discriminan |
+|---|---|
+| `cano` | Tipo (con/sin costura), medida, grado, Schedule, Norma |
+| `chapa` | **Terminación (21 valores)**, espesor, grado |
+| `bulon` | Tipo (19), Rosca, Forma, medida |
+| `acc_soldar_ind` | **Tipo (23)**, medida, grado, Norma, Serie |
+| `tapa_puerta` | **Tipojunta (30)**, Forma |
+| `instrumentacion` | Rosca, medida |
+
+### 8.3 Lo que NO se va a hacer: adivinar la conexión
+
+La salida tentadora al problema de los NPT es derivar un eje "tipo de conexión"
+(soldar / roscado / clamp) parseando descripción y norma. Se probó y **no da**:
+
+| Familia | Sin determinar |
+|---|---|
+| `cano` | 100 % |
+| `acc_rosc_sw` | 44 % |
+| `acc_soldar_ind` | 23 % |
+
+Con ese nivel de indeterminación, filtrar por conexión derivada esconde stock real sin que
+nadie se entere. Es inventar un dato que el catálogo no tiene. Se descarta: `Tipo` está al
+95 % y es explícito.
+
+### 8.4 El embudo, con su trampa
+
+Simulado sobre caño:
+
+```
+CAÑO                      1.213 ítems
+  → Tipo "con costura"      626
+  → Medida 2"               102
+  → Grado 316L               43
+  → Schedule SCH10            1
+```
+
+Cierra bien hasta el grado. Pero **el schedule está vacío en 37 de esos 43 ítems**: pedirlo
+como paso obligatorio esconde el 86 % del stock.
+
+De ahí la regla que gobierna todo el flujo:
+
+> Un eje se ofrece solo si está poblado en la mayoría de los ítems que quedan y si
+> realmente parte el conjunto. Un eje mayormente vacío se ofrece como refinamiento
+> opcional, nunca como paso, y elegirlo **no** descarta los ítems que no declaran el valor.
+
+### 8.5 El flujo nuevo
+
+Reemplaza la pantalla de selectores sueltos por pasos que se arman solos con los datos.
+
+1. **Identificar el material.** Pasos cortos, uno por eje, en orden de poder discriminante.
+   Cada opción muestra cuántos ítems quedan. Reglas:
+   - Un eje con una sola opción **no se pregunta**, se aplica y se muestra como dato.
+   - Un eje mayormente vacío no es paso, es refinamiento opcional.
+   - Nunca se ofrece una opción que lleva a cero.
+   - Se puede cortar en cualquier momento: los pasos que faltan son refinamiento.
+2. **Ficha del material.** Una línea compacta con lo elegido —`Caño con costura · 2" ·
+   316L`— editable por chip, sin volver atrás.
+3. **Sugerencias.** Recién acá, y heredando lo que corresponde por par según el criterio
+   de `complemento_categoria`.
+
+### 8.6 Ordenar por lo que se vende, no por abecedario
+
+El orden alfabético es lo que puso los bujes NPT arriba. La alternativa no es una heurística:
+son los **641.661 renglones de pedido de 2025-2026** que ya están cargados y verificados
+(98,6 % clasificado, `scripts/historico/`).
+
+Ordenar cada familia por volumen real de venta pone "CURVA 90°" arriba y "BUJE DE REDUCCIÓN"
+donde corresponde, sin escribir una sola regla a mano. Es el primer uso productivo del
+histórico y no depende del resto de F4.
+
+**Cuidado:** esto ordena, no filtra. Un ítem que se vende poco sigue estando; aparece más
+abajo. No se esconde stock por baja rotación.
+
+### 8.7 Qué hay que construir
+
+| # | Bloque | Depende de |
+|---|---|---|
+| 1 | Importar `Tipo`, `Norma`, `Terminación`, `Forma` a columnas consultables | — |
+| 2 | Tabla de ejes por familia, con su cobertura, generada desde el catálogo | 1 |
+| 3 | RPC de facetas: opciones y conteos del conjunto que queda | 2 |
+| 4 | Pantalla de pasos + ficha del material | 3 |
+| 5 | Ranking de venta por familia y `Tipo`, desde el histórico | `scripts/historico/` |
+| 6 | Herencia de criterios a las sugerencias | 4 |
+
+Los bloques 1 a 4 no dependen de nada externo. El 5 usa datos que ya están cargados.
